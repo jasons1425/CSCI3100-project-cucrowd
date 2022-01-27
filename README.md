@@ -15,3 +15,8 @@ Framework: https://www.django-rest-framework.org/
 Sprint Structure (Agile Software Development)
 
 https://searchsoftwarequality.techtarget.com/definition/Scrum-sprint
+
+
+# High-Level Description
+
+https://docs.google.com/document/d/1I2MnXVgWsSJvWj0sM4RzHOcH3UH_gpJIyJ3-lNy49vw/edit?usp=sharing
