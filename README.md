@@ -12,9 +12,10 @@ Framework: https://www.django-rest-framework.org/
 
 # Project development model
 
-Sprint Structure (Agile Software Development)
+SCRUM, Sprint Structure (Agile Software Development)
 
 https://searchsoftwarequality.techtarget.com/definition/Scrum-sprint
+https://www.scnsoft.com/blog/software-development-models#Scrum
 
 
 # High-Level Description
