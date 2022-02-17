@@ -131,7 +131,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES":[
-        'rest_framework.authentication.TokenAuthentication',
+        'user_auth.authentication.ExpiringTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication'
     ],
     # no API can be accessed by unauthenticated users by default,
