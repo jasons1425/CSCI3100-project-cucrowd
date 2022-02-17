@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from rest_framework.authentication import SessionAuthentication
-from .models import ExpiringTokenAuthentication
+from .authentication import ExpiringTokenAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
@@ -35,15 +35,17 @@ class LogInView(APIView):
         if user is not None and user.is_active:
             login(request, user)
             token, created = Token.objects.get_or_create(user=user)
+            response = Response({'username': user.username,
+                                 'result': True,
+                                 'authorization': token.key})
 
             if not created:
                 token.created = datetime.utcnow()
                 token.save()
+            else:
+                response.set_cookie("Authorization", "Token "+token.key)
 
-            response = {'username': user.username,
-                        'result': True,
-                        'authorization': token.key}
-            return Response(response)
+            return response
         else:
             raise ValidationError({'result': False,
                                    'message': "Incorrect username or password."})
@@ -60,5 +62,7 @@ class LogOutView(APIView):
         if request.user.is_authenticated:
             request.user.auth_token.delete()
             logout(request)
-            return Response({"result": True})
+            response = Response({"result": True})
+            response.delete_cookie("Authorization")
+            return response
         return Response({"result": False, "message": "Unauthenticated user."})
