@@ -9,8 +9,9 @@ from rest_framework.parsers import JSONParser
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from rest_framework.exceptions import ValidationError
-import json
 from datetime import datetime, timedelta
+import pytz
+import json
 
 
 class LogInView(APIView):
@@ -20,8 +21,8 @@ class LogInView(APIView):
 
     def get(self, request):
         user = request.user
-        return Response({"endpoint": "logout-get",
-                         "user": user.username,
+        return Response({"endpoint": "login-get",
+                         "username": user.username,
                          "isAuthenticated": user.is_authenticated})
 
     def post(self, request, format=None):
@@ -38,12 +39,10 @@ class LogInView(APIView):
             response = Response({'username': user.username,
                                  'result': True,
                                  'authorization': token.key})
-
             if not created:
-                token.created = datetime.utcnow()
+                token.created = datetime.utcnow().replace(tzinfo=pytz.utc)
                 token.save()
-            else:
-                response.set_cookie("Authorization", "Token "+token.key)
+            response.set_cookie("Authorization", "Token "+token.key)
 
             return response
         else:
@@ -55,7 +54,7 @@ class LogOutView(APIView):
     def get(self, request):
         user = request.user
         return Response({"endpoint": "logout-get",
-                         "user": user.username,
+                         "username": user.username,
                          "isAuthenticated": user.is_authenticated})
 
     def post(self, request, format=None):
