@@ -1,5 +1,6 @@
 from django.shortcuts import render
-from rest_framework.authentication import SessionAuthentication, TokenAuthentication
+from rest_framework.authentication import SessionAuthentication
+from .authentication import ExpiringTokenAuthentication
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
@@ -8,21 +9,21 @@ from rest_framework.parsers import JSONParser
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from rest_framework.exceptions import ValidationError
+from datetime import datetime, timedelta
+import pytz
 import json
 
 
 class LogInView(APIView):
     # will follow DEFAULT_AUTHENTICATION_CLASSES in settings.py if unspecified
-    authentication_classes = [TokenAuthentication, SessionAuthentication]
+    authentication_classes = [ExpiringTokenAuthentication, SessionAuthentication]
     permission_classes = []
 
-    def get(self, request, format=None):
-        data = request.data
-        content = {
-            'user': data.get('username', None),
-            'auth': data.get('auth', None),
-        }
-        return Response(content)
+    def get(self, request):
+        user = request.user
+        return Response({"endpoint": "login-get",
+                         "username": user.username,
+                         "isAuthenticated": user.is_authenticated})
 
     def post(self, request, format=None):
         data = request.data
@@ -34,18 +35,33 @@ class LogInView(APIView):
         user = authenticate(username=username, password=password)
         if user is not None and user.is_active:
             login(request, user)
-            token = Token.objects.get_or_create(user=user)[0].key
-            response = {'username': user.username,
-                        'result': True,
-                        'authorization': token}
-            return Response(response)
+            token, created = Token.objects.get_or_create(user=user)
+            response = Response({'username': user.username,
+                                 'result': True,
+                                 'authorization': token.key})
+            if not created:
+                token.created = datetime.utcnow().replace(tzinfo=pytz.utc)
+                token.save()
+            response.set_cookie("Authorization", "Token "+token.key)
+
+            return response
         else:
             raise ValidationError({'result': False,
                                    'message': "Incorrect username or password."})
 
 
 class LogOutView(APIView):
-    def get(self, request, format=None):
-        request.user.auth_token.delete()
-        logout(request)
-        return Response({})
+    def get(self, request):
+        user = request.user
+        return Response({"endpoint": "logout-get",
+                         "username": user.username,
+                         "isAuthenticated": user.is_authenticated})
+
+    def post(self, request, format=None):
+        if request.user.is_authenticated:
+            request.user.auth_token.delete()
+            logout(request)
+            response = Response({"result": True})
+            response.delete_cookie("Authorization")
+            return response
+        return Response({"result": False, "message": "Unauthenticated user."})

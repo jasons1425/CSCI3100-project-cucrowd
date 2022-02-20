@@ -131,14 +131,15 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES":[
-        'rest_framework.authentication.TokenAuthentication',
+        'user_auth.authentication.ExpiringTokenAuthentication',
         'rest_framework.authentication.SessionAuthentication'
     ],
     # no API can be accessed by unauthenticated users by default,
     #   unless that API has specifically specified permission_classes
     "DEFAULT_PERMISSION_CLASSES":[
         'rest_framework.permissions.IsAuthenticated',
-    ]
+    ],
+    "EXCEPTION_HANDLER": "backend.exception.custom_exception_handler"
 }
 
 CORS_ORIGIN_WHITELIST = [
