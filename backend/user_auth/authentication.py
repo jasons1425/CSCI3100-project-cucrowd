@@ -31,6 +31,7 @@ class ExpiringTokenAuthentication(TokenAuthentication):
 
         utc_now = datetime.utcnow().replace(tzinfo=pytz.utc)
         if token.created < utc_now - timedelta(hours=72):  # token expire after 3 days
+            token.delete()
             raise AuthenticationFailed("Token has expired")
 
         return token.user, token
