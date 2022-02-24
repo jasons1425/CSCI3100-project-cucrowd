@@ -1,18 +1,14 @@
-from django.shortcuts import render
 from rest_framework.authentication import SessionAuthentication
 from .authentication import ExpiringTokenAuthentication
-from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.parsers import JSONParser
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from rest_framework.exceptions import ValidationError
 from datetime import datetime, timedelta
 import pytz
-import json
 
 
 class LogInView(APIView):
