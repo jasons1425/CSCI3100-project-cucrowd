@@ -22,3 +22,10 @@ https://www.scnsoft.com/blog/software-development-models#Scrum
 # High-Level Description
 
 https://docs.google.com/document/d/1I2MnXVgWsSJvWj0sM4RzHOcH3UH_gpJIyJ3-lNy49vw/edit?usp=sharing
+
+
+# Testing Gmail Account
+
+email:  csci3100cucrowd@gmail.com 
+
+password:  CUcrowd2022
