@@ -8,5 +8,6 @@ import user_auth.views as views
 
 urlpatterns = [
     path('login', views.LogInView.as_view(), name='login'),
-    path('logout', views.LogOutView.as_view(), name='logout')
+    path('logout', views.LogOutView.as_view(), name='logout'),
+    path('signup', views.SignUpView.as_view(), name='signup')
 ]
