@@ -6,6 +6,10 @@ from rest_framework.views import APIView
 from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.db import IntegrityError
+from django.core.validators import validate_email
+from django.core.mail import send_mail
+from django.core.exceptions import ValidationError as FieldValidationError
+from backend.settings import EMAIL_HOST_USER
 from rest_framework.exceptions import ValidationError
 from datetime import datetime, timedelta
 import pytz
@@ -82,14 +86,20 @@ class SignUpView(APIView):
             raise ValidationError({'result': False,
                                    'message': "Missing username, email or password."})
         try:
+            validate_email(email)
             new_user = User.objects.create_user(username=username, email=email, password=password)
             assert new_user is not None
+            send_mail("Account created!",
+                      f"Thank you for signing up, {new_user.username}",
+                      EMAIL_HOST_USER,
+                      [email],
+                      fail_silently=False)
             return Response({'result': True,
                              'username': new_user.username,
                              'email': new_user.email})
         except IntegrityError:  # username/email already exists, pending custom User model
             raise ValidationError({'result': False, 'message': "Username or email already exists."})
-        except ValidationError:  # incorrect format of the email
+        except FieldValidationError:  # incorrect format of the email
             raise ValidationError({'result': False, 'message': "Incorrect format of email."})
         except AssertionError:
             raise ValidationError({'result': False, 'message': "Fail to create new users - unknown errors."})
