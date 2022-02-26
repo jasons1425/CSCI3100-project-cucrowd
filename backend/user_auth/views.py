@@ -37,6 +37,7 @@ class LogInView(APIView):
         if not (username and password):
             raise ValidationError({'result': False,
                                    'message': "Missing username or password."})
+        username = username.lower()
         user = authenticate(username=username, password=password)
         if user is not None and user.is_active:
             login(request, user)
@@ -89,6 +90,9 @@ class SignUpView(APIView):
         if not (username and password and email):
             raise ValidationError({'result': False,
                                    'message': "Missing username, email or password."})
+        if username != username.lower():
+            raise ValidationError({'result': False,
+                                   'message': "The username must consist of lowercase characters only."})
         try:
             validate_email(email)
             new_user = User.objects.create_user(username=username, email=email, password=password)
