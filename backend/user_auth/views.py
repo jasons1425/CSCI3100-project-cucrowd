@@ -7,10 +7,14 @@ from django.contrib.auth import login, logout, authenticate
 from django.contrib.auth.models import User
 from django.db import IntegrityError
 from django.core.validators import validate_email
-from django.core.mail import send_mail
+from django.core.mail import send_mail, EmailMultiAlternatives
 from django.core.exceptions import ValidationError as FieldValidationError
+from django.dispatch import receiver
+from django.template.loader import render_to_string
+from django.urls import reverse
 from backend.settings import EMAIL_HOST_USER
 from rest_framework.exceptions import ValidationError
+from django_rest_passwordreset.signals import reset_password_token_created
 from datetime import datetime, timedelta
 import pytz
 
@@ -103,3 +107,21 @@ class SignUpView(APIView):
             raise ValidationError({'result': False, 'message': "Incorrect format of email."})
         except AssertionError:
             raise ValidationError({'result': False, 'message': "Fail to create new users - unknown errors."})
+
+
+@receiver(reset_password_token_created)
+def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
+    user_name = reset_password_token.user.username
+    user_email = reset_password_token.user.email
+    abs_uri = instance.request.build_absolute_uri(reverse("password_reset:reset-password-confirm"))
+    reset_url = f"{abs_uri}?token={reset_password_token.key}"
+    email_message = f"Dear {user_name},\n\n" \
+                    f"Please click the below link to reset your password.\n\n" \
+                    f"{reset_url}\n\n" \
+                    f"Regards, CU Crowd project team\n\n" \
+                    f"你是忘記了，還是害怕想起來？"
+    send_mail("Reset Password Email",
+              email_message,
+              EMAIL_HOST_USER,
+              [user_email],
+              fail_silently=False)
