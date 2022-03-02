@@ -4,18 +4,19 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth import login, logout, authenticate
-from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.core.validators import validate_email
-from django.core.mail import send_mail, EmailMultiAlternatives
+from django.core.mail import send_mail
 from django.core.exceptions import ValidationError as FieldValidationError
 from django.dispatch import receiver
-from django.template.loader import render_to_string
 from django.urls import reverse
 from backend.settings import EMAIL_HOST_USER
 from rest_framework.exceptions import ValidationError
 from django_rest_passwordreset.signals import reset_password_token_created
-from datetime import datetime, timedelta
+from user_auth.models import StudentProfile, OrgUserProfile, validate_sid
+from datetime import datetime
 import pytz
 
 
@@ -26,9 +27,23 @@ class LogInView(APIView):
 
     def get(self, request):
         user = request.user
-        return Response({"endpoint": "login-get",
+        response_dict = {"endpoint": "login-get",
                          "username": user.username,
-                         "isAuthenticated": user.is_authenticated})
+                         "isAuthenticated": user.is_authenticated}
+        if user.is_authenticated:
+            if user.is_org:  # organization user
+                profile = OrgUserProfile.objects.filter(user=user)
+                if profile:  # ensure the queryset is non-empty
+                    profile = profile[0]  # get the first query result
+                    response_dict['org_name'] = profile.org_name
+            else:  # student user
+                profile = StudentProfile.objects.filter(user=user)
+                if profile:  # ensure the queryset is non-empty
+                    profile = profile[0]
+                    response_dict['sid'] = profile.sid
+                    response_dict['major'] = profile.major
+                    response_dict['admission year'] = profile.admission_year
+        return Response(response_dict)
 
     def post(self, request, format=None):
         data = request.data
@@ -59,9 +74,23 @@ class LogInView(APIView):
 class LogOutView(APIView):
     def get(self, request):
         user = request.user
-        return Response({"endpoint": "logout-get",
+        response_dict = {"endpoint": "logout-get",
                          "username": user.username,
-                         "isAuthenticated": user.is_authenticated})
+                         "isAuthenticated": user.is_authenticated}
+        if user.is_authenticated:
+            if user.is_org:  # organization user
+                profile = OrgUserProfile.objects.filter(user=user)
+                if profile:  # ensure the queryset is non-empty
+                    profile = profile[0]  # get the first query result
+                    response_dict['org_name'] = profile.org_name
+            else:  # student user
+                profile = StudentProfile.objects.filter(user=user)
+                if profile:  # ensure the queryset is non-empty
+                    profile = profile[0]
+                    response_dict['sid'] = profile.sid
+                    response_dict['major'] = profile.major
+                    response_dict['admission year'] = profile.admission_year
+        return Response(response_dict)
 
     def post(self, request, format=None):
         if request.user.is_authenticated:
@@ -78,25 +107,63 @@ class SignUpView(APIView):
 
     def get(self, request):
         user = request.user
-        return Response({"endpoint": "signup-get",
+        response_dict = {"endpoint": "signup-get",
                          "username": user.username,
-                         "isAuthenticated": user.is_authenticated})
+                         "isAuthenticated": user.is_authenticated}
+        if user.is_authenticated:
+            if user.is_org:  # organization user
+                profile = OrgUserProfile.objects.filter(user=user)
+                if profile:  # ensure the queryset is non-empty
+                    profile = profile[0]  # get the first query result
+                    response_dict['org_name'] = profile.org_name
+            else:  # student user
+                profile = StudentProfile.objects.filter(user=user)
+                if profile:  # ensure the queryset is non-empty
+                    profile = profile[0]
+                    response_dict['sid'] = profile.sid
+                    response_dict['major'] = profile.major
+                    response_dict['admission year'] = profile.admission_year
+        return Response(response_dict)
 
     def post(self, request):
         data = request.data
         username = data.get('username', None)
         email = data.get("email", None)
         password = data.get('password', None)
-        if not (username and password and email):
+        sid = data.get("sid", None)
+        gender = data.get("gender", None)
+        date_of_birth = data.get("date_of_birth", None)
+        major = data.get("major", None)
+        admission_year = data.get("admission_year", None)
+
+        if not (username and password and email and sid
+                and gender and date_of_birth and major and admission_year):
             raise ValidationError({'result': False,
-                                   'message': "Missing username, email or password."})
+                                   'message': "Missing values."})
         if username != username.lower():
             raise ValidationError({'result': False,
                                    'message': "The username must consist of lowercase characters only."})
         try:
+            date_of_birth = datetime.strptime(date_of_birth, "%Y-%m-%d").date()
+            admission_year = datetime.strptime(admission_year, "%Y-%m-%d").date()
+        except ValueError as e:
+            raise ValidationError({'result': False,
+                                   'message': "date_of_birth or admission_year has invalid date format. "
+                                              "Expected %Y-%m-%d"})
+
+        try:
             validate_email(email)
-            new_user = User.objects.create_user(username=username, email=email, password=password)
+            validate_sid(sid)
+            user_model = get_user_model()
+            new_user = user_model.objects.create_user(username=username, email=email,
+                                                      password=password, gender=gender,
+                                                      date_of_birth=date_of_birth)
             assert new_user is not None
+            new_profile = StudentProfile.objects.create(user=new_user, sid=sid, major=major,
+                                                        admission_year=admission_year)
+            if new_profile is None:
+                new_user.delete()
+                raise AssertionError
             send_mail("Account created!",
                       f"Thank you for signing up, {new_user.username}",
                       EMAIL_HOST_USER,
