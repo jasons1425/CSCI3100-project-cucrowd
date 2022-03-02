@@ -1,1 +1,57 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+from django.conf import settings
+import os
+
+
+def get_avatar_fp(instance, filename):
+    return os.path.join("avatar/", f"{instance.username}_") + filename
+
+
+class StudentProfile(models.Model):
+    # general account details
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE,
+                                null=False, blank=False)
+
+    # student user related
+    major = models.CharField(max_length=50,
+                             null=False, blank=False)
+    admission_year = models.DateField(null=False, blank=False)
+
+    def __str__(self):
+        return self.user.username
+
+
+class OrgUserProfile(models.Model):
+    # general account details
+    user = models.OneToOneField(settings.AUTH_USER_MODEL,
+                                on_delete=models.CASCADE,
+                                null=False, blank=False)
+
+    # organization user related
+    org_name = models.CharField(max_length=100,
+                                default="The Chinese University of Hong Kong",
+                                null=False, blank=False)
+
+    def __str__(self):
+        return self.user.username
+
+
+class CrowdUser(AbstractUser):
+    is_org = models.BooleanField(default=False, null=False, blank=False)
+    avatar = models.ImageField(upload_to=get_avatar_fp, null=True, blank=True)
+    gender = models.CharField(
+        max_length=2,
+        choices=[
+            ('M', "male"),
+            ('F', "female"),
+            ("NA", "others"),
+        ],
+        default="NA",
+        null=False,
+        blank=False
+    )
+    date_of_birth = models.DateField(auto_now_add=True, null=False, blank=False)
+    create_time = models.DateTimeField(auto_now_add=True, editable=False)
+
