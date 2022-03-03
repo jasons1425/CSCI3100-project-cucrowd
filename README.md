@@ -9,6 +9,8 @@ Backend: Python Django
 
 Framework: https://www.django-rest-framework.org/
 
+Design: Figma https://www.figma.com/file/MwBMWKmREYUG3DNRwUHaaP/CSCI3100_project?node-id=0%3A1
+
 
 # Project development model
 
