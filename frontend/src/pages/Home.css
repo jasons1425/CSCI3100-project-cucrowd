@@ -1,0 +1,100 @@
+.home {
+  position: relative;
+  margin-left: 270px;
+  align-items: center;
+  justify-content: center;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+  margin-left: 100px;
+}
+
+.column {
+  float: left;
+  width: 500px;
+  padding: 10px;
+  height: 680px;
+  margin: 50px;
+  border-style: solid;
+  border-color: purple;
+  border-radius: 25px;
+}
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+.postphoto {
+  margin-top: 10px;
+  margin-left: 10px;
+  margin-right: 10px;
+  width: 480px;
+  height: 400px;
+  background-color: white;
+}
+
+.postauthor {
+  margin-top: 5px;
+  margin-left: 15px;
+  font-size: large;
+}
+
+.description {
+  background-color: white;
+  margin-top: 30px;
+  font-size: large;
+  width: 480px;
+  height: 200px;
+  margin-left: 10px;
+}
+.title {
+  margin-left: 100px;
+  font-size: 80px;
+  padding-top: 50px;
+  color: purple;
+  font-weight: bold;
+}
+
+.intro {
+  margin-left: 100px;
+  font-size: 25px;
+}
+
+.background1 {
+  background-color: white;
+}
+
+.viewmore {
+  margin-left: 1700px;
+  display: inline-block;
+  padding: 15px 20px;
+  font-size: 25px;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  cursor: pointer;
+  text-align: center;
+  text-decoration: none;
+  color: #fff;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 25px;
+}
+
+.viewmore:hover {
+  background-color: #3e8e41;
+}
+
+.viewmore:active {
+  background-color: #3e8e41;
+  transform: translateY(4px);
+}
+
+.title-sub {
+  color: #d4af37;
+  padding-top: 10px;
+  margin-left: 100px;
+  font-size: 30px;
+  font-weight: bold;
+}
