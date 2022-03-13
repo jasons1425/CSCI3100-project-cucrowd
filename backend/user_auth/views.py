@@ -184,8 +184,9 @@ class SignUpView(APIView):
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
     user_name = reset_password_token.user.username
     user_email = reset_password_token.user.email
-    abs_uri = instance.request.build_absolute_uri(reverse("password_reset:reset-password-confirm"))
-    reset_url = f"{abs_uri}?token={reset_password_token.key}"
+    # abs_uri = instance.request.build_absolute_uri(reverse("password_reset:reset-password-confirm"))
+    # reset_url = f"{abs_uri}?token={reset_password_token.key}"
+    reset_url = f"http://localhost:3000/resetpassword/?token={reset_password_token.key}"
     email_message = f"Dear {user_name},\n\n" \
                     f"Please click the below link to reset your password.\n\n" \
                     f"{reset_url}\n\n" \
