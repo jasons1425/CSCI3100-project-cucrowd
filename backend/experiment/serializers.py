@@ -4,7 +4,7 @@ from user_auth.serializers import CrowdUserSerializer
 
 
 class ExperimentSerializer(serializers.ModelSerializer):
-    host = CrowdUserSerializer(many=False)
+    host = CrowdUserSerializer(many=False, required=False, allow_null=True)
 
     def create(self, validated_data):
         if self.context['host']:
@@ -15,4 +15,4 @@ class ExperimentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Experiment
-        fields = "__all__"
+        fields = ["id", "host", "title", "description"]
