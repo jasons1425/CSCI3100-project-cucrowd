@@ -109,7 +109,7 @@ class Experiment_field(models.Model):
     exp_img = models.ImageField(upload_to=get_exp_fp, null=True, blank=True)
     ############## still doing####################
     ### here for user to input timeslot
-    time_list =  
+    #time_list =  
     #######################################
     vacancy = models.IntegerField(validators=[validate_min])
     def __str__(self):
