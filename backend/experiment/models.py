@@ -18,6 +18,13 @@ def validate_deadline(self):
         raise ValidationError("The date cannot be in the past!")
     return date
 
+def validate_min(value):
+    if value <= 0 :
+        raise ValidationError(('%(value)s is not an validate number'),
+            params={'value': value},
+        )
+
+
 
 class Experiment_field(models.Model):
     host_id=models.ForeignKey(OrgUserProfile.org_id,null=False,blank=False,editable=False)
@@ -100,6 +107,10 @@ class Experiment_field(models.Model):
     post_date=models.DateField(("Post_date"),auto_now_add=True)
     last_modified=models.DateField(("last_modified"),auto_now=True)
     exp_img = models.ImageField(upload_to=get_exp_fp, null=True, blank=True)
-
+    ############## still doing####################
+    ### here for user to input timeslot
+    time_list =  
+    #######################################
+    vacancy = models.IntegerField(validators=[validate_min])
     def __str__(self):
         return self.title
