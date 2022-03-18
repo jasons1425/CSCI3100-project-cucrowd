@@ -26,7 +26,7 @@ def validate_min(value):
 
 
 
-class Experiment_field(models.Model):
+class Experiment(models.Model):
     #host_id=models.ForeignKey(OrgUserProfile.org_id,null=False,blank=False,editable=False)
     post_id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title=models.CharField(max_length=100,default="Title",null=False, blank=False)
