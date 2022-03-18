@@ -1,5 +1,6 @@
 import uuid
-
+from django.contrib.auth.models import AnonymousUser
+from django.conf import settings
 from attr import field
 from user_auth.models import OrgUserProfile
 from django.db import models
@@ -27,11 +28,11 @@ def validate_min(value):
 
 
 class Experiment(models.Model):
-    #host_id=models.ForeignKey(OrgUserProfile.org_id,null=False,blank=False,editable=False)
+    host = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,null=False, blank=True, editable=False)
     post_id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title=models.CharField(max_length=100,default="Title",null=False, blank=False)
     subtitle=models.CharField(max_length=100,default="Subtitle",null=False, blank=False)
-    #employer=models.ForeignKey(OrgUserProfile.org_name,null=False, blank=False,editable=False)
+    #employer=models.ForeignKey(OrgUserProfile.org_name,on_delete=models.CASCADE,null=False, blank=False,editable=False)
     target=models.CharField(max_length=100,default="University Students",null=False, blank=False)
     Job_Nature=models.CharField(max_length=100,
         choices=[                                             
