@@ -27,11 +27,11 @@ def validate_min(value):
 
 
 class Experiment_field(models.Model):
-    host_id=models.ForeignKey(OrgUserProfile.org_id,null=False,blank=False,editable=False)
+    #host_id=models.ForeignKey(OrgUserProfile.org_id,null=False,blank=False,editable=False)
     post_id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     title=models.CharField(max_length=100,default="Title",null=False, blank=False)
     subtitle=models.CharField(max_length=100,default="Subtitle",null=False, blank=False)
-    employer=models.ForeignKey(OrgUserProfile.org_name,null=False, blank=False,editable=False)
+    #employer=models.ForeignKey(OrgUserProfile.org_name,null=False, blank=False,editable=False)
     target=models.CharField(max_length=100,default="University Students",null=False, blank=False)
     Job_Nature=models.CharField(max_length=100,
         choices=[                                             
