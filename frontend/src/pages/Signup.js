@@ -8,18 +8,15 @@ function signup(){
     checkempty_email();
     checkempty_major();
     checkempty_admission_year();
-    checkempty_password();
-    checkempty_confirm_password();
 
-    if(document.getElementById("password").value !== document.getElementById("confirm_password").value){
-        alert("Password and confirm password are not the same");
+    if(checksid() === false){
+        alert("sid format incorrect");
         return;
     }
 
     let payload = {
         username: document.getElementById("username").value,
         email: document.getElementById("email").value,
-        password: document.getElementById("password").value,
         sid: document.getElementById("sid").value,
         gender: document.getElementById("gender").value,
         major: document.getElementById("major").value,
@@ -77,14 +74,6 @@ function Signup(){
                     <div>
                         <label htmlFor="admission_year">Admission year: </label>
                         <input type="date" name="admission_year" id="admission_year" required></input>
-                    </div>
-                    <div>
-                        <label htmlFor="password">Password: </label>
-                        <input type="password" name="password" id="password" placeholder="password" required></input>
-                    </div>
-                    <div>
-                        <label htmlFor="confirm_password">Confirm password: </label>
-                        <input type="password" name="confirm_password" id="confirm_password" placeholder="confirm password" onChange={() => check_confirm_password()} required></input>
                     </div>
                     <button type="button" onClick={signup}>Sign up</button>
                 </div>
@@ -183,44 +172,6 @@ function checkempty_admission_year(){
     }else{
         if(document.querySelector("#admission_year").classList.contains("is-invalid")){
             document.querySelector("#admission_year").classList.remove("is-invalid");
-        }
-    }
-}
-
-function checkempty_password(){
-    let check = document.getElementById("password").value;
-    if(check === ""){
-        if(!document.querySelector("#password").classList.contains("is-invalid")){
-            document.querySelector("#password").classList.add("is-invalid");
-        }
-    }else{
-        if(document.querySelector("#password").classList.contains("is-invalid")){
-            document.querySelector("#password").classList.remove("is-invalid");
-        }
-    }
-}
-
-function checkempty_confirm_password(){
-    let check = document.getElementById("confirm_password").value;
-    if(check === ""){
-        if(!document.querySelector("#confirm_password").classList.contains("is-invalid")){
-            document.querySelector("#confirm_password").classList.add("is-invalid");
-        }
-    }else{
-        if(document.querySelector("#confirm_password").classList.contains("is-invalid")){
-            document.querySelector("#confirm_password").classList.remove("is-invalid");
-        }
-    }
-}
-
-function check_confirm_password(){
-    if(document.getElementById("password").value !== document.getElementById("confirm_password").value){
-        if(!document.querySelector("#confirm_password").classList.contains("is-invalid")){
-            document.querySelector("#confirm_password").classList.add("is-invalid");
-        }
-    }else{
-        if(document.querySelector("#confirm_password").classList.contains("is-invalid")){
-            document.querySelector("#confirm_password").classList.remove("is-invalid");
         }
     }
 }

@@ -9,9 +9,9 @@
     display: block;
     position: relative;
     width: 60%;
-    height: 95%;
-    top: 2.5%;
-    left: 5%;
+    height: 75%;
+    top: 10%;
+    left: 20%;
     bottom: 2.5%;
     background-color: #f3f0cf;
 }
@@ -24,6 +24,7 @@
     font-size: 1.25vw;
     height: 15%;
     padding: 2.5% 5% 2.5% 5%;
+    margin-bottom: 2vh;
 }
 
 #signup_hr {
