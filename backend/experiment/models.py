@@ -1,7 +1,7 @@
 import uuid
+from django.db import models
 from django.contrib.auth.models import AnonymousUser
 from django.conf import settings
-from attr import field
 from user_auth.models import OrgUserProfile
 from django.db import models
 from django.core.exceptions import ValidationError
@@ -9,32 +9,41 @@ from datetime import date
 import datetime
 import os
 
-def get_exp_fp(instance, filename):
-    return os.path.join("exp/", f"{instance.username}_") + filename
 
-#dateobject 
-def validate_deadline(self):
-    date = self.deadline['deadline']
-    if date < datetime.date.today():  
+def get_exp_fp(instance, filename):
+    return os.path.join("exp", f"{instance.id}_") + filename
+
+
+def validate_deadline(value):
+    if value < date.today():
         raise ValidationError("The date cannot be in the past!")
-    return date
+    return value
+
 
 def validate_min(value):
-    if value <= 0 :
-        raise ValidationError(('%(value)s is not an validate number'),
-            params={'value': value},
+    if value <= 0:
+        raise ValidationError(
+            '%(value)s is not an validate number',
+            params={'value': value}
         )
 
 
-
 class Experiment(models.Model):
-    host = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,null=False, blank=True, editable=False)
-    post_id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    title=models.CharField(max_length=100,default="Title",null=False, blank=False)
-    subtitle=models.CharField(max_length=100,default="Subtitle",null=False, blank=False)
-    #employer=models.ForeignKey(OrgUserProfile.org_name,on_delete=models.CASCADE,null=False, blank=False,editable=False)
-    target=models.CharField(max_length=100,default="University Students",null=False, blank=False)
-    Job_Nature=models.CharField(max_length=100,
+    host = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE,
+                             null=False, blank=True, editable=False)
+    id = models.UUIDField(primary_key=True,
+                          default=uuid.uuid4,
+                          editable=False)
+    title = models.CharField(max_length=100, default="Title",
+                             null=False, blank=False)
+    description = models.TextField(max_length=1000,
+                                   default="Please type a short description.(around 200 words)")
+    subtitle = models.CharField(max_length=100, default="Subtitle",
+                                null=False, blank=False)
+    target = models.CharField(max_length=100, default="University Students",
+                            null=False, blank=False)
+    job_nature = models.CharField(max_length=100,
         choices=[                                             
                 ("Architecture_Surveying", "Architecture / Surveying"),
                 ("Accounting_Auditing_Taxation", "Accounting / Auditing / Taxation"),
@@ -87,7 +96,7 @@ class Experiment(models.Model):
         blank=False
     )
 
-    type= models.CharField(
+    type = models.CharField(
         max_length=6,
         choices=[
             ('FT', "FullTime"),
@@ -100,18 +109,37 @@ class Experiment(models.Model):
         blank=False
     )
 
-    duration=models.CharField(max_length=200,default="July - Aug",null=False, blank=False)
-    salary=models.CharField(max_length=200,default="HKD$65/1hr",null=False, blank=False)
-    venue=models.CharField(max_length=200,null=False, blank=False)
-    highlight=models.CharField(max_length=500,default="Please type a short description.(around 200 words)",null=False, blank=False)
-    deadline=models.DateField(("Deadline"),validators=[validate_deadline],default=date.today)
-    post_date=models.DateField(("Post_date"),auto_now_add=True)
-    last_modified=models.DateField(("last_modified"),auto_now=True)
+    duration = models.CharField(max_length=200, default="July - Aug",
+                                null=False, blank=False)
+    salary = models.CharField(max_length=200, default="HKD$65/1hr",
+                              null=False, blank=False)
+    venue = models.CharField(max_length=200, null=False, blank=False)
+    
+    deadline = models.DateField(validators=[validate_deadline], default=date.today)
+    post_date = models.DateField(auto_now_add=True)
+    last_modified = models.DateField(auto_now=True)
     exp_img = models.ImageField(upload_to=get_exp_fp, null=True, blank=True)
+    vacancy = models.IntegerField(validators=[validate_min])
     ############## still doing####################
     ### here for user to input timeslot
     #time_list =  
     #######################################
-    vacancy = models.IntegerField(validators=[validate_min])
+
     def __str__(self):
         return self.title
+
+
+class Enrollment(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    experiment = models.ForeignKey(Experiment,
+                                   on_delete=models.CASCADE,
+                                   null=False, blank=True)
+    participant = models.ForeignKey(settings.AUTH_USER_MODEL,
+                                    on_delete=models.CASCADE,
+                                    null=False, blank=True)
+    time = models.DateTimeField()
+
+    def __str__(self):
+        title = self.experiment.title
+        username = self.participant.username
+        return ' - '.join([title, username])

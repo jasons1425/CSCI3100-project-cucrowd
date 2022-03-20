@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import Experiment
+from .models import Experiment, Enrollment
 
 
 # Register your models here.
@@ -13,4 +13,10 @@ class ExperimentAdmin(admin.ModelAdmin):
         obj.save()
 
 
+class EnrollmentAdmin(admin.ModelAdmin):
+    list_display = ("id", "experiment", "participant")
+    search_fields = ("experiment__title", "participant__username")
+
+
 admin.site.register(Experiment, ExperimentAdmin)
+admin.site.register(Enrollment, EnrollmentAdmin)
