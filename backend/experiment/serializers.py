@@ -15,4 +15,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Experiment
-        fields = ["id", "host", "title", "description"]
+        fields = ["id", "host", "title", "subtitle", "target",
+                  "job_nature", "type", "duration", "salary", "venue",
+                  "deadline", "vacancy", "description"]
+
