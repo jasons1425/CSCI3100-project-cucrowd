@@ -115,7 +115,7 @@ class Experiment(models.Model):
                               null=False, blank=False)
     venue = models.CharField(max_length=200, null=False, blank=False)
     
-    deadline = models.DateField(validators=[validate_deadline], default=date.today())
+    deadline = models.DateField(validators=[validate_deadline], default=date.today)
     post_date = models.DateField(auto_now_add=True)
     last_modified = models.DateField(auto_now=True)
     exp_img = models.ImageField(upload_to=get_exp_fp, null=True, blank=True)
