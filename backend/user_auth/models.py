@@ -3,7 +3,7 @@ from django.contrib.auth.models import AbstractUser
 from django.conf import settings
 from django.core.exceptions import ValidationError
 import os
-
+import uuid
 
 def get_avatar_fp(instance, filename):
     return os.path.join("avatar/", f"{instance.username}_") + filename
@@ -61,6 +61,9 @@ class OrgUserProfile(models.Model):
     org_name = models.CharField(max_length=100,
                                 default="The Chinese University of Hong Kong",
                                 null=False, blank=False)
+
+    # organization user id
+    org_id=models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
 
     def __str__(self):
         return self.user.username
