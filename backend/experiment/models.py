@@ -4,7 +4,7 @@ from django.contrib.auth.models import AnonymousUser
 from django.conf import settings
 from user_auth.models import OrgUserProfile
 from django.db import models
-from django.core.exceptions import ValidationError
+from django.core.exceptions import ValidationError as FieldValidationError
 from datetime import date
 import datetime
 import os
@@ -16,16 +16,31 @@ def get_exp_fp(instance, filename):
 
 def validate_deadline(value):
     if value < date.today():
-        raise ValidationError("The date cannot be in the past!")
+        raise FieldValidationError("The date cannot be in the past!")
     return value
 
 
 def validate_min(value):
     if value <= 0:
-        raise ValidationError(
+        raise FieldValidationError(
             '%(value)s is not an validate number',
             params={'value': value}
         )
+
+
+def validate_time_string(value):
+    timeslots = value.split(';')
+    format_string = "%Y-%m-%d-%H:%M"
+    current_date_time = datetime.datetime.now()
+    try:
+        for slot in timeslots:
+            datetime_obj = datetime.datetime.strptime(slot, format_string)
+            assert datetime_obj > current_date_time
+    except ValueError:
+        raise FieldValidationError("Incorrect time string format.")
+    except AssertionError:
+        raise FieldValidationError("Selected datetime cannot be prior to current datetime.")
+    return value
 
 
 class Experiment(models.Model):
@@ -114,16 +129,15 @@ class Experiment(models.Model):
     salary = models.CharField(max_length=200, default="HKD$65/1hr",
                               null=False, blank=False)
     venue = models.CharField(max_length=200, null=False, blank=False)
-    
     deadline = models.DateField(validators=[validate_deadline], default=date.today)
     post_date = models.DateField(auto_now_add=True)
     last_modified = models.DateField(auto_now=True)
     exp_img = models.ImageField(upload_to=get_exp_fp, null=True, blank=True)
     vacancy = models.IntegerField(validators=[validate_min])
-    ############## still doing####################
-    ### here for user to input timeslot
-    #time_list =  
-    #######################################
+    timeslots = models.TextField(max_length=1000, validators=[validate_time_string],
+                                 help_text="Enter each allowed time delimited by `;`, "
+                                           "e.g. 2022-03-27-16:00;2022-03-28-17:00",
+                                 blank=False, null=False)
 
     def __str__(self):
         return self.title
@@ -133,13 +147,32 @@ class Enrollment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     experiment = models.ForeignKey(Experiment,
                                    on_delete=models.CASCADE,
-                                   null=False, blank=True)
+                                   null=False, blank=False)
     participant = models.ForeignKey(settings.AUTH_USER_MODEL,
                                     on_delete=models.CASCADE,
-                                    null=False, blank=True)
-    time = models.DateTimeField()
+                                    null=False, blank=False)
+    selected_time = models.TextField(max_length=1000, validators=[validate_time_string],
+                                     help_text="Enter each allowed time delimited by `;`, "
+                                               "e.g. 2022-03-27-16:00;2022-03-28-17:00",
+                                     blank=False, null=False)
 
     def __str__(self):
         title = self.experiment.title
         username = self.participant.username
         return ' - '.join([title, username])
+
+    def clean(self, *args, **kwargs):
+        if getattr(self, "experiment", None) is None or getattr(self, "participant", None) is None:
+            raise FieldValidationError("Enrollment must have both experiment and participant.")
+        available_time = self.experiment.timeslots
+        selected_times = self.selected_time.split(';')
+        try:
+            for time in selected_times:
+                assert time in available_time
+        except AssertionError:
+            raise FieldValidationError("Selected time not in available time slots.")
+        super().clean(*args, **kwargs)
+
+    def save(self, *args, **kwargs):
+        self.full_clean()
+        super().save(*args, **kwargs)

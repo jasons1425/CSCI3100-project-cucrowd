@@ -1,10 +1,11 @@
 from django.shortcuts import render
+from django.core.exceptions import ValidationError as FieldValidationError
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.exceptions import ValidationError
-from .serializers import ExperimentSerializer
-from .models import Experiment
+from .serializers import ExperimentSerializer, EnrollmentSerializer
+from .models import Experiment, Enrollment
 
 
 # Create your views here.
@@ -76,3 +77,44 @@ class ExperimentView(viewsets.ModelViewSet):
         except KeyError:
             return [permission() for permission in self.permission_classes]
 
+
+class EnrollView(viewsets.ModelViewSet):
+    serializer_class = EnrollmentSerializer
+    queryset = Enrollment.objects.all()
+    permission_classes_by_action = {
+        'create': [IsAuthenticated],
+        'list': [IsAuthenticated],
+        'retrieve': [IsAuthenticated],
+        'destroy': [IsAuthenticated],
+        'update': [],
+        'partial_update': [],
+    }
+
+    def get_permissions(self):
+        try:
+            return [permission() for permission in self.permission_classes_by_action[self.action]]
+        except KeyError:
+            return [permission() for permission in self.permission_classes]
+
+    def create(self, request, *args, **kwargs):
+        participant = request.user
+        data = request.data
+        exp_id = data.get('experiment', None)
+        if exp_id is None:
+            raise ValidationError({"result": False, "message": "Missing experiment ID."})
+        try:
+            exp_obj = Experiment.objects.filter(id=request.data['experiment'])
+            assert exp_obj.exists()
+            exp_obj = exp_obj[0]
+        except (FieldValidationError, AssertionError):
+            raise ValidationError({"result": False, "message": "Experiment not found."})
+        existing_exp_records = self.get_queryset().filter(experiment=exp_obj, participant=participant)
+        if existing_exp_records.exists():
+            raise ValidationError({"result": False, "message": "The current user already enrolled in the experiment"})
+        _serializer = self.serializer_class(data=request.data,
+                                            context={"participant": participant, "experiment": exp_obj})
+        if _serializer.is_valid(raise_exception=False):
+            self.perform_create(_serializer)
+            return Response(data=_serializer.data, status=status.HTTP_201_CREATED)
+        else:
+            return Response(data=_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
