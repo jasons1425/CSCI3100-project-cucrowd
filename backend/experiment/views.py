@@ -1,5 +1,5 @@
 from django.shortcuts import render
-from django.core.exceptions import ValidationError as CoreValidationError
+from django.core.exceptions import ValidationError as FieldValidationError
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -104,13 +104,16 @@ class EnrollView(viewsets.ModelViewSet):
             raise ValidationError({"result": False, "message": "Missing experiment ID."})
         try:
             exp_obj = Experiment.objects.filter(id=request.data['experiment'])
-            assert exp_obj
+            assert exp_obj.exists()
             exp_obj = exp_obj[0]
-        except (CoreValidationError, AssertionError):
+        except (FieldValidationError, AssertionError):
             raise ValidationError({"result": False, "message": "Experiment not found."})
+        existing_exp_records = self.get_queryset().filter(experiment=exp_obj, participant=participant)
+        if existing_exp_records.exists():
+            raise ValidationError({"result": False, "message": "The current user already enrolled in the experiment"})
         _serializer = self.serializer_class(data=request.data,
                                             context={"participant": participant, "experiment": exp_obj})
-        if _serializer.is_valid(raise_exception=True):
+        if _serializer.is_valid(raise_exception=False):
             self.perform_create(_serializer)
             return Response(data=_serializer.data, status=status.HTTP_201_CREATED)
         else:

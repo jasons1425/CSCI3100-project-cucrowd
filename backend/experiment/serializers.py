@@ -1,4 +1,6 @@
 from rest_framework import serializers
+from django.core.exceptions import ValidationError as FieldValidationError
+from rest_framework.exceptions import ValidationError
 from .models import Experiment, Enrollment
 from user_auth.serializers import CrowdUserSerializer
 
@@ -17,7 +19,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
         model = Experiment
         fields = ["id", "host", "title", "subtitle", "target",
                   "job_nature", "type", "duration", "salary", "venue",
-                  "deadline", "vacancy", "description"]
+                  "deadline", "vacancy", "description", "timeslots"]
 
 
 class EnrollmentSerializer(serializers.ModelSerializer):
@@ -30,7 +32,10 @@ class EnrollmentSerializer(serializers.ModelSerializer):
         if self.context.get("experiment", None):
             exp_obj = self.context['experiment']
             validated_data['experiment'] = exp_obj
-        enrollment = Enrollment.objects.create(**validated_data)
+        try:
+            enrollment = Enrollment.objects.create(**validated_data)
+        except FieldValidationError as e:
+            raise ValidationError({"result": False, "message": f"{e.args}"})
         return enrollment
 
     class Meta:

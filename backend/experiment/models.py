@@ -135,8 +135,8 @@ class Experiment(models.Model):
     exp_img = models.ImageField(upload_to=get_exp_fp, null=True, blank=True)
     vacancy = models.IntegerField(validators=[validate_min])
     timeslots = models.TextField(max_length=1000, validators=[validate_time_string],
-                                 default="Enter each allowed time delimited by `;`, "
-                                         "e.g. 2022-03-27-16:00;2022-03-28-17:00",
+                                 help_text="Enter each allowed time delimited by `;`, "
+                                           "e.g. 2022-03-27-16:00;2022-03-28-17:00",
                                  blank=False, null=False)
 
     def __str__(self):
@@ -147,13 +147,13 @@ class Enrollment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     experiment = models.ForeignKey(Experiment,
                                    on_delete=models.CASCADE,
-                                   null=False, blank=True)
+                                   null=False, blank=False)
     participant = models.ForeignKey(settings.AUTH_USER_MODEL,
                                     on_delete=models.CASCADE,
-                                    null=False, blank=True)
+                                    null=False, blank=False)
     selected_time = models.TextField(max_length=1000, validators=[validate_time_string],
-                                     default="Enter each allowed time delimited by `;`, "
-                                             "e.g. 2022-03-27-16:00;2022-03-28-17:00",
+                                     help_text="Enter each allowed time delimited by `;`, "
+                                               "e.g. 2022-03-27-16:00;2022-03-28-17:00",
                                      blank=False, null=False)
 
     def __str__(self):
@@ -162,6 +162,8 @@ class Enrollment(models.Model):
         return ' - '.join([title, username])
 
     def clean(self, *args, **kwargs):
+        if getattr(self, "experiment", None) is None or getattr(self, "participant", None) is None:
+            raise FieldValidationError("Enrollment must have both experiment and participant.")
         available_time = self.experiment.timeslots
         selected_times = self.selected_time.split(';')
         try:
