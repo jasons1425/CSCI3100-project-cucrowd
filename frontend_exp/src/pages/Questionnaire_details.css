@@ -1,0 +1,136 @@
+.questionnaire_details {
+    margin-left: 11vw;
+}
+
+.questionnaire_detials_info {
+    display: flex;
+    flex-direction: row;
+}
+
+.questionnaire_details_content {
+    border: 0.4vh solid #005a85;
+    border-radius: 2.5%;
+    margin: 0 0 0 4vw;
+    height: 80vh;
+    width: 80vw;
+}
+
+.questionnaire_detials_info {
+    margin: 3vh 0 0 0;
+}
+
+.questionnaire_details_title {
+    background-color: rgb(70, 163, 255, 50%);
+    height: 25vh;
+    width: 37.5vw;
+    margin-left: 2%;
+    text-align: center;
+}
+
+.questionnaire_details_description {
+    background-color: rgb(70, 163, 255, 50%);
+    height: 25vh;
+    width: 37.5vw;
+    margin-left: 1.5%;
+    float: right;
+    text-align: center;
+}
+
+.questionnaire {
+    background-color: rgb(70, 163, 255, 50%);
+    margin-top: 2vh;
+    height: 42.5vh;
+    margin-left: 2vw;
+    width: 72.5vw;
+    overflow: scroll;
+    padding: 1vh 0 0 2vw;
+}
+
+.LongQ textarea {
+    width: 40vw;
+    height: 20vh;
+    margin-bottom: 2vh;
+}
+
+.MC input {
+    margin-right: 2vw;
+}
+
+.MC div {
+    margin-top: 1vh;
+}
+
+.MC {
+    margin-bottom: 6vh;
+}
+
+.slider {
+    -webkit-appearance: none;
+    width: 30vw;
+    height: 1vh;
+    border-radius: 1vh;
+    background: rgba(17, 127, 236, 0.5);
+    outline: none;
+    opacity: 0.7;
+    -webkit-transition: 0.2s;
+    transition: opacity 0.2s;
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 2vh;
+    height: 2vh;
+    border-radius: 50%;
+    background: rgba(2, 59, 116, 1);
+    cursor: pointer;
+}
+
+.slider::-moz-range-thumb {
+    width: 2vh;
+    height: 2vh;
+    border-radius: 50%;
+    background: rgba(2, 59, 116, 1);
+    cursor: pointer;
+}
+
+.scoring {
+    margin-bottom: 3vh;
+}
+
+.score_mark {
+    display: flex;
+}
+
+.scoring_1 {
+    margin-right: 12.9vw;
+}
+
+.scoring_5 {
+    margin-right: 15.6vw;
+}
+
+.questionnaire_submit_button {
+    padding: 1vh 1vw;
+    font-size: 1vw;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 1vw;
+    float: right;
+    margin-right: 1vw;
+    margin-top: 1vh;
+}
+
+.questionnaire_submit_button:active {
+    background-color: #3e8e41;
+    transform: translateY(4px);
+}
+
+.questionnaire_submit_button:hover {
+    background-color: #3e8e41;
+}

@@ -1,0 +1,99 @@
+.Exp{
+    margin-left: 12vw;
+}
+.banner{
+    margin-left: 11vw;
+    padding-left: 17vw;
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+    background-color:#f5eac9;
+    font-size: 2vw;
+    display: flex;
+    flex-direction: row;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: fixed;
+    width: 100%;
+}
+
+.icon{
+    padding-top: 0.8vh;
+}
+
+.title1{
+    padding-left: 1vw;
+}
+
+.exp_space{
+    height: 200px;
+}
+.picture{
+    margin-left: 11vw;
+    display: grid;
+    padding-top: 2vh;
+    border-style: solid;
+    border-width: 0vw;
+    width: 14vw;
+}
+
+.exp_list{
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    margin-left: 15vw; 
+    list-style-type: none;
+    width: 100%;
+    height: 25vh;
+    display: flex;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.exp_item{
+    width: 30vw;
+}
+.exp_item #exp_date{
+    padding-left: 1vw;
+    font-size: 0.7vw;
+}
+.exp_item #exp_title{
+    padding-left: 1vw;
+    font-size: 1vw;
+}
+
+.exp_item #exp_condition{
+    padding-top: 0.5vh;
+    padding-left: 1vw;
+    font-size: 0.6vw;
+}
+
+.exp_item #exp_duration{
+    padding-top: 0.5vh;
+    padding-left: 1vw;
+    font-size: 0.6vw;
+    font-weight: bold;
+}
+
+.exp_item #exp_reward{
+    padding-top: 0.5vh;
+    padding-left: 1vw;
+    font-size: 0.6vw;
+    font-weight: bold;
+}
+
+.exp_item #exp_more{
+    padding-top: 0.5vh;
+    padding-left: 1vw;
+    color: red;
+}
+
+.exp_item #exp_vacancy{
+    padding-top: 0.5vh;
+    padding-left: 1vw;
+    font-size: 0.6vw;
+    font-weight: bold;
+}
+
+
+.exp_line{
+    margin-left: 30vw;
+    margin-right: 28vw;
+    border: 0.02vw solid black;
+}
