@@ -2,9 +2,9 @@ from django.urls import path, include
 from rest_framework import routers
 import user_auth.views as views
 
-# incorrect as routers are used with viewset only
-# router = routers.DefaultRouter()
-# router.register(r'example', views.ExampleView.as_view(), 'example')
+router = routers.DefaultRouter()
+router.register(r'profile', views.StudentProfileView, basename="profile")
+
 
 urlpatterns = [
     path('login', views.LogInView.as_view(), name='login'),
@@ -16,4 +16,4 @@ urlpatterns = [
     #   POST ${API_URL}/validate_token/ - will return a 200 if a given token is valid
     # refer to issue #13 for details
     path('password_reset/', include('django_rest_passwordreset.urls', namespace='password_reset'))
-]
+] + router.urls

@@ -1,4 +1,5 @@
 from django.contrib import admin
+from django.contrib.auth.admin import UserAdmin
 from user_auth.models import StudentProfile, OrgUserProfile, CrowdUser
 
 
@@ -13,9 +14,14 @@ class OrgUserProfileAdmin(admin.ModelAdmin):
     search_fields = ("user__username", "org_name")
 
 
-class CrowdUserAdmin(admin.ModelAdmin):
-    list_display = ("username", "email", "is_org")
+# ref:
+# https://stackoverflow.com/a/17496836/16418649
+class CrowdUserAdmin(UserAdmin):
+    list_display = ("id", "username", "email", "is_org")
     search_fields = ("username", "email")
+    fieldsets = UserAdmin.fieldsets + (
+        ("Is organizational user?", {'fields': ('is_org', )}),
+    )
 
 
 admin.site.register(StudentProfile, StudentProfileAdmin)
