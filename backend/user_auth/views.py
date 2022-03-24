@@ -13,9 +13,13 @@ from django.core.exceptions import ValidationError as FieldValidationError
 from django.dispatch import receiver
 from django.urls import reverse
 from backend.settings import EMAIL_HOST_USER
+from rest_framework.viewsets import ModelViewSet
+from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
 from rest_framework.exceptions import ValidationError
+from rest_framework.decorators import action
 from django_rest_passwordreset.signals import reset_password_token_created
 from user_auth.models import StudentProfile, OrgUserProfile, validate_sid
+from user_auth.serializers import StudentProfileSerializer, OrgProfileSerializer
 from datetime import datetime
 import pytz
 
@@ -155,12 +159,13 @@ class SignUpView(APIView):
             validate_email(email)
             validate_sid(sid)
             user_model = get_user_model()
-            new_user = user_model.objects.create_user(username=username, email=email,
-                                                      password=password, gender=gender,
-                                                      date_of_birth=date_of_birth)
+            # new_user = user_model.objects.create_user(username=username, email=email,
+            #                                           password=password, gender=gender,
+            #                                           date_of_birth=date_of_birth)
+            new_user = user_model.objects.create_user(username=username, email=email, password=password)
             assert new_user is not None
-            new_profile = StudentProfile.objects.create(user=new_user, sid=sid, major=major,
-                                                        admission_year=admission_year)
+            new_profile = StudentProfile.objects.create(user=new_user, gender=gender, date_of_birth=date_of_birth,
+                                                        sid=sid, major=major, admission_year=admission_year)
             if new_profile is None:
                 new_user.delete()
                 raise AssertionError
@@ -174,10 +179,73 @@ class SignUpView(APIView):
                              'email': new_user.email})
         except IntegrityError:  # username/email already exists, pending custom User model
             raise ValidationError({'result': False, 'message': "Username or email already exists."})
-        except FieldValidationError:  # incorrect format of the email
-            raise ValidationError({'result': False, 'message': "Incorrect format of email."})
+        except FieldValidationError as e:  # incorrect format of the email
+            raise ValidationError({'result': False, 'message': f"{e}"})
         except AssertionError:
             raise ValidationError({'result': False, 'message': "Fail to create new users - unknown errors."})
+
+
+class StudentProfileView(ModelViewSet):
+    serializer_class = StudentProfileSerializer
+    queryset = StudentProfile.objects.all()
+    permission_classes_by_action = {
+        'create': [IsAdminUser],
+        'list': [IsAuthenticated],
+        'retrieve': [IsAuthenticated],
+        'destroy': [IsAdminUser],
+        'update': [IsAuthenticated],
+        'partial_update': [IsAuthenticated],
+    }
+    lookup_field = "user__username"
+
+    def list(self, request, *args, **kwargs):
+        if request.user.is_org:
+            return super().list(request, *args, **kwargs)
+        raise ValidationError({"result": False,
+                               "message": "Profile listing view only available for organization users."})
+
+    def update(self, request, *args, **kwargs):
+        user = request.user
+        instance = self.get_object()
+        data = request.data
+        if data.get('user', None):
+            del data['user']
+        request.data.update(data)
+        if instance.user.id is not user.id:
+            raise ValidationError({"result": False, "message": "Only profile owner can edit the content."})
+        return super().update(request, *args, **kwargs)
+
+    @action(detail=False, methods=['GET'], name='get my profile')
+    def me(self, request, *args, **kwargs):
+        user = request.user
+        if user.is_org:
+            profile = OrgUserProfile.objects.filter(user=user)
+            if not profile:
+                raise ValidationError({"result": False, "message": "Profile not found."})
+            serializer = OrgProfileSerializer(profile[0], many=False)
+        else:
+            profile = self.queryset.filter(user=user)
+            if not profile:
+                raise ValidationError({"result": False, "message": "Profile not found."})
+            serializer = self.serializer_class(profile[0], many=False)
+        return Response(serializer.data)
+
+    def partial_update(self, request, *args, **kwargs):
+        user = request.user
+        instance = self.get_object()
+        data = request.data
+        if data.get('user', None):
+            del data['user']
+        request.data.update(data)
+        if instance.user.id is not user.id:
+            raise ValidationError({"result": False, "message": "Only profile owner can update the content."})
+        return super().partial_update(request, *args, **kwargs)
+
+    def get_permissions(self):
+        try:
+            return [permission() for permission in self.permission_classes_by_action[self.action]]
+        except KeyError:
+            return [permission() for permission in self.permission_classes]
 
 
 @receiver(reset_password_token_created)
