@@ -19,7 +19,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
         model = Experiment
         fields = ["id", "host", "title", "subtitle", "target",
                   "job_nature", "type", "duration", "salary", "venue",
-                  "deadline", "vacancy", "description", "timeslots"]
+                  "deadline", "vacancy", "description", "timeslots", "requirements"]
 
 
 class EnrollmentSerializer(serializers.ModelSerializer):
