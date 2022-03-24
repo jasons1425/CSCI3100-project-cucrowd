@@ -6,7 +6,7 @@ function Home() {
   return (
     <div className='home'>
         <div className='title'> CU Crowd</div>
-        <div className='username'>Welcome User : &nbsp;<div id='username1'> <Name/></div></div>
+        <div className='username'>Welcome User : &nbsp;<div id='username1' onClick={()=>{window.location.pathname='/profile';}}> <Name/></div></div>
         <hr className="line1"/>
         <div className='intro'>Here are the latest posts in each function </div>
         <div className="background1" >
