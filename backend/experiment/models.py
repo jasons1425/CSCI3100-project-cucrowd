@@ -50,15 +50,16 @@ class Experiment(models.Model):
     id = models.UUIDField(primary_key=True,
                           default=uuid.uuid4,
                           editable=False)
-    title = models.CharField(max_length=100, default="Title",
+    title = models.CharField(max_length=200, default="Title",
                              null=False, blank=False)
     description = models.TextField(max_length=1000,
-                                   default="Please type a short description.(around 200 words)")
+                                   default="Enter description for the experiments (max 1000 words)")
     subtitle = models.CharField(max_length=100, default="Subtitle",
                                 null=False, blank=False)
     target = models.CharField(max_length=100, default="University Students",
-                            null=False, blank=False)
-    job_nature = models.CharField(max_length=100,
+                              null=False, blank=False)
+    job_nature = models.CharField(
+        max_length=100,
         choices=[                                             
                 ("Architecture_Surveying", "Architecture / Surveying"),
                 ("Accounting_Auditing_Taxation", "Accounting / Auditing / Taxation"),
@@ -124,11 +125,11 @@ class Experiment(models.Model):
         blank=False
     )
 
-    duration = models.CharField(max_length=200, default="July - Aug",
+    duration = models.CharField(max_length=100, default="July - Aug",
                                 null=False, blank=False)
-    salary = models.CharField(max_length=200, default="HKD$65/1hr",
+    salary = models.CharField(max_length=100, default="HKD$65/1hr",
                               null=False, blank=False)
-    venue = models.CharField(max_length=200, null=False, blank=False)
+    venue = models.CharField(max_length=100, null=False, blank=False)
     deadline = models.DateField(validators=[validate_deadline], default=date.today)
     post_date = models.DateField(auto_now_add=True)
     last_modified = models.DateField(auto_now=True)
@@ -138,6 +139,8 @@ class Experiment(models.Model):
                                  help_text="Enter each allowed time delimited by `;`, "
                                            "e.g. 2022-03-27-16:00;2022-03-28-17:00",
                                  blank=False, null=False)
+    requirements = models.TextField(max_length=150, default="No requirements",
+                                    null=False, blank=False)
 
     def __str__(self):
         return self.title
