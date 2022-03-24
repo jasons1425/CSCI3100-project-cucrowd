@@ -26,7 +26,8 @@ class StudentProfile(models.Model):
     # general account details
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE,
-                                null=False, blank=False, primary_key=True)
+                                null=False, blank=False, primary_key=True,
+                                related_name="stu_profile")
     avatar = models.ImageField(upload_to=get_avatar_fp, null=True, blank=True)
     gender = models.CharField(
         max_length=2,
@@ -56,7 +57,8 @@ class OrgUserProfile(models.Model):
     # general account details
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
                                 on_delete=models.CASCADE,
-                                null=False, blank=False, primary_key=True)
+                                null=False, blank=False, primary_key=True,
+                                related_name="org_profile")
     avatar = models.ImageField(upload_to=get_avatar_fp, null=True, blank=True)
     gender = models.CharField(
         max_length=2,
