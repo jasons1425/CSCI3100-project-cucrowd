@@ -2,10 +2,12 @@ from django.shortcuts import render
 from django.core.exceptions import ValidationError as FieldValidationError
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.exceptions import ValidationError
+from rest_framework.decorators import action
 from .serializers import ExperimentSerializer, EnrollmentSerializer
 from .models import Experiment, Enrollment
+from user_auth.serializers import StudentProfileSerializer
 
 
 # Create your views here.
@@ -71,6 +73,21 @@ class ExperimentView(viewsets.ModelViewSet):
             raise ValidationError({"result": False, "message": "Only experiment host can edit the content."})
         return super().update(request, *args, **kwargs)
 
+    @action(detail=True, methods=['GET'], name='get enrolled participants')
+    def enrolled(self, request, pk):
+        user = request.user
+        exp = self.get_queryset().filter(pk=pk)
+        if not exp:
+            raise ValidationError({"result": False, "mesage": "Experiment not found."})
+        exp = exp[0]
+        if exp.host.id is not user.id:
+            raise ValidationError({"result": False, "message": "Only experiment host can request participant info."})
+        enrolled = exp.enrollment_set.all()
+        enrolled_profiles = [enrollment.participant.stu_profile for enrollment in enrolled
+                             if getattr(enrollment.participant, "stu_profile", None) is not None]
+        serializer = StudentProfileSerializer(enrolled_profiles, many=True)
+        return Response(serializer.data)
+
     def get_permissions(self):
         try:
             return [permission() for permission in self.permission_classes_by_action[self.action]]
@@ -86,8 +103,8 @@ class EnrollView(viewsets.ModelViewSet):
         'list': [IsAuthenticated],
         'retrieve': [IsAuthenticated],
         'destroy': [IsAuthenticated],
-        'update': [],
-        'partial_update': [],
+        'update': [IsAdminUser],
+        'partial_update': [IsAdminUser],
     }
 
     def get_permissions(self):
