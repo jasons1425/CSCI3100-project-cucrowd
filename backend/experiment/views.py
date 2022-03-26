@@ -1,3 +1,5 @@
+import datetime
+
 from django.shortcuts import render
 from django.core.exceptions import ValidationError as FieldValidationError
 from rest_framework import viewsets, status
@@ -91,6 +93,19 @@ class ExperimentView(viewsets.ModelViewSet):
             raise ValidationError({"result": False, "message": "Only experiment host can request participant info."})
         enrolled = exp.enrollment_set.all()
         serializer = EnrollmentSerializer(enrolled, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['GET'], name='get ongoing experiments', url_path='ongoing')
+    def ongoing(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        queryset = queryset.filter(deadline__gte=datetime.date.today())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
 
     def get_permissions(self):
