@@ -206,6 +206,9 @@ class StudentProfileView(ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         user = request.user
+        if user.is_org and not user.is_staff:
+            raise ValidationError({"result": False,
+                                   "message": "Please contact system admin for changing organization profile."})
         instance = self.get_object()
         data = request.data
         if data.get('user', None):
@@ -228,6 +231,16 @@ class StudentProfileView(ModelViewSet):
             if not profile:
                 raise ValidationError({"result": False, "message": "Profile not found."})
             serializer = self.serializer_class(profile[0], many=False)
+        return Response(serializer.data)
+
+    # ref: https://stackoverflow.com/a/54221108/16418649
+    @action(detail=False, methods=['GET'],
+            name='get org user profile', url_path=r"org/(?P<username>[^\.=]+)")
+    def org(self, request, username):
+        profile = OrgUserProfile.objects.filter(user__username=username)
+        if not profile:
+            raise ValidationError({"result": False, "message": "Profile not found."})
+        serializer = OrgProfileSerializer(profile[0], many=False)
         return Response(serializer.data)
 
     def partial_update(self, request, *args, **kwargs):
