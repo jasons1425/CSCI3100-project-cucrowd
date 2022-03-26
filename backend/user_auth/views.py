@@ -185,7 +185,7 @@ class SignUpView(APIView):
             raise ValidationError({'result': False, 'message': "Fail to create new users - unknown errors."})
 
 
-class StudentProfileView(ModelViewSet):
+class ProfileView(ModelViewSet):
     serializer_class = StudentProfileSerializer
     queryset = StudentProfile.objects.all()
     permission_classes_by_action = {
