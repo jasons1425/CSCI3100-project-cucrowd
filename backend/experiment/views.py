@@ -1,6 +1,4 @@
 import datetime
-
-from django.shortcuts import render
 from django.core.exceptions import ValidationError as FieldValidationError
 from rest_framework import viewsets, status
 from rest_framework.response import Response
@@ -9,6 +7,8 @@ from rest_framework.exceptions import ValidationError
 from rest_framework.decorators import action
 from .serializers import ExperimentSerializer, EnrollmentSerializer
 from .models import Experiment, Enrollment
+from backend.settings import EMAIL_HOST_USER
+from django.core.mail import send_mail
 from user_auth.serializers import StudentProfileSerializer
 
 
@@ -168,4 +168,17 @@ class EnrollView(viewsets.ModelViewSet):
         if user.id != host.id and user.id != participant.id:
             raise ValidationError({"result": False,
                                    "message": "Only experiment host and participant can cancel the enrollment."})
-        return super().destroy(request, *args, **kwargs)
+        res = super().destroy(request, *args, **kwargs)
+        exp_name = instance.experiment.title
+        exp_time = instance.selected_time
+        user_email = user.email
+        send_mail(f"Experiment Enrollment Canceled",
+                  f"Dear {user.username},\n"
+                  f"Your enrollment of the below experiment is canceled.\n"
+                  f"title: {exp_name:<100}\n"
+                  f"time: {exp_time}\n\n"
+                  f"Regards, CU Crowd Project team",
+                  EMAIL_HOST_USER,
+                  [user_email],
+                  fail_silently=False)
+        return res
