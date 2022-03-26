@@ -206,14 +206,14 @@ class ProfileView(ModelViewSet):
 
     def update(self, request, *args, **kwargs):
         user = request.user
-        if user.is_org and not user.is_staff:
-            raise ValidationError({"result": False,
-                                   "message": "Please contact system admin for changing organization profile."})
         instance = self.get_object()
-        data = request.data
-        if data.get('user', None):
-            del data['user']
-        request.data.update(data)
+        if type(request.data) is not dict:  # i.e. is immutable QueryDict
+            request.data._mutable = True
+        for key in list(request.data.keys()):
+            if key.startswith("user.") or key == "user":
+                del request.data[key]
+        if type(request.data) is not dict:  # i.e. is immutable QueryDict
+            request.data._mutable = False
         if instance.user.id is not user.id:
             raise ValidationError({"result": False, "message": "Only profile owner can edit the content."})
         return super().update(request, *args, **kwargs)
@@ -246,10 +246,13 @@ class ProfileView(ModelViewSet):
     def partial_update(self, request, *args, **kwargs):
         user = request.user
         instance = self.get_object()
-        data = request.data
-        if data.get('user', None):
-            del data['user']
-        request.data.update(data)
+        if type(request.data) is not dict:  # i.e. is immutable QueryDict
+            request.data._mutable = True
+        for key in list(request.data.keys()):
+            if key.startswith("user.") or key == "user":
+                del request.data[key]
+        if type(request.data) is not dict:  # i.e. is immutable QueryDict
+            request.data._mutable = False
         if instance.user.id is not user.id:
             raise ValidationError({"result": False, "message": "Only profile owner can update the content."})
         return super().partial_update(request, *args, **kwargs)
