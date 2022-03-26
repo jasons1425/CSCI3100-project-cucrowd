@@ -4,14 +4,13 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth import login, logout, authenticate
-# from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.core.validators import validate_email
 from django.core.mail import send_mail
 from django.core.exceptions import ValidationError as FieldValidationError
 from django.dispatch import receiver
-from django.urls import reverse
+from django.utils.crypto import get_random_string
 from backend.settings import EMAIL_HOST_USER
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
@@ -28,7 +27,7 @@ import pytz
 class LogInView(APIView):
     # will follow DEFAULT_AUTHENTICATION_CLASSES in settings.py if unspecified
     authentication_classes = [ExpiringTokenAuthentication, SessionAuthentication]
-    permission_classes = []
+    permission_classes = [AllowAny]
 
     def get(self, request):
         user = request.user
@@ -108,7 +107,7 @@ class LogOutView(APIView):
 
 
 class SignUpView(APIView):
-    permission_classes = []
+    permission_classes = [AllowAny]
 
     def get(self, request):
         user = request.user
@@ -134,7 +133,7 @@ class SignUpView(APIView):
         data = request.data
         username = data.get('username', None)
         email = data.get("email", None)
-        password = data.get('password', None)
+        password = get_random_string(10)
         sid = data.get("sid", None)
         gender = data.get("gender", None)
         date_of_birth = data.get("date_of_birth", None)
@@ -171,7 +170,9 @@ class SignUpView(APIView):
                 new_user.delete()
                 raise AssertionError
             send_mail("Account created!",
-                      f"Thank you for signing up, {new_user.username}",
+                      f"Thank you for signing up, {new_user.username}.\n"
+                      f"Your initial password is \t {password}.\n"
+                      f"You can also change your password via the 'Forgot Password' function.",
                       EMAIL_HOST_USER,
                       [email],
                       fail_silently=False)
