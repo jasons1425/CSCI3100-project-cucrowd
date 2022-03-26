@@ -90,9 +90,7 @@ class ExperimentView(viewsets.ModelViewSet):
         if exp.host.id is not user.id:
             raise ValidationError({"result": False, "message": "Only experiment host can request participant info."})
         enrolled = exp.enrollment_set.all()
-        enrolled_profiles = [enrollment.participant.stu_profile for enrollment in enrolled
-                             if getattr(enrollment.participant, "stu_profile", None) is not None]
-        serializer = StudentProfileSerializer(enrolled_profiles, many=True)
+        serializer = EnrollmentSerializer(enrolled, many=True)
         return Response(serializer.data)
 
     def get_permissions(self):
@@ -142,3 +140,13 @@ class EnrollView(viewsets.ModelViewSet):
             return Response(data=_serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(data=_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, *args, **kwargs):
+        user = request.user
+        instance = self.get_object()
+        host = instance.experiment.host
+        participant = instance.participant
+        if user.id != host.id and user.id != participant.id:
+            raise ValidationError({"result": False,
+                                   "message": "Only experiment host and participant can cancel the enrollment."})
+        return super().destroy(request, *args, **kwargs)
