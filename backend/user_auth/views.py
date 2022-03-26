@@ -20,6 +20,7 @@ from rest_framework.decorators import action
 from django_rest_passwordreset.signals import reset_password_token_created
 from user_auth.models import StudentProfile, OrgUserProfile, validate_sid
 from user_auth.serializers import StudentProfileSerializer, OrgProfileSerializer
+from experiment.serializers import EnrollmentSerializer
 from datetime import datetime
 import pytz
 
@@ -218,7 +219,22 @@ class ProfileView(ModelViewSet):
             raise ValidationError({"result": False, "message": "Only profile owner can edit the content."})
         return super().update(request, *args, **kwargs)
 
-    @action(detail=False, methods=['GET'], name='get my profile')
+    def partial_update(self, request, *args, **kwargs):
+        user = request.user
+        instance = self.get_object()
+        if type(request.data) is not dict:  # i.e. is immutable QueryDict
+            request.data._mutable = True
+        for key in list(request.data.keys()):
+            if key.startswith("user.") or key == "user":
+                del request.data[key]
+        if type(request.data) is not dict:  # i.e. is immutable QueryDict
+            request.data._mutable = False
+        if instance.user.id is not user.id:
+            raise ValidationError({"result": False, "message": "Only profile owner can update the content."})
+        return super().partial_update(request, *args, **kwargs)
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated],
+            name='get my profile')
     def me(self, request, *args, **kwargs):
         user = request.user
         if user.is_org:
@@ -234,7 +250,7 @@ class ProfileView(ModelViewSet):
         return Response(serializer.data)
 
     # ref: https://stackoverflow.com/a/54221108/16418649
-    @action(detail=False, methods=['GET'],
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated],
             name='get org user profile', url_path=r"org/(?P<username>[^\.=]+)")
     def org(self, request, username):
         profile = OrgUserProfile.objects.filter(user__username=username)
@@ -243,19 +259,13 @@ class ProfileView(ModelViewSet):
         serializer = OrgProfileSerializer(profile[0], many=False)
         return Response(serializer.data)
 
-    def partial_update(self, request, *args, **kwargs):
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated],
+            name='get joining experiments', url_path=r"me/joining")
+    def joining(self, request, *args, **kwargs):
         user = request.user
-        instance = self.get_object()
-        if type(request.data) is not dict:  # i.e. is immutable QueryDict
-            request.data._mutable = True
-        for key in list(request.data.keys()):
-            if key.startswith("user.") or key == "user":
-                del request.data[key]
-        if type(request.data) is not dict:  # i.e. is immutable QueryDict
-            request.data._mutable = False
-        if instance.user.id is not user.id:
-            raise ValidationError({"result": False, "message": "Only profile owner can update the content."})
-        return super().partial_update(request, *args, **kwargs)
+        joined = user.enrollment_set.all()
+        serializer = EnrollmentSerializer(joined, many=True)
+        return Response(serializer.data)
 
     def get_permissions(self):
         try:

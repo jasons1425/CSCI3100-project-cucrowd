@@ -82,7 +82,8 @@ class ExperimentView(viewsets.ModelViewSet):
             raise ValidationError({"result": False, "message": "Only experiment host can edit the content."})
         return super().update(request, *args, **kwargs)
 
-    @action(detail=True, methods=['GET'], name='get enrolled participants')
+    @action(detail=True, methods=['GET'], permission_classes=[IsAuthenticated],
+            name='get enrolled participants')
     def enrolled(self, request, pk):
         user = request.user
         exp = self.get_queryset().filter(pk=pk)
@@ -95,7 +96,8 @@ class ExperimentView(viewsets.ModelViewSet):
         serializer = EnrollmentSerializer(enrolled, many=True)
         return Response(serializer.data)
 
-    @action(detail=False, methods=['GET'], name='get ongoing experiments', url_path='ongoing')
+    @action(detail=False, methods=['GET'], permission_classes=[AllowAny],
+            name='get ongoing experiments', url_path='ongoing')
     def ongoing(self, request, *args, **kwargs):
         queryset = self.filter_queryset(self.get_queryset())
         queryset = queryset.filter(deadline__gte=datetime.date.today())
