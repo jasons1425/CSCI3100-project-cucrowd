@@ -71,13 +71,15 @@ class OrgUserProfile(models.Model):
         null=False,
         blank=False
     )
-    date_of_birth = models.DateField(null=False, blank=False)
+    date_of_birth = models.DateField(null=True, blank=True)
 
     # organization user related
     org_name = models.CharField(max_length=100,
                                 default="The Chinese University of Hong Kong",
                                 null=False, blank=False)
-
+    org_url = models.URLField(max_length=200, null=True, blank=True)
+    org_intro = models.TextField(max_length=1000, null=True, blank=True)
+    org_email = models.EmailField(max_length=100, null=True, blank=True)
 
     def __str__(self):
         return self.user.username
