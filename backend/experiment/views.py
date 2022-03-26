@@ -105,8 +105,8 @@ class EnrollView(viewsets.ModelViewSet):
     queryset = Enrollment.objects.all()
     permission_classes_by_action = {
         'create': [IsAuthenticated],
-        'list': [IsAuthenticated],
-        'retrieve': [IsAuthenticated],
+        'list': [IsAdminUser],
+        'retrieve': [IsAdminUser],
         'destroy': [IsAuthenticated],
         'update': [IsAdminUser],
         'partial_update': [IsAdminUser],
@@ -122,6 +122,8 @@ class EnrollView(viewsets.ModelViewSet):
         participant = request.user
         data = request.data
         exp_id = data.get('experiment', None)
+        if participant.is_org:
+            raise ValidationError({"result": False, "message": "Only student users can enroll in experiments."})
         if exp_id is None:
             raise ValidationError({"result": False, "message": "Missing experiment ID."})
         try:
