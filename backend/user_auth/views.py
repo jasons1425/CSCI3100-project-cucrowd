@@ -4,14 +4,13 @@ from rest_framework.authtoken.models import Token
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from django.contrib.auth import login, logout, authenticate
-# from django.contrib.auth.models import User
 from django.contrib.auth import get_user_model
 from django.db import IntegrityError
 from django.core.validators import validate_email
 from django.core.mail import send_mail
 from django.core.exceptions import ValidationError as FieldValidationError
 from django.dispatch import receiver
-from django.urls import reverse
+from django.utils.crypto import get_random_string
 from backend.settings import EMAIL_HOST_USER
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
@@ -20,6 +19,7 @@ from rest_framework.decorators import action
 from django_rest_passwordreset.signals import reset_password_token_created
 from user_auth.models import StudentProfile, OrgUserProfile, validate_sid
 from user_auth.serializers import StudentProfileSerializer, OrgProfileSerializer
+from experiment.serializers import EnrollmentSerializer
 from datetime import datetime
 import pytz
 
@@ -27,7 +27,7 @@ import pytz
 class LogInView(APIView):
     # will follow DEFAULT_AUTHENTICATION_CLASSES in settings.py if unspecified
     authentication_classes = [ExpiringTokenAuthentication, SessionAuthentication]
-    permission_classes = []
+    permission_classes = [AllowAny]
 
     def get(self, request):
         user = request.user
@@ -107,7 +107,7 @@ class LogOutView(APIView):
 
 
 class SignUpView(APIView):
-    permission_classes = []
+    permission_classes = [AllowAny]
 
     def get(self, request):
         user = request.user
@@ -133,7 +133,7 @@ class SignUpView(APIView):
         data = request.data
         username = data.get('username', None)
         email = data.get("email", None)
-        password = data.get('password', None)
+        password = get_random_string(10)
         sid = data.get("sid", None)
         gender = data.get("gender", None)
         date_of_birth = data.get("date_of_birth", None)
@@ -170,7 +170,9 @@ class SignUpView(APIView):
                 new_user.delete()
                 raise AssertionError
             send_mail("Account created!",
-                      f"Thank you for signing up, {new_user.username}",
+                      f"Thank you for signing up, {new_user.username}.\n"
+                      f"Your initial password is \t {password}.\n"
+                      f"You can also change your password via the 'Forgot Password' function.",
                       EMAIL_HOST_USER,
                       [email],
                       fail_silently=False)
@@ -185,7 +187,7 @@ class SignUpView(APIView):
             raise ValidationError({'result': False, 'message': "Fail to create new users - unknown errors."})
 
 
-class StudentProfileView(ModelViewSet):
+class ProfileView(ModelViewSet):
     serializer_class = StudentProfileSerializer
     queryset = StudentProfile.objects.all()
     permission_classes_by_action = {
@@ -207,15 +209,33 @@ class StudentProfileView(ModelViewSet):
     def update(self, request, *args, **kwargs):
         user = request.user
         instance = self.get_object()
-        data = request.data
-        if data.get('user', None):
-            del data['user']
-        request.data.update(data)
+        if type(request.data) is not dict:  # i.e. is immutable QueryDict
+            request.data._mutable = True
+        for key in list(request.data.keys()):
+            if key.startswith("user.") or key == "user":
+                del request.data[key]
+        if type(request.data) is not dict:  # i.e. is immutable QueryDict
+            request.data._mutable = False
         if instance.user.id is not user.id:
             raise ValidationError({"result": False, "message": "Only profile owner can edit the content."})
         return super().update(request, *args, **kwargs)
 
-    @action(detail=False, methods=['GET'], name='get my profile')
+    def partial_update(self, request, *args, **kwargs):
+        user = request.user
+        instance = self.get_object()
+        if type(request.data) is not dict:  # i.e. is immutable QueryDict
+            request.data._mutable = True
+        for key in list(request.data.keys()):
+            if key.startswith("user.") or key == "user":
+                del request.data[key]
+        if type(request.data) is not dict:  # i.e. is immutable QueryDict
+            request.data._mutable = False
+        if instance.user.id is not user.id:
+            raise ValidationError({"result": False, "message": "Only profile owner can update the content."})
+        return super().partial_update(request, *args, **kwargs)
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated],
+            name='get my profile')
     def me(self, request, *args, **kwargs):
         user = request.user
         if user.is_org:
@@ -230,16 +250,23 @@ class StudentProfileView(ModelViewSet):
             serializer = self.serializer_class(profile[0], many=False)
         return Response(serializer.data)
 
-    def partial_update(self, request, *args, **kwargs):
+    # ref: https://stackoverflow.com/a/54221108/16418649
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated],
+            name='get org user profile', url_path=r"org/(?P<username>[^\.=]+)")
+    def org(self, request, username):
+        profile = OrgUserProfile.objects.filter(user__username=username)
+        if not profile:
+            raise ValidationError({"result": False, "message": "Profile not found."})
+        serializer = OrgProfileSerializer(profile[0], many=False)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated],
+            name='get joining experiments', url_path=r"me/joining")
+    def joining(self, request, *args, **kwargs):
         user = request.user
-        instance = self.get_object()
-        data = request.data
-        if data.get('user', None):
-            del data['user']
-        request.data.update(data)
-        if instance.user.id is not user.id:
-            raise ValidationError({"result": False, "message": "Only profile owner can update the content."})
-        return super().partial_update(request, *args, **kwargs)
+        joined = user.enrollment_set.all()
+        serializer = EnrollmentSerializer(joined, many=True)
+        return Response(serializer.data)
 
     def get_permissions(self):
         try:

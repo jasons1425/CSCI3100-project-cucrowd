@@ -5,7 +5,7 @@ from .models import CrowdUser, StudentProfile, OrgUserProfile
 class CrowdUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = CrowdUser
-        fields = ["id", "username", "email"]
+        fields = ["username", "email"]
 
 
 class StudentProfileSerializer(serializers.ModelSerializer):
@@ -22,4 +22,4 @@ class OrgProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrgUserProfile
-        fields = ["user", "gender", "date_of_birth", "avatar", "org_name"]
+        fields = "__all__"

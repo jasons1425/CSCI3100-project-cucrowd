@@ -1,11 +1,15 @@
-from django.shortcuts import render
+import datetime
 from django.core.exceptions import ValidationError as FieldValidationError
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, AllowAny
+from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.exceptions import ValidationError
+from rest_framework.decorators import action
 from .serializers import ExperimentSerializer, EnrollmentSerializer
 from .models import Experiment, Enrollment
+from backend.settings import EMAIL_HOST_USER
+from django.core.mail import send_mail
+from user_auth.serializers import StudentProfileSerializer
 
 
 # Create your views here.
@@ -31,6 +35,11 @@ class ExperimentView(viewsets.ModelViewSet):
         host = request.user
         if host.is_org is False:
             raise ValidationError({"result": False, "message": "Only organization users can create experiments."})
+        request.data._mutable = True
+        for key in list(request.data.keys()):
+            if key.startswith("host.") or key == "host":
+                del request.data[key]
+        request.data._mutable = False
         _serializer = self.serializer_class(data=request.data, context={"host": host})
         if _serializer.is_valid(raise_exception=True):
             self.perform_create(_serializer)
@@ -41,10 +50,13 @@ class ExperimentView(viewsets.ModelViewSet):
     def partial_update(self, request, *args, **kwargs):
         user = request.user
         instance = self.get_object()
-        data = request.data
-        if data.get('host', None):
-            del data['host']
-        request.data.update(data)
+        if type(request.data) is not dict:  # i.e. is immutable QueryDict
+            request.data._mutable = True
+        for key in list(request.data.keys()):
+            if key.startswith("host.") or key == "host":
+                del request.data[key]
+        if type(request.data) is not dict:  # i.e. is immutable QueryDict
+            request.data._mutable = False
         if instance.host.id is not user.id:
             raise ValidationError({"result": False, "message": "Only experiment host can update the content."})
         return super().partial_update(request, *args, **kwargs)
@@ -52,10 +64,6 @@ class ExperimentView(viewsets.ModelViewSet):
     def destroy(self, request, *args, **kwargs):
         user = request.user
         instance = self.get_object()
-        data = request.data
-        if data.get('host', None):
-            del data['host']
-        request.data.update(data)
         if instance.host.id is not user.id:
             raise ValidationError({"result": False, "message": "Only experiment host can destroy the content."})
         return super().destroy(request, *args, **kwargs)
@@ -63,13 +71,44 @@ class ExperimentView(viewsets.ModelViewSet):
     def update(self, request, *args, **kwargs):
         user = request.user
         instance = self.get_object()
-        data = request.data
-        if data.get('host', None):
-            del data['host']
-        request.data.update(data)
+        if type(request.data) is not dict:  # i.e. is immutable QueryDict
+            request.data._mutable = True
+        for key in list(request.data.keys()):
+            if key.startswith("host.") or key == "host":
+                del request.data[key]
+        if type(request.data) is not dict:  # i.e. is immutable QueryDict
+            request.data._mutable = False
         if instance.host.id is not user.id:
             raise ValidationError({"result": False, "message": "Only experiment host can edit the content."})
         return super().update(request, *args, **kwargs)
+
+    @action(detail=True, methods=['GET'], permission_classes=[IsAuthenticated],
+            name='get enrolled participants')
+    def enrolled(self, request, pk):
+        user = request.user
+        exp = self.get_queryset().filter(pk=pk)
+        if not exp:
+            raise ValidationError({"result": False, "mesage": "Experiment not found."})
+        exp = exp[0]
+        if exp.host.id is not user.id:
+            raise ValidationError({"result": False, "message": "Only experiment host can request participant info."})
+        enrolled = exp.enrollment_set.all()
+        serializer = EnrollmentSerializer(enrolled, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['GET'], permission_classes=[AllowAny],
+            name='get ongoing experiments', url_path='ongoing')
+    def ongoing(self, request, *args, **kwargs):
+        queryset = self.filter_queryset(self.get_queryset())
+        queryset = queryset.filter(deadline__gte=datetime.date.today())
+
+        page = self.paginate_queryset(queryset)
+        if page is not None:
+            serializer = self.get_serializer(page, many=True)
+            return self.get_paginated_response(serializer.data)
+
+        serializer = self.get_serializer(queryset, many=True)
+        return Response(serializer.data)
 
     def get_permissions(self):
         try:
@@ -83,11 +122,11 @@ class EnrollView(viewsets.ModelViewSet):
     queryset = Enrollment.objects.all()
     permission_classes_by_action = {
         'create': [IsAuthenticated],
-        'list': [IsAuthenticated],
-        'retrieve': [IsAuthenticated],
+        'list': [IsAdminUser],
+        'retrieve': [IsAdminUser],
         'destroy': [IsAuthenticated],
-        'update': [],
-        'partial_update': [],
+        'update': [IsAdminUser],
+        'partial_update': [IsAdminUser],
     }
 
     def get_permissions(self):
@@ -100,6 +139,8 @@ class EnrollView(viewsets.ModelViewSet):
         participant = request.user
         data = request.data
         exp_id = data.get('experiment', None)
+        if participant.is_org:
+            raise ValidationError({"result": False, "message": "Only student users can enroll in experiments."})
         if exp_id is None:
             raise ValidationError({"result": False, "message": "Missing experiment ID."})
         try:
@@ -118,3 +159,26 @@ class EnrollView(viewsets.ModelViewSet):
             return Response(data=_serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(data=_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def destroy(self, request, *args, **kwargs):
+        user = request.user
+        instance = self.get_object()
+        host = instance.experiment.host
+        participant = instance.participant
+        if user.id != host.id and user.id != participant.id:
+            raise ValidationError({"result": False,
+                                   "message": "Only experiment host and participant can cancel the enrollment."})
+        res = super().destroy(request, *args, **kwargs)
+        exp_name = instance.experiment.title
+        exp_time = instance.selected_time
+        user_email = user.email
+        send_mail(f"Experiment Enrollment Canceled",
+                  f"Dear {user.username},\n"
+                  f"Your enrollment of the below experiment is canceled.\n"
+                  f"title: {exp_name:<100}\n"
+                  f"time: {exp_time}\n\n"
+                  f"Regards, CU Crowd Project team",
+                  EMAIL_HOST_USER,
+                  [user_email],
+                  fail_silently=False)
+        return res
