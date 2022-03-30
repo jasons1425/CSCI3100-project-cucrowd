@@ -4,6 +4,7 @@ from datetime import date
 from django.contrib.auth.models import AnonymousUser
 from django.conf import settings
 from django.core.exceptions import ValidationError as FieldValidationError
+from django.core.exceptions import ValidationError
 from user_auth.models import StudentProfile
 import os
 
@@ -56,8 +57,13 @@ class Teamformation(models.Model):
     teamsize = models.IntegerField(validators=[validate_size], default = "Please type the teamsize here.",
                             help_text="Please enter an integer number. (Minimum is 2 and Maximum is 5)",null=False, blank=False)
 
-    teammates = models.ForeignKey(Teammates,
-                            on_delete=models.CASCADE,
-                            null=True, blank=True)
+    teammates = models.ManyToManyField('Teammates', related_name='teammates+', blank=True)
                             
     team_img = models.ImageField(upload_to=get_team_fp, null=True, blank=True)
+
+    def clean(self):
+        teammates = self.cleaned_data.get('teammates')
+        teamsize = self.get('teamsize')
+        if teammates.count() > teamsize:
+            raise ValidationError("Oops! No vacancy is left.")
+        return self.cleaned_data
