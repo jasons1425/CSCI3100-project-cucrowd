@@ -3,17 +3,16 @@ from .models import Teammates, Teamformation
 
 # Register your models here.
 class TeammatesAdmin(admin.ModelAdmin):
-    list_display = ("info")
-    search_fields = ("info")
-
-
+    list_display = ("info",)
 
 
 class TeamformationAdmin(admin.ModelAdmin):
     list_display = ("id",)
-    search_fields = ()
-
-
+    
+    def save_model(self, request, obj, form, change):
+        if getattr(obj, 'host', None) is None:
+            obj.host = request.user
+        obj.save()
 
 
 admin.site.register(Teammates, TeammatesAdmin)
