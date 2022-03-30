@@ -280,14 +280,15 @@ class ProfileView(ModelViewSet):
     def upload(self, request, *args, **kwargs):
         user = request.user
         profile = self.queryset.filter(user=user)
-        avatar = request.FILES.get('avatar', -1)
-        if avatar == -1:
-            raise ValidationError({'result': False, 'message': "Avatar file not found."})
-        fp = get_avatar_fp(profile[0], str(avatar))
-        with open(os.path.join(MEDIA_ROOT, fp), 'wb+') as f:
-            for chunk in avatar.chunks():
-                f.write(chunk)
-        # update only work on queryset
+        avatar = request.FILES.get('avatar', None)
+        if avatar:
+            fp = get_avatar_fp(profile[0], str(avatar))
+            with open(os.path.join(MEDIA_ROOT, fp), 'wb+') as f:
+                for chunk in avatar.chunks():
+                    f.write(chunk)
+            # update only work on queryset
+        else:
+            fp = None
         profile.update(avatar=fp)
         return Response({"result": True})
 
