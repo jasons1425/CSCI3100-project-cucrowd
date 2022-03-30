@@ -11,7 +11,8 @@ import os
 
 
 def get_exp_fp(instance, filename):
-    return os.path.join("exp", f"{instance.id}_") + filename
+    ext = filename.split('.')[-1]
+    return os.path.join("exp", f"{instance.id}.") + ext
 
 
 def validate_deadline(value):
@@ -131,7 +132,7 @@ class Experiment(models.Model):
                               null=False, blank=False)
     venue = models.CharField(max_length=100, null=False, blank=False)
     deadline = models.DateField(validators=[validate_deadline], default=date.today)
-    post_date = models.DateField(auto_now_add=True)
+    post_date = models.DateTimeField(auto_now_add=True)
     last_modified = models.DateField(auto_now=True)
     exp_img = models.ImageField(upload_to=get_exp_fp, null=True, blank=True)
     vacancy = models.IntegerField(validators=[validate_min])

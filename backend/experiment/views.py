@@ -9,7 +9,6 @@ from .serializers import ExperimentSerializer, EnrollmentSerializer
 from .models import Experiment, Enrollment
 from backend.settings import EMAIL_HOST_USER
 from django.core.mail import send_mail
-from user_auth.serializers import StudentProfileSerializer
 
 
 # Create your views here.
@@ -68,7 +67,9 @@ class ExperimentView(viewsets.ModelViewSet):
             raise ValidationError({"result": False, "message": "Only experiment host can destroy the content."})
         return super().destroy(request, *args, **kwargs)
 
+    # treat all full-update as partial update
     def update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
         user = request.user
         instance = self.get_object()
         if type(request.data) is not dict:  # i.e. is immutable QueryDict

@@ -7,7 +7,8 @@ import uuid
 
 
 def get_avatar_fp(instance, filename):
-    return os.path.join("avatar", f"{instance.user.username}_") + filename
+    ext = filename.split('.')[-1]
+    return os.path.join("avatar", f"{instance.user.username}.") + ext
 
 
 class CrowdUser(AbstractUser):

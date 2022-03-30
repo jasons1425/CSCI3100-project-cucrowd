@@ -5,7 +5,7 @@ from .models import Experiment, Enrollment
 
 # Register your models here.
 class ExperimentAdmin(admin.ModelAdmin):
-    list_display = ("id", "host", "title")
+    list_display = ("id", "host", "title", "post_date")
     search_fields = ("id", "host__username", "title")
 
     def save_model(self, request, obj, form, change):

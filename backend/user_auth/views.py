@@ -11,17 +11,19 @@ from django.core.mail import send_mail
 from django.core.exceptions import ValidationError as FieldValidationError
 from django.dispatch import receiver
 from django.utils.crypto import get_random_string
-from backend.settings import EMAIL_HOST_USER
+from backend.settings import EMAIL_HOST_USER, MEDIA_ROOT
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
-from rest_framework.exceptions import ValidationError
-from rest_framework.decorators import action
+from rest_framework.exceptions import ValidationError, status
+from rest_framework.decorators import action, parser_classes
+from rest_framework.parsers import MultiPartParser, FormParser
 from django_rest_passwordreset.signals import reset_password_token_created
-from user_auth.models import StudentProfile, OrgUserProfile, validate_sid
+from user_auth.models import StudentProfile, OrgUserProfile, validate_sid, get_avatar_fp
 from user_auth.serializers import StudentProfileSerializer, OrgProfileSerializer
 from experiment.serializers import EnrollmentSerializer
 from datetime import datetime
 import pytz
+import os
 
 
 class LogInView(APIView):
@@ -98,7 +100,8 @@ class LogOutView(APIView):
 
     def post(self, request, format=None):
         if request.user.is_authenticated:
-            request.user.auth_token.delete()
+            if getattr(request.user, 'auth_token', None):
+                request.user.auth_token.delete()
             logout(request)
             response = Response({"result": True})
             response.delete_cookie("Authorization")
@@ -206,7 +209,9 @@ class ProfileView(ModelViewSet):
         raise ValidationError({"result": False,
                                "message": "Profile listing view only available for organization users."})
 
+    # treat all full-update as partial update
     def update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
         user = request.user
         instance = self.get_object()
         if type(request.data) is not dict:  # i.e. is immutable QueryDict
@@ -267,6 +272,25 @@ class ProfileView(ModelViewSet):
         joined = user.enrollment_set.all()
         serializer = EnrollmentSerializer(joined, many=True)
         return Response(serializer.data)
+
+    # ref: https://stackoverflow.com/a/24420192/16418649
+    @action(detail=False, methods=['POST'], permission_classes=[IsAuthenticated],
+            name='upload profile avatar', url_path=r"upload")
+    @parser_classes([MultiPartParser, FormParser])
+    def upload(self, request, *args, **kwargs):
+        user = request.user
+        profile = self.queryset.filter(user=user)
+        avatar = request.FILES.get('avatar', None)
+        if avatar:
+            fp = get_avatar_fp(profile[0], str(avatar))
+            with open(os.path.join(MEDIA_ROOT, fp), 'wb+') as f:
+                for chunk in avatar.chunks():
+                    f.write(chunk)
+            # update only work on queryset
+        else:
+            fp = None
+        profile.update(avatar=fp)
+        return Response({"result": True})
 
     def get_permissions(self):
         try:
