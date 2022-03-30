@@ -14,7 +14,7 @@ from django.utils.crypto import get_random_string
 from backend.settings import EMAIL_HOST_USER
 from rest_framework.viewsets import ModelViewSet
 from rest_framework.permissions import AllowAny, IsAuthenticated, IsAdminUser
-from rest_framework.exceptions import ValidationError
+from rest_framework.exceptions import ValidationError, status
 from rest_framework.decorators import action
 from django_rest_passwordreset.signals import reset_password_token_created
 from user_auth.models import StudentProfile, OrgUserProfile, validate_sid
@@ -98,7 +98,8 @@ class LogOutView(APIView):
 
     def post(self, request, format=None):
         if request.user.is_authenticated:
-            request.user.auth_token.delete()
+            if getattr(request.user, 'auth_token', None):
+                request.user.auth_token.delete()
             logout(request)
             response = Response({"result": True})
             response.delete_cookie("Authorization")
@@ -206,7 +207,9 @@ class ProfileView(ModelViewSet):
         raise ValidationError({"result": False,
                                "message": "Profile listing view only available for organization users."})
 
+    # treat all full-update as partial update
     def update(self, request, *args, **kwargs):
+        kwargs['partial'] = True
         user = request.user
         instance = self.get_object()
         if type(request.data) is not dict:  # i.e. is immutable QueryDict
