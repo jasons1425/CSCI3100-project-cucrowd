@@ -163,5 +163,7 @@ EMAIL_HOST_USER = "csci3100cucrowd@gmail.com"
 EMAIL_HOST_PASSWORD = "CUcrowd2022"
 
 AUTH_USER_MODEL = "user_auth.CrowdUser"
-MEDIA_ROOT = os.path.join(BASE_DIR, "media")
 AUTH_PASSWORD_VALIDATORS = []
+
+MEDIA_URL = '/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
