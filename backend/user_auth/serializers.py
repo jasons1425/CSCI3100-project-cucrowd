@@ -13,8 +13,8 @@ class StudentProfileSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StudentProfile
-        fields = ["user", "gender", "date_of_birth", "avatar",
-                  "sid", "major", "admission_year"]
+        fields = ["user", "gender", "date_of_birth",
+                  "sid", "major", "admission_year", 'avatar']
 
 
 class OrgProfileSerializer(serializers.ModelSerializer):
