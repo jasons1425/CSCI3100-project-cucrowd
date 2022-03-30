@@ -1,8 +1,16 @@
 from django.urls import path, include
-from rest_framework import routers
+from rest_framework.routers import SimpleRouter
 import user_auth.views as views
 
-router = routers.DefaultRouter()
+
+# ref: https://www.twblogs.net/a/5db2dfc2bd9eee310ee64dbf
+class StandardRouter(SimpleRouter):
+    def __init__(self, trailing_slash="/?"):
+        super().__init__()
+        self.trailing_slash = trailing_slash
+
+
+router = StandardRouter()
 router.register(r'profile', views.ProfileView, basename="profile")
 
 
