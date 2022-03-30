@@ -11,7 +11,8 @@ import os
 
 
 def get_exp_fp(instance, filename):
-    return os.path.join("exp", f"{instance.id}_") + filename
+    ext = filename.split('.')[-1]
+    return os.path.join("exp", f"{instance.id}.") + ext
 
 
 def validate_deadline(value):
