@@ -65,5 +65,5 @@ class Teamformation(models.Model):
         teammates = self.cleaned_data.get('teammates')
         teamsize = self.get('teamsize')
         if teammates.count() > teamsize:
-            raise ValidationError("Sorry! The team has already full!")
+            raise ValidationError("Oops! No vacancy is left.")
         return self.cleaned_data
