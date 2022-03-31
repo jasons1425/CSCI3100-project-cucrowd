@@ -29,7 +29,11 @@ def validate_size(value):
         )
     
 class Teammates(models.Model):
+    id = models.UUIDField(primary_key=True,
+                            default=uuid.uuid4,editable=False)
     info = models.ForeignKey(StudentProfile,on_delete=models.CASCADE,
+                                null=False, blank=False)
+    temaformation_id = models.ForeignKey(Teamformation,on_delete=models.CASCADE,
                                 null=False, blank=False)
 
 # Create your models here.
