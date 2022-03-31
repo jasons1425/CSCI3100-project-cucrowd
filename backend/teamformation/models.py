@@ -28,14 +28,6 @@ def validate_size(value):
             params={'value': value}
         )
     
-class Teammates(models.Model):
-    id = models.UUIDField(primary_key=True,
-                            default=uuid.uuid4,editable=False)
-    info = models.ForeignKey(StudentProfile,on_delete=models.CASCADE,
-                                null=False, blank=False)
-    temaformation_id = models.ForeignKey(Teamformation,on_delete=models.CASCADE,
-                                null=False, blank=False)
-
 # Create your models here.
 class Teamformation(models.Model):
     id = models.UUIDField(primary_key=True,
@@ -65,3 +57,17 @@ class Teamformation(models.Model):
                             
     team_img = models.ImageField(upload_to=get_team_fp, null=True, blank=True)
 
+    def __str__(self):
+        return self.title
+
+class Teammates(models.Model):
+    id = models.UUIDField(primary_key=True,
+                            default=uuid.uuid4,editable=False)
+    info = models.ForeignKey(StudentProfile,on_delete=models.CASCADE,
+                                null=False, blank=False)
+    temaformation = models.ForeignKey(Teamformation,on_delete=models.CASCADE,
+                                null=False, blank=False)
+    def __str__(self):
+        title = self.temaformation.title
+        username = self.info.username
+        return ' - '.join([title, username])
