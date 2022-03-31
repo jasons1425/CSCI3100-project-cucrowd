@@ -61,7 +61,7 @@ class Teamformation(models.Model):
     teamsize = models.IntegerField(validators=[validate_size], default = "Please type the teamsize here.",
                             help_text="Please enter an integer number. (Minimum is 2 and Maximum is 5)",null=False, blank=False)
 
-    teammates = models.ManyToManyField('Teammates', related_name='teammates+', blank=True)
+    teammates = models.ManyToManyField('Teammates', related_name='teammates', blank=True)
                             
     team_img = models.ImageField(upload_to=get_team_fp, null=True, blank=True)
 
