@@ -65,7 +65,7 @@ class Teammates(models.Model):
                             default=uuid.uuid4,editable=False)
     info = models.ForeignKey(StudentProfile,on_delete=models.CASCADE,
                                 null=False, blank=False)
-    temaformation = models.ForeignKey(Teamformation,on_delete=models.CASCADE,
+    teamformation = models.ForeignKey(Teamformation,on_delete=models.CASCADE,
                                 null=False, blank=False)
     def __str__(self):
         title = self.temaformation.title
