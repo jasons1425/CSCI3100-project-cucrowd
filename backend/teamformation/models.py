@@ -61,11 +61,7 @@ class Teammates(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     info = models.ForeignKey(StudentProfile,on_delete=models.CASCADE,
                                 null=False, blank=False)
-    teamformation = models.ForeignKey(Teamformation,
+    teamformation = models.ForeignKey(Teamformation,default="",
                                 on_delete=models.CASCADE,
                                 null=False, blank=False)
         
-    def __str__(self):
-        title = self.teamformation.title
-        username = self.info.username
-        return ' - '.join([title, username])
