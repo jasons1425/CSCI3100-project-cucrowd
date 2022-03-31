@@ -31,8 +31,6 @@ def validate_size(value):
 class Teammates(models.Model):
     info = models.ForeignKey(StudentProfile,on_delete=models.CASCADE,
                                 null=False, blank=False)
-    # def __str__(self):
-    #     return self.info.user
 
 # Create your models here.
 class Teamformation(models.Model):
@@ -59,18 +57,7 @@ class Teamformation(models.Model):
     teamsize = models.IntegerField(validators=[validate_size], default = "Please type the teamsize here.",
                             help_text="Please enter an integer number. (Minimum is 2 and Maximum is 5)",null=False, blank=False)
 
-    # teammates = models.ForeignKey(Teammates,on_delete=models.CASCADE,
-    #                         null=True, blank=True, editable=False)
-
     teammates = models.ManyToManyField('Teammates', related_name='teammates+', blank=True)
                             
     team_img = models.ImageField(upload_to=get_team_fp, null=True, blank=True)
 
-    def __str__(self):
-        return self.title
-
-    # def clean(self):
-    #     teammates = self.get('teammates')
-    #     teamsize = self.get('teamsize')
-    #     if teammates.count() > teamsize:
-    #         raise ValidationError("Sorry! The team has already full!")
