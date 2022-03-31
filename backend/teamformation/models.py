@@ -51,23 +51,21 @@ class Teamformation(models.Model):
     post_date = models.DateField(auto_now_add=True)
     last_modified = models.DateField(auto_now=True)
     teamsize = models.IntegerField(validators=[validate_size], default = "Please type the teamsize here.",
-                            help_text="Please enter an integer number. (Minimum is 2 and Maximum is 5)",null=False, blank=False)
-
-    teammates = models.ManyToManyField('Teammates', related_name='teammates',null=True, blank=True)
-                            
+                            help_text="Please enter an integer number. (Minimum is 2 and Maximum is 5)",null=False, blank=False)                           
     team_img = models.ImageField(upload_to=get_team_fp, null=True, blank=True)
 
     def __str__(self):
         return self.title
 
 class Teammates(models.Model):
-    id = models.UUIDField(primary_key=True,
-                            default=uuid.uuid4,editable=False)
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     info = models.ForeignKey(StudentProfile,on_delete=models.CASCADE,
                                 null=False, blank=False)
-    temaformation = models.ForeignKey(Teamformation,on_delete=models.CASCADE,
+    teamformation = models.ForeignKey(Teamformation,
+                                on_delete=models.CASCADE,
                                 null=False, blank=False)
+        
     def __str__(self):
-        title = self.temaformation.title
+        title = self.teamformation.title
         username = self.info.username
         return ' - '.join([title, username])
