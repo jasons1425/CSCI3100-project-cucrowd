@@ -19,7 +19,7 @@ class TeamformationSerializer(serializers.ModelSerializer):
         model = Teamformation
         fields = ["id", "title","host", "self_intro", "description",
                   "requirements", "link", "contact", "deadline", "post_date",
-                  "last_modified", "teamsize", "teammates", "team_img"]
+                  "last_modified", "teamsize", "teammember", "team_img"]
 
 class TeammatesSerializer(serializers.ModelSerializer):
     teaminfo = CrowdUserSerializer(many=False, required=False, allow_null=True)
