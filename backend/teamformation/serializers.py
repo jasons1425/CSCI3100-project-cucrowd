@@ -19,15 +19,15 @@ class TeamformationSerializer(serializers.ModelSerializer):
         model = Teamformation
         fields = ["id", "title","host", "self_intro", "description",
                   "requirements", "link", "contact", "deadline", "post_date",
-                  "last_modified", "teamsize", "teammates", "team_img"]
+                  "last_modified", "teamsize", "team_img"]
 
 class TeammatesSerializer(serializers.ModelSerializer):
-    teaminfo = CrowdUserSerializer(many=False, required=False, allow_null=True)
+    info = CrowdUserSerializer(many=False, required=False, allow_null=True)
 
     def create(self, validated_data):
-        if self.context.get("teaminfo", None):
-            teaminfo = self.context['teaminfo']
-            validated_data['teaminfo'] = teaminfo
+        if self.context.get("info", None):
+            info = self.context['teaminfo']
+            validated_data['teaminfo'] = info
         if self.context.get("teamformation", None):
             tfm_obj = self.context['teamformation']
             validated_data['teamformation'] = tfm_obj
@@ -39,4 +39,4 @@ class TeammatesSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Teammates
-        fields = ["id", "teaminfo", "teamformation"]
+        fields = ["id", "info", "teamformation"]
