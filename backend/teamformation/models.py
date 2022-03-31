@@ -67,7 +67,4 @@ class Teammates(models.Model):
                                 null=False, blank=False)
     teamformation = models.ForeignKey(Teamformation,on_delete=models.CASCADE,
                                 null=False, blank=False)
-    def __str__(self):
-        title = self.temaformation.title
-        username = self.info.username
-        return ' - '.join([title, username])
+
