@@ -1,4 +1,7 @@
+from django import forms
+from .models import Teamformation, Teammates
 from django.core.exceptions import ValidationError
+
 class Teamformation(forms.ModelForm):
     class Meta:
         model = Teamformation
