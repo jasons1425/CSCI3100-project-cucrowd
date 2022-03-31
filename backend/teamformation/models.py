@@ -4,6 +4,7 @@ from datetime import date
 from django.contrib.auth.models import AnonymousUser
 from django.conf import settings
 from django.core.exceptions import ValidationError as FieldValidationError
+from django.core.exceptions import ValidationError
 from user_auth.models import StudentProfile
 import os
 
@@ -27,10 +28,6 @@ def validate_size(value):
             params={'value': value}
         )
     
-class Teammates(models.Model):
-    info = models.ForeignKey(StudentProfile,on_delete=models.CASCADE,
-                                null=False, blank=False)
-
 # Create your models here.
 class Teamformation(models.Model):
     id = models.UUIDField(primary_key=True,
@@ -54,10 +51,17 @@ class Teamformation(models.Model):
     post_date = models.DateField(auto_now_add=True)
     last_modified = models.DateField(auto_now=True)
     teamsize = models.IntegerField(validators=[validate_size], default = "Please type the teamsize here.",
-                            help_text="Please enter an integer number. (Minimum is 2 and Maximum is 5)",null=False, blank=False)
-
-    teammates = models.ForeignKey(Teammates,
-                            on_delete=models.CASCADE,
-                            null=True, blank=True)
-                            
+                            help_text="Please enter an integer number. (Minimum is 2 and Maximum is 5)",null=False, blank=False)                           
     team_img = models.ImageField(upload_to=get_team_fp, null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+class Teammates(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    info = models.ForeignKey(StudentProfile,on_delete=models.CASCADE,
+                                null=False, blank=False)
+    teamformation = models.ForeignKey(Teamformation,default="",
+                                on_delete=models.CASCADE,
+                                null=False, blank=False)
+        
