@@ -9,7 +9,7 @@ class TeammatesInline(admin.TabularInline):
 
 
 class TeamformationAdmin(admin.ModelAdmin):
-    list_display = ("id", "title", "host", "teamsize", "post_date",)
+    list_display = ("id", "title", "host", "teamsize", "post_date", "publishable")
     inlines = [TeammatesInline]
 
     def save_model(self, request, obj, form, change):
@@ -19,7 +19,7 @@ class TeamformationAdmin(admin.ModelAdmin):
 
 
 class TeammatesAdmin(admin.ModelAdmin):
-    list_display = ("id", "info", "teamformation")
+    list_display = ("id", "info", "teamformation", "state")
 
 
 admin.site.register(Teamformation, TeamformationAdmin)
