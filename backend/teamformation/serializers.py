@@ -46,7 +46,7 @@ class TeammatePreviewSerializer(serializers.ModelSerializer):
             return None   # No profile found
 
 
-class TeamDetailSerializer(serializers.ModelSerializer):
+class TeamPrivateDetailSerializer(serializers.ModelSerializer):
     members = serializers.SerializerMethodField()
     host = CrowdUserSerializer(many=False, required=False, allow_null=True)
 
@@ -68,6 +68,28 @@ class TeamDetailSerializer(serializers.ModelSerializer):
         return TeammateSerializer(applicants, many=True).data
 
 
+class TeamPublicDetailSerializer(serializers.ModelSerializer):
+    members = serializers.SerializerMethodField()
+    host = CrowdUserSerializer(many=False, required=False, allow_null=True)
+
+    def create(self, validated_data):
+        if self.context.get("host", None):
+            host = self.context['host']
+            validated_data['host'] = host
+        experiment = Teamformation.objects.create(**validated_data)
+        return experiment
+
+    class Meta:
+        model = Teamformation
+        fields = ["id", "title", "host", "self_intro", "description",
+                  "requirements", "link", "contact", "deadline", "teamsize",
+                  "publishable", "post_date", "members"]
+
+    def get_members(self, team):
+        applicants = team.teammates_set.filter(state="accepted")
+        return TeammatePreviewSerializer(applicants, many=True).data
+
+
 class TeamPreviewSerializer(serializers.ModelSerializer):
     members = serializers.SerializerMethodField()
 
@@ -79,3 +101,12 @@ class TeamPreviewSerializer(serializers.ModelSerializer):
     def get_members(self, team):
         applicants = team.teammates_set.filter(state="accepted")
         return TeammatePreviewSerializer(applicants, many=True).data
+
+
+class TeamApplicationSerializer(serializers.ModelSerializer):
+    team = TeamPreviewSerializer(many=False, source="teamformation")
+    applicant = CrowdUserSerializer(many=False, source="info")
+
+    class Meta:
+        model = Teammates
+        fields = ["id", "applicant", "team"]

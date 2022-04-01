@@ -2,16 +2,17 @@ from django.shortcuts import render
 from django.core.exceptions import ValidationError as FieldValidationError
 from rest_framework import viewsets, status
 from rest_framework.response import Response
-from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
+from rest_framework.permissions import IsAuthenticated, AllowAny
 from rest_framework.exceptions import ValidationError
 from rest_framework.decorators import action
-from .serializers import TeamDetailSerializer, TeamPreviewSerializer, TeammateSerializer
+from .serializers import TeamPrivateDetailSerializer, TeamPreviewSerializer, TeamPublicDetailSerializer
 from .models import Teamformation, Teammates
+from datetime import date
 
 
 # Create your views here.
 class TeamView(viewsets.ModelViewSet):
-    default_serializer_class = TeamDetailSerializer
+    default_serializer_class = TeamPrivateDetailSerializer
     serializer_classes = {
         'list': TeamPreviewSerializer
     }
@@ -49,6 +50,15 @@ class TeamView(viewsets.ModelViewSet):
             return Response(data=_serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(data=_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+    def retrieve(self, request, *args, **kwargs):
+        instance = self.get_object()
+        user = request.user
+        if instance.host.id is not user.id:
+            serializer = TeamPublicDetailSerializer(instance)
+        else:
+            serializer = TeamPrivateDetailSerializer(instance)
+        return Response(serializer.data)
 
     def list(self, request, *args, **kwargs):
         open_team = self.get_queryset().filter(publishable=True)
@@ -119,5 +129,36 @@ class TeamView(viewsets.ModelViewSet):
         except FieldValidationError as e:
             raise ValidationError({"result": False, "message": f"{e.args}"})
         return Response({"result": True})
+
+    @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated],
+            name='apply to join the team', url_path=r'apply')
+    def apply(self, request, *args, **kwargs):
+        instance = self.get_object()
+        if instance.deadline < date.today():
+            raise ValidationError({"result": False, "message": "The team recruitment has expired."})
+        if not instance.publishable:
+            raise ValidationError({"result": False, "message": "The team is not open for application anymore."})
+        user = request.user
+        existing_application = Teammates.objects.filter(teamformation=instance, info=user)
+        if existing_application:
+            raise ValidationError({"result": False,
+                                   "message": "You have already applied to join this team."})
+        application = Teammates.objects.create(teamformation=instance, info=user)
+        if not application:
+            raise ValidationError({"result": False,
+                                   "message": "Fail to submit the application. Please contact system admin."})
+        return Response({"result": True})
+
+    @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated],
+            name='cancel application', url_path=r'cancel_application')
+    def cancel_application(self, request, *args, **kwargs):
+        instance = self.get_object()
+        user = request.user
+        existing_application = Teammates.objects.filter(teamformation=instance, info=user)
+        if not existing_application:
+            raise ValidationError({"result": False, "message": "You have not applied to join this team."})
+        existing_application[0].delete()
+        return Response({"result": True})
+
 
 
