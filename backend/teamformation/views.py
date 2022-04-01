@@ -39,7 +39,7 @@ class TeamView(viewsets.ModelViewSet):
         if type(request.data) is not dict:  # i.e. is immutable QueryDict
             request.data._mutable = True
         for key in list(request.data.keys()):
-            if key.startswith("host.") or key == "host" or key == "publishable" or key == "members":
+            if key.startswith("host.") or key == "host" or key.startswith("members.") or key == "members":
                 del request.data[key]
         if type(request.data) is not dict:  # i.e. is immutable QueryDict
             request.data._mutable = False
@@ -66,7 +66,7 @@ class TeamView(viewsets.ModelViewSet):
         if type(request.data) is not dict:  # i.e. is immutable QueryDict
             request.data._mutable = True
         for key in list(request.data.keys()):
-            if key.startswith("host.") or key == "host" or key == "publishable" or key == "members":
+            if key.startswith("host.") or key == "host" or key.startswith("members.") or key == "members":
                 del request.data[key]
         if type(request.data) is not dict:  # i.e. is immutable QueryDict
             request.data._mutable = False
@@ -80,7 +80,7 @@ class TeamView(viewsets.ModelViewSet):
         if type(request.data) is not dict:  # i.e. is immutable QueryDict
             request.data._mutable = True
         for key in list(request.data.keys()):
-            if key.startswith("host.") or key == "host" or key == "publishable" or key == "members":
+            if key.startswith("host.") or key == "host" or key.startswith("members.") or key == "members":
                 del request.data[key]
         if type(request.data) is not dict:  # i.e. is immutable QueryDict
             request.data._mutable = False
@@ -94,3 +94,30 @@ class TeamView(viewsets.ModelViewSet):
         if instance.host.id is not user.id:
             raise ValidationError({"result": False, "message": "Only team host can delete the post."})
         return super().destroy(request, *args, **kwargs)
+
+    @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated],
+            name='update application status', url_path=r"update_status")
+    def update_status(self, request, *args, **kwargs):
+        user = request.user
+        instance = self.get_object()
+        if instance.host.id is not user.id:
+            raise ValidationError({"result": False, "message": "Only team host can change application status"})
+        application_id = request.data.get('id', None)
+        application = instance.teammates_set.filter(id=application_id)
+        if not application:
+            raise ValidationError({"result": False, "message": "Application not found."})
+        application = application[0]
+        new_state = request.data.get('state', None)
+        if not new_state:
+            raise ValidationError({"result": False, "message": "Missing new state for the application."})
+        try:
+            # queryset.update() method will not do the choice checking,
+            #   need to directly call the full_clean method
+            application.state = new_state
+            application.full_clean()
+            application.save()
+        except FieldValidationError as e:
+            raise ValidationError({"result": False, "message": f"{e.args}"})
+        return Response({"result": True})
+
+
