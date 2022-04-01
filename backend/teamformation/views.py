@@ -1,5 +1,7 @@
 from django.shortcuts import render
 from django.core.exceptions import ValidationError as FieldValidationError
+from django.core.mail import send_mail
+from backend.settings import EMAIL_HOST_USER
 from rest_framework import viewsets, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, AllowAny
@@ -151,6 +153,26 @@ class TeamView(viewsets.ModelViewSet):
         if not application:
             raise ValidationError({"result": False,
                                    "message": "Fail to submit the application. Please contact system admin."})
+        team_title = instance.title
+        host = instance.host
+        if user.is_org:
+            profile = user.org_profile
+            field1 = ('organization name', profile.org_name)
+            field2 = ('organization URL', profile.org_url)
+        else:
+            profile = user.stu_profile
+            field1 = ('admission year', profile.admission_year)
+            field2 = ('major', profile.major)
+        send_mail(f"New application for your team '{team_title}'",
+                  f"Dear {host.username},\n"
+                  f"Your have received a new application for your team '{team_title}'.\n"
+                  f"name: {user.username:<100}\n"
+                  f"{field1[0]}: {field1[1]}\n"
+                  f"{field2[0]}: {field2[1]}\n\n"
+                  f"Regards, CU Crowd Project team",
+                  EMAIL_HOST_USER,
+                  [host.email],
+                  fail_silently=False)
         return Response({"result": True})
 
     @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated],
