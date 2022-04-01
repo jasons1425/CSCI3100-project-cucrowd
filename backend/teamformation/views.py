@@ -47,6 +47,10 @@ class TeamView(viewsets.ModelViewSet):
         _serializer = self.get_serializer_class()(data=request.data, context={"host": host})
         if _serializer.is_valid(raise_exception=True):
             self.perform_create(_serializer)
+            instance = self.queryset.get(id=_serializer.data['id'])
+            Teammates.objects.create(teamformation=instance, info=host, state="accepted")  # create the initial member (leader) of the team
+            instance = self.queryset.get(id=_serializer.data['id'])  # re-fetch the instance to reflect he new member
+            _serializer = self.get_serializer_class()(instance, many=False)
             return Response(data=_serializer.data, status=status.HTTP_201_CREATED)
         else:
             return Response(data=_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -106,7 +110,7 @@ class TeamView(viewsets.ModelViewSet):
         return super().destroy(request, *args, **kwargs)
 
     @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated],
-            name='update application status', url_path=r"update_status")
+            name='update application status', url_path=r"update_state")
     def update_status(self, request, *args, **kwargs):
         user = request.user
         instance = self.get_object()
