@@ -21,7 +21,7 @@ from django_rest_passwordreset.signals import reset_password_token_created
 from user_auth.models import StudentProfile, OrgUserProfile, validate_sid, get_avatar_fp
 from user_auth.serializers import StudentProfileSerializer, OrgProfileSerializer
 from experiment.serializers import EnrollmentSerializer
-from teamformation.serializers import TeamApplicationSerializer
+from teamformation.serializers import TeamApplicationSerializer, TeamPreviewSerializer
 from datetime import datetime
 import pytz
 import os
@@ -280,6 +280,14 @@ class ProfileView(ModelViewSet):
         user = request.user
         submitted_applications = user.teammates_set.all()
         serializer = TeamApplicationSerializer(submitted_applications, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated],
+            name='shows leading team', url_path=r'me/leading_team')
+    def leading_team(self, request, *args, **kwargs):
+        user = request.user
+        leading_teams = user.teamformation_set.all()
+        serializer = TeamPreviewSerializer(leading_teams, many=True)
         return Response(serializer.data)
 
     # ref: https://stackoverflow.com/a/24420192/16418649
