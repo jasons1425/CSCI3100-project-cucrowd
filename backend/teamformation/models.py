@@ -28,10 +28,6 @@ def validate_size(value):
             params={'value': value}
         )
     
-class Teammates(models.Model):
-    info = models.ForeignKey(StudentProfile,on_delete=models.CASCADE,
-                                null=False, blank=False)
-
 # Create your models here.
 class Teamformation(models.Model):
     id = models.UUIDField(primary_key=True,
@@ -55,15 +51,17 @@ class Teamformation(models.Model):
     post_date = models.DateField(auto_now_add=True)
     last_modified = models.DateField(auto_now=True)
     teamsize = models.IntegerField(validators=[validate_size], default = "Please type the teamsize here.",
-                            help_text="Please enter an integer number. (Minimum is 2 and Maximum is 5)",null=False, blank=False)
-
-    teammates = models.ManyToManyField('Teammates', related_name='teammates+', blank=True)
-                            
+                            help_text="Please enter an integer number. (Minimum is 2 and Maximum is 5)",null=False, blank=False)                           
     team_img = models.ImageField(upload_to=get_team_fp, null=True, blank=True)
 
-    def clean(self):
-        teammates = self.cleaned_data.get('teammates')
-        teamsize = self.get('teamsize')
-        if teammates.count() > teamsize:
-            raise ValidationError("Oops! No vacancy is left.")
-        return self.cleaned_data
+    def __str__(self):
+        return self.title
+
+class Teammates(models.Model):
+    id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
+    info = models.ForeignKey(StudentProfile,on_delete=models.CASCADE,
+                                null=False, blank=False)
+    teamformation = models.ForeignKey(Teamformation,default="",
+                                on_delete=models.CASCADE,
+                                null=False, blank=False)
+        
