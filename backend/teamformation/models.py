@@ -8,13 +8,17 @@ from django.core.exceptions import ValidationError
 from user_auth.models import StudentProfile
 import os
 
+
 def get_team_fp(instance, filename):
-    return os.path.join("team", f"{instance.id}_") + filename
+    ext = filename.split('.')[-1]
+    return os.path.join("team", f"{instance.id}.") + ext
+
 
 def validate_deadline(value):
     if value < date.today():
         raise FieldValidationError("The date cannot be in the past!")
     return value
+
 
 def validate_size(value):
     if value <= 1:
@@ -27,7 +31,8 @@ def validate_size(value):
             '%(value)s is not an validate number, it is too large.',
             params={'value': value}
         )
-    
+
+
 # Create your models here.
 class Teamformation(models.Model):
     id = models.UUIDField(primary_key=True,
@@ -57,11 +62,13 @@ class Teamformation(models.Model):
     def __str__(self):
         return self.title
 
+
 class Teammates(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
-    info = models.ForeignKey(StudentProfile,on_delete=models.CASCADE,
-                                null=False, blank=False)
+    info = models.ForeignKey(settings.AUTH_USER_MODEL,
+                             on_delete=models.CASCADE,
+                             null=False, blank=False)
     teamformation = models.ForeignKey(Teamformation,default="",
-                                on_delete=models.CASCADE,
-                                null=False, blank=False)
+                                      on_delete=models.CASCADE,
+                                      null=False, blank=False)
         

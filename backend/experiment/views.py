@@ -34,11 +34,13 @@ class ExperimentView(viewsets.ModelViewSet):
         host = request.user
         if host.is_org is False:
             raise ValidationError({"result": False, "message": "Only organization users can create experiments."})
-        request.data._mutable = True
+        if type(request.data) is not dict:  # i.e. is immutable QueryDict
+            request.data._mutable = True
         for key in list(request.data.keys()):
             if key.startswith("host.") or key == "host":
                 del request.data[key]
-        request.data._mutable = False
+        if type(request.data) is not dict:  # i.e. is immutable QueryDict
+            request.data._mutable = False
         _serializer = self.serializer_class(data=request.data, context={"host": host})
         if _serializer.is_valid(raise_exception=True):
             self.perform_create(_serializer)
