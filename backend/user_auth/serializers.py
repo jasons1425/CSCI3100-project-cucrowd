@@ -3,9 +3,16 @@ from .models import CrowdUser, StudentProfile, OrgUserProfile
 
 
 class CrowdUserSerializer(serializers.ModelSerializer):
+    identity = serializers.SerializerMethodField()
+
     class Meta:
         model = CrowdUser
-        fields = ["username", "email"]
+        fields = ["username", "email", "identity"]
+
+    def get_identity(self, user):
+        if user.is_org:
+            return "organization user"
+        return "student user"
 
 
 class StudentProfileSerializer(serializers.ModelSerializer):
