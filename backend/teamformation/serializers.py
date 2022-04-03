@@ -96,7 +96,7 @@ class TeamPreviewSerializer(serializers.ModelSerializer):
     class Meta:
         model = Teamformation
         fields = ["id", "title", "teamsize", "deadline", "requirements",
-                  "members"]
+                  "description", "members"]
 
     def get_members(self, team):
         applicants = team.teammates_set.filter(state="accepted")
