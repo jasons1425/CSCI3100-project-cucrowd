@@ -20,7 +20,7 @@ from rest_framework.parsers import MultiPartParser, FormParser
 from django_rest_passwordreset.signals import reset_password_token_created
 from user_auth.models import StudentProfile, OrgUserProfile, validate_sid, get_avatar_fp
 from user_auth.serializers import StudentProfileSerializer, OrgProfileSerializer
-from experiment.serializers import EnrollmentSerializer
+from experiment.serializers import EnrollmentSerializer, ExperimentSerializer
 from teamformation.serializers import TeamApplicationSerializer, TeamPreviewSerializer
 from datetime import datetime
 import pytz
@@ -272,6 +272,14 @@ class ProfileView(ModelViewSet):
         user = request.user
         joined = user.enrollment_set.all()
         serializer = EnrollmentSerializer(joined, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated],
+            name='get hosting experiments', url_path=r"me/hosting")
+    def hosting(self, request, *args, **kwargs):
+        user = request.user
+        hosted = user.experiment_set.all()
+        serializer = ExperimentSerializer(hosted, many=True)
         return Response(serializer.data)
 
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated],
