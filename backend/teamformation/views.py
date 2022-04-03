@@ -183,6 +183,9 @@ class TeamView(viewsets.ModelViewSet):
         existing_application = Teammates.objects.filter(teamformation=instance, info=user)
         if not existing_application:
             raise ValidationError({"result": False, "message": "You have not applied to join this team."})
+        if instance.host.id is user.id:
+            raise ValidationError({"result": False,
+                                   "message": "Team leader cannot quit the team. Please disband the team instead."})
         existing_application[0].delete()
         return Response({"result": True})
 
