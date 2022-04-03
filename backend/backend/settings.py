@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'django_rest_passwordreset',
     'user_auth',
     'experiment',
-    'teamformation'
+    'teamformation',
+    'questionnaire'
 ]
 
 MIDDLEWARE = [
