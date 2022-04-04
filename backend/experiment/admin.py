@@ -1,11 +1,17 @@
 from django.contrib import admin
+from django.core.exceptions import ValidationError as FieldValidationError
 from .models import Experiment, Enrollment
 
 
 # Register your models here.
+class EnrollmentInline(admin.TabularInline):
+    model = Enrollment
+
+
 class ExperimentAdmin(admin.ModelAdmin):
-    list_display = ("id", "host", "title")
+    list_display = ("id", "host", "title", "post_date")
     search_fields = ("id", "host__username", "title")
+    inlines = [EnrollmentInline]
 
     def save_model(self, request, obj, form, change):
         if getattr(obj, 'host', None) is None:
