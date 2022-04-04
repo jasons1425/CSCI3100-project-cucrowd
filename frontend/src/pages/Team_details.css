@@ -2,88 +2,6 @@
     margin-left: 11vw;
 }
 
-.team_button_and_content {
-    display: flex;
-}
-
-.team_details_content {
-    border: 0.4vh solid #d4af37;
-    border-radius: 10%;
-    margin: 0 0 0 4vw;
-    height: 80vh;
-    width: 80vw;
-}
-
-.team_details_top {
-    display: flex;
-}
-
-.team_details_info {
-    margin: 0.5vw 0 10vh 35vw;
-    text-align: center;
-}
-
-.team_details_info h1 {
-    font-size: 4vh;
-    margin: 0;
-}
-
-.team_details_info p {
-    margin: 0;
-}
-
-.team_details_vacancy {
-    margin: 1vw 0 0 20vw;
-    border: 0.4vh solid #d4af37;
-    border-radius: 50%;
-    height: 15vh;
-    width: 15vh;
-    text-align: center;
-    font-size: 2vh;
-}
-
-.team_details_number {
-    margin: 0;
-    font-size: 4vh;
-}
-
-.team_details_team_member {
-    display: flex;
-    flex-direction: column;
-    float: right;
-    margin: 0 10vw 0 0;
-    font-size: 2vh;
-    text-align: center;
-    width: 30%;
-    background-color: #d6a119;
-    height: 50vh;
-}
-
-.team_details_team_member h3 {
-    font-size: 2.5vh;
-    margin: 0 0 1vh 0;
-}
-
-.team_details_team_member td {
-    padding-left: 2vh;
-    padding-bottom: 2vh;
-}
-
-.team_details_purpose {
-    margin-left: 4vw;
-    width: 50%;
-    height: 25vh;
-    background-color: #d4bf00;
-}
-
-.self_intro {
-    width: 50%;
-    margin-left: 4vw;
-    margin-top: 2vh;
-    height: 25vh;
-    background-color: #a68b00;
-}
-
 .team_join_button {
     padding: 0.8vw 1vw;
     font-size: 1vw;
@@ -97,6 +15,7 @@
     border-radius: 1vw;
     float: right;
     margin-right: 5vw;
+    margin-top: 5vh;
 }
 
 .team_join_button:active {
@@ -106,4 +25,152 @@
 
 .team_join_button:hover {
     background-color: #3e8e41;
+}
+
+.details_team_member {
+    float: right;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    height: 82.5vh;
+    right: 0;
+    position: relative;
+    text-align: center;
+    margin-right: 2vw;
+    font-size: 1vw;
+}
+
+.membercard {
+    box-shadow: 0 0.5vh 0.5vh 0 rgba(0, 0, 0, 0.2);
+    display: flex;
+    width: 17vw;
+    text-align: center;
+    margin-bottom: 2vh;
+    background-color: #eaf1f1;
+    padding: 0.75vw;
+    height: 11vh;
+    align-items: center;
+}
+
+.membercard img {
+    width: 5.5vw;
+    margin-right: 2vw;
+    border-radius: 50%;
+}
+
+.membercard:hover {
+    box-shadow: 0 1vh 1vh 0 rgba(0, 0, 0, 0.2);
+}
+
+.membercard p,
+h4 {
+    margin: 0.25vw;
+    font-size: 1vw;
+}
+
+.team_details_info {
+    display: flex;
+    flex-direction: row;
+    width: 70%;
+    margin-bottom: 10vh;
+    margin-top: 5vh;
+    margin-left:4vw;
+}
+
+.team_details_info div {
+    white-space: initial;
+    font-size: 1vw;
+}
+
+.team_all_details {
+    display: flex;
+    justify-content: center;
+    height: 20vh;
+    margin-top: 2.5vh;
+    margin-bottom: 5vh;
+}
+
+.team_requirements {
+    width: 30vw;
+    align-self: center;
+    margin-top: 5vh;
+}
+
+.team_requirements table {
+    white-space: initial;
+    font-size: 1vw;
+}
+
+.team_requirements tr {
+    vertical-align: top;
+}
+
+.team_table_fr {
+    width: 40%;
+}
+
+.team_info_contact {
+    display: flex;
+    flex-direction: column;
+}
+
+.team_self_intro {
+    margin-left: 2.5vw;
+    width: 30vw;
+    text-align: center;
+    font-size: 1vw;
+}
+
+.team_dotted_line {
+    border: dotted rgba(0, 0, 0, 0.1);
+    height: 0vh;
+}
+
+.team_self_intro h4 {
+    font-size: 1.1vw;
+}
+
+.team_self_intro p {
+    margin: 0;
+    text-align: left;
+    white-space: initial;
+}
+
+.team_self_intro h4 {
+    margin-bottom: 1vh;
+}
+
+.team_contact {
+    align-self: flex-end;
+    margin-top: auto;
+    font-size: 1vw;
+}
+
+.team_back_button {
+    padding: 0.8vw 1vw;
+    font-size: 1vw;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 1vw;
+    float: left;
+    margin-left: 5vw;
+    margin-top: 5vh;
+}
+
+.team_submit_button:active {
+    background-color: #3e8e41;
+    transform: translateY(4px);
+}
+
+.team_submit_button:hover {
+    background-color: #3e8e41;
+}
+
+.membercard:hover{
+    cursor:pointer;
 }

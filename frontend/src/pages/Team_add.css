@@ -1,0 +1,178 @@
+.team_add {
+    margin-top: 3vh;
+    margin-left: 10vw;
+    font-size: 1.5vw;
+    height: 140vh;
+}
+
+.team_add div {
+    margin-bottom: 5vh;
+}
+
+.team_add label {
+    margin-right: 2vw;
+}
+
+.team_add_title input {
+    height: 1.5vw;
+    width: 50vw;
+    font-size: 1vw;
+    border:solid;
+    border-radius: 0.4vw;
+}
+
+.team_add_time input {
+    width: 11vw;
+    height: 1.5vw;
+    font-size: 1vw;
+    margin-right: 15vw;
+    border:solid;
+    border-radius: 0.4vw;
+}
+
+.team_add_purpose{
+    margin-bottom:1vh !important;
+}
+
+.team_add_self_intro{
+    margin-bottom:1vh !important;
+}
+
+.team_add_purpose label {
+    vertical-align: top;
+}
+
+.team_add_link input{
+    width:50vw;
+    height:1.5vw;
+    font-size:1vw;
+    border:solid;
+    border-radius: 0.4vw;
+}
+
+.team_add_size input{
+    height:1.5vw;
+    font-size:1vw;
+    border:solid;
+    border-radius: 0.4vw;
+}
+
+.team_add_requirements input{
+    width:50vw;
+    height:1.5vw;
+    font-size:1vw;
+    border:solid;
+    border-radius: 0.4vw;
+}
+
+.team_add textarea{
+    width:50vw;
+    height:20vh;
+    font-size:1vw;
+    border:solid;
+    border-radius: 0.4vw;
+}
+
+.team_add_self_intro label{
+    vertical-align: top;
+}
+
+.team_add_contact input{
+    width:30vw;
+    height:1.5vw;
+    font-size:1vw;
+    border:solid;
+    border-radius: 0.4vw;
+}
+
+.team_add #icon{
+    font-size: 50px;
+    font-weight: bold;
+    color: purple;
+    margin-bottom: 30px;
+}
+
+.team_edit_add_button {
+    padding: 1vw 1.75vw;
+    font-size: 1vw;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 1vw;
+    margin-top: 1vw;
+    margin-left: 1vw;
+    display:inline-block;
+}
+
+.team_edit_add_button:active {
+    background-color: #3e8e41;
+    transform: translateY(4px);
+}
+
+.team_edit_add_button:hover {
+    background-color: #3e8e41;
+}
+
+.team_edit_back_button {
+    display: inline-block;
+    padding: 1vw 1.75vw;
+    font-size: 1vw;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 1vw;
+    margin-top: 1vw;
+    margin-left: 1vw;
+}
+
+.team_edit_back_button:active {
+    background-color: #3e8e41;
+    transform: translateY(4px);
+}
+
+.team_edit_back_button:hover {
+    background-color: #3e8e41;
+}
+
+.team_edit_reset_button{
+    margin-top: 1vw;
+    margin-left: 1vw;
+    display: inline-block;
+    padding: 1vw 1.75vw;
+    font-size: 1vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 1vw;
+}
+
+.team_edit_reset_button:hover{
+    background-color: #3e8e41
+}
+
+.team_edit_reset_button:active {
+  background-color: #3e8e41;
+  transform: translateY(4px);
+}
+
+.team_edit_button{
+    float:right;
+    margin-right:10vw;
+    display:flex;
+}
+
+.is_empty{
+    border:red;
+}

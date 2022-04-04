@@ -1,0 +1,79 @@
+.team_select{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.team_select_title{
+    display:flex;
+    flex-direction: row;
+    margin-left: 17.5vw;
+    margin-bottom:2vw;
+}
+
+.team_select_title p{
+    font-size:2vw;
+    margin-top:1vw;
+    margin-right:27.5vw;
+}
+
+.team_select_line{
+    border: 0.02vw solid black;
+    margin-left: 15vw;
+    margin-right: 25vw;
+}
+
+.team_select_table{
+    font-size:1.25vw;
+    width:50vw;
+    margin-left:15vw; 
+}
+
+.team_select_table_title td{
+    font-size:1.25vw !important;
+}
+
+.team_select_table td{
+    text-align: center;
+    font-size:1vw;
+    padding-top:1vw;
+    table-layout: fixed;
+}
+
+.accept_button{
+    background-color:rgb(69, 185, 94);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    border: none;
+    border-radius: 1vw;
+    width:5vw;
+    height:1.5vw;
+}
+
+.accept_button:hover{
+    cursor:pointer;
+    background-color: rgb(36, 155, 12);
+}
+
+.reject_button{
+    background-color:rgb(220, 94, 115);
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    color: #fff;
+    border: none;
+    border-radius: 1vw;
+    width:5vw;
+    height:1.5vw;
+}
+
+.reject_button:hover{
+    cursor:pointer;
+    background-color: rgb(186, 32, 57);
+}
+
+.tick{
+    color:green;
+    font-size:2vw;
+}
+
+.cross{
+    color:red;
+    font-size:1vw;
+}
