@@ -9,8 +9,8 @@
     display: block;
     position: relative;
     width: 60%;
-    height: 75%;
-    top: 10%;
+    height: 85%;
+    top: 5%;
     left: 20%;
     bottom: 2.5%;
     background-color: #f3f0cf;
@@ -24,7 +24,7 @@
     font-size: 1.25vw;
     height: 15%;
     padding: 2.5% 5% 2.5% 5%;
-    margin-bottom: 2vh;
+    margin-bottom: 8vh;
 }
 
 #signup_hr {
@@ -66,4 +66,8 @@
     height: 3.5vh;
     font-size: 1.25vw;
     background-color: #e9d311;
+}
+
+#signup_form button:hover {
+    cursor: pointer;
 }

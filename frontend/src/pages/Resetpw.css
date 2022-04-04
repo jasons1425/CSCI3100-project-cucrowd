@@ -40,6 +40,10 @@
     background-color: beige;
 }
 
+#resetpw_form button:hover {
+    cursor: pointer;
+}
+
 #resetpw_form input {
     width: 20%;
 }

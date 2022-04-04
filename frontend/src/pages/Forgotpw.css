@@ -1,11 +1,9 @@
 #forgotpw {
-    display: block;
     text-align: center;
     background-color: white;
     border: solid rgba(255, 255, 0, 0.253);
-    padding: 5% 10% 5% 10%;
+    padding: 5vh 10vw 5vh 10vw;
     position: absolute;
-    height: 50%;
 }
 
 #forgotpw_page {
@@ -17,14 +15,24 @@
     justify-content: center;
 }
 
+#forgotpw div {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+}
+
 #forgotpw-button {
-    margin: 20px 0px 0px 0px;
-    height: 30px;
-    width: 50px;
+    margin: 2% 0 2% 0;
     background-color: beige;
 }
 
+#forgotpw-button:hover {
+    cursor: pointer;
+}
+
 #loading_forgotpw {
-    margin: 30px 0px 0px 0px;
-    font-size: 20px;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    font-size: 1.5vw;
 }

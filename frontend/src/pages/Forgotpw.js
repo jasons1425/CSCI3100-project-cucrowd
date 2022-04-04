@@ -47,7 +47,7 @@ function Forgotpw() {
         <div>
           <button type="reset" id="forgotpw-button"  onClick={(e) => sendemail(e)}>Send</button>
         </div>
-        {isSending && <section id="loading_forgotpw">Loading... Please wait.</section>}
+        <div>&nbsp;{isSending && <section id="loading_forgotpw">Loading... Please wait.</section>}</div>
       </form>
     </div>
     
