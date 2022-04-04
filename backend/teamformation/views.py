@@ -39,6 +39,8 @@ class TeamView(viewsets.ModelViewSet):
 
     def create(self, request, *args, **kwargs):
         host = request.user
+        if host.is_org:
+            raise ValidationError({"result": False, "message": "Only student users can create questionnaires."})
         if type(request.data) is not dict:  # i.e. is immutable QueryDict
             request.data._mutable = True
         for key in list(request.data.keys()):
@@ -145,6 +147,8 @@ class TeamView(viewsets.ModelViewSet):
         if not instance.publishable:
             raise ValidationError({"result": False, "message": "The team is not open for application anymore."})
         user = request.user
+        if user.is_org:
+            raise ValidationError({"result": False, "message": "Only student users can apply for joining the team."})
         existing_application = Teammates.objects.filter(teamformation=instance, info=user)
         if existing_application:
             raise ValidationError({"result": False,
