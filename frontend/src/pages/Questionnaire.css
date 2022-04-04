@@ -12,8 +12,8 @@
     flex-direction: row;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
     position: fixed;
-    height: 4.5vh;
     width: 100%;
+    z-index: 99;
 }
 
 .questionnaire_space {
@@ -57,6 +57,8 @@
 
 .questionnaire_post_content ul {
     list-style-type: none;
+    height: 22vh;
+    font-size: 1vw;
 }
 
 .questionnaire_post_title {
@@ -77,4 +79,37 @@
     border: 0.02vw solid black;
     margin-left: 17.5vw;
     margin-right: 30vw;
+}
+
+.questionnaire_search {
+    margin-left: 15vw;
+    padding-bottom: 1vw;
+    display: flex;
+}
+
+.questionnaire_search .questionnaire_search_bar {
+    width: 40vw;
+    height: 5vh;
+    border-radius: 0.5vw;
+    font-size: 1vw;
+}
+.questionnaire_search .questionnaire_search_icon {
+    padding-top: 0.5vw;
+    padding-right: 0.75vw;
+    font-size: 2vw;
+}
+
+.questionnaire_search .questionnaire_search_edit_icon {
+    padding-top: 0.75vw;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+    margin-left: 3vw;
+    font-size: 1.5vw;
+}
+
+.questionnaire_search .questionnaire_search_edit_icon:hover {
+    cursor: pointer;
+    background-color: white;
+    border-radius: 1vw;
+    border-style: outset;
 }

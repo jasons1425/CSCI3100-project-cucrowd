@@ -1,12 +1,14 @@
 import './Questionnaire_details.css'
 import * as Ri from "react-icons/ri";
-import {useState, useEffect} from 'react'
+import { BiCaretLeft, BiCaretRight } from "react-icons/bi";
+import {useState, useEffect, us} from 'react'
 
 function Questionnaire_details() {
     const[type, setType] = useState(-1);
+    const[number, setNumber] = useState(1);
+    const maxno = 2;
 
     useEffect(()=> {
-        /* ... */
         let x = window.location.pathname.split("/")
         if(x[2] == 1){
             setType(2);
@@ -18,6 +20,7 @@ function Questionnaire_details() {
             setType(3)
         }
     },[])
+
 
     return(
         <div className="questionnaire_details">
@@ -36,39 +39,63 @@ function Questionnaire_details() {
 
             <div className="questionnaire_details_content">
                 <div className="questionnaire_detials_info">
-                    <div className="questionnaire_details_title">
-                        <p>Title</p>
-                        <p>expected finishing time</p>
-                        <p>deadline</p>
-                    </div>
-                    <div className="questionnaire_details_description">
-                        <p>Purpose/ description</p>
+                    <table className="questionnaire_details_title">
+                        <tbody>
+                            <tr>
+                                <td><b>Title</b></td>
+                                <td>I am a title</td>
+                            </tr>
+                            <tr>
+                                <td><b>Expected Finishing Time</b></td>
+                                <td>I am expected time</td>
+                            </tr>
+                            <tr>
+                                <td><b>Deadline</b></td>
+                                <td>I am deadline</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div className="questionnaire_details_description">      
+                        <h4><b>Purpose/ description</b></h4>
+                        <p>sssss</p>
                     </div>
                 </div>
+
+                {type !== 4 && <div className="progress_bar">
+                    <div className="bar" id="bar" style={{width: (100/maxno)*number + "%"}}></div>
+                </div>
+                }
+
                 <div className="questionnaire">
-                    {type === 1 && <LongQ number="1"/>}
-                    {type === 2 && <MC number="1"/>}
-                    {type === 3 && <Scoring number="1"/>}
-                    {type === 4 && <GoogleForm/>}
+                    <div className="questionnaire_left_icon">{number !== 1 && <BiCaretLeft onClick={()=> setNumber(number - 1)}/>}</div>
+                    <div className="question">
+                        {type === 1 && <LongQ number={number}/>}
+                        {type === 2 && <MC number={number}/>}
+                        {type === 3 && <Scoring number={number}/>}
+                        {type === 4 && <GoogleForm/>}
+                       
+                    </div>
+                    <div className="questionnaire_right_icon">{number !== maxno && <BiCaretRight onClick={()=> setNumber(number + 1)}/>}</div>
                 </div>
+                
                 <div>
+                    <button className="questionnaire_back_button" type="button" onClick={()=> window.location.pathname="/question"}>Back</button>
+                {type !==4 &&
                     <button className="questionnaire_submit_button" type="button">Submit</button>
+                }
                 </div>
             </div>
         </div>
     )
 }
-  
-export default Questionnaire_details;
 
 function LongQ({number}){
     return(
         <div className="LongQ">
             <p>
-                Question:
+                Question {number}:
             </p>
-            <label htmlFor={number}>Answer:<br/></label>
-            <textarea type="text" name={number} id={number}></textarea>
+            <textarea type="text" name={number} id={number} placeholder="type your answer here"></textarea>
         </div>
     )
 }
@@ -76,22 +103,24 @@ function LongQ({number}){
 function MC({number}){
     return(
         <div className="MC">
-            <p>Question: </p>
-            <div>
-                <input type="radio" name={number} id={number+'A'}></input>
-                <label htmlFor={number+'A'}>A: </label>
-            </div>
-            <div>
-                <input type="radio" name={number} id={number+'B'}></input>
-                <label htmlFor={number+'B'}>B: </label>
-            </div>   
-            <div>
-                <input type="radio" name={number} id={number+'C'}></input>
-                <label htmlFor={number+'C'}>C: </label>
-            </div>   
-            <div>
-                <input type="radio" name={number} id={number+'D'}></input>
-                <label htmlFor={number+'D'}>D: </label>
+            <p>Question {number}: </p>
+            <div className="MC_choice">
+                <div>
+                    <input type="radio" name={number} id={number+'A'}></input>
+                    <label htmlFor={number+'A'}>A: </label>
+                </div>
+                <div>
+                    <input type="radio" name={number} id={number+'B'}></input>
+                    <label htmlFor={number+'B'}>B: </label>
+                </div>   
+                <div>
+                    <input type="radio" name={number} id={number+'C'}></input>
+                    <label htmlFor={number+'C'}>C: </label>
+                </div>   
+                <div>
+                    <input type="radio" name={number} id={number+'D'}></input>
+                    <label htmlFor={number+'D'}>D: </label>
+                </div>
             </div>
         </div>
     )
@@ -100,16 +129,13 @@ function MC({number}){
 function Scoring({number}){
     return(
         <div className="scoring">
-                <p>
-                    Question:
-                </p>
-                <div className="score_mark">
-                    <label className="scoring_1" htmlFor="1">1</label>
-                    <label className="scoring_5" htmlFor="5">5</label>
-                    <label className="scoring_10" htmlFor="10">10</label>
+                <p>Question {number}:</p>
+                <input type="range" defaultValue="1" min="1" max="10" className="slider" name={number} id={number} onChange={()=> update(number)}></input>
+                <div className="bubble">
+                    <div className="bubble_img" id="bubble_img" style={{marginLeft : "-0.5%"}}>
+                        {1}
+                    </div>
                 </div>
-                <input type="range" min="1" max="10" className="slider" name={number} id={number} onChange={()=> update(number)}></input>
-                <p id="score_value">Value: </p>
         </div>
     )
 }
@@ -117,13 +143,17 @@ function Scoring({number}){
 function GoogleForm(){
     return(
         <div className="googleForm">
-            <a href=" ">Link to goole form</a>
+            <a href=" ">Click to Goole Form</a>
         </div>
     )
 }
 
 function update(number){
     let x = document.getElementById(number).value;
-    let y = document.getElementById("score_value");
-    y.innerHTML = "Value: " + x;
+    let y = document.getElementById("bubble_img");
+    y.innerHTML = x;
+    y.style.marginLeft = (-0.5 + (x-1) * (97/9)) + "%";
 }
+
+  
+export default Questionnaire_details;

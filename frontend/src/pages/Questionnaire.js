@@ -1,6 +1,8 @@
 import React from 'react'
 import './Questionnaire.css'
 import * as Ri from "react-icons/ri";
+import * as Io from "react-icons/io";
+import * as Ai from "react-icons/ai";
 import sample from '../components/sample.jpg'
 
 function Questionnaire() {
@@ -17,6 +19,15 @@ function Questionnaire() {
 
       <div className="questionnaire_space">
         &nbsp;
+      </div>
+
+      <div className="questionnaire_search">
+        <div className="questionnaire_search_icon"><Ai.AiOutlineSearch /></div>
+          <input className="questionnaire_search_bar" type="text" placeholder="Search..." 
+            onChange={(e)=>{
+              let SearchItemsLowerCase = e.target.value.toLowerCase();
+              setSearchItems(SearchItemsLowerCase);}}/>
+          <div className="questionnaire_search_edit_icon" onClick={()=>{window.location.pathname='/question/edit';}}><Io.IoMdCreate/></div>
       </div>
 
       <section>
@@ -53,4 +64,8 @@ function QuestionnairePost({id, type}){
         <hr className="questionnaire_post_line"/>
     </div>
   )
+}
+
+function setSearchItems(){
+  
 }
