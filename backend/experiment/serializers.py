@@ -22,6 +22,14 @@ class ExperimentSerializer(serializers.ModelSerializer):
                   "deadline", "vacancy", "description", "timeslots", "requirements"]
 
 
+class ExperimentPreviewSerializer(serializers.ModelSerializer):
+    host = CrowdUserSerializer(many=False)
+
+    class Meta:
+        model = Experiment
+        fields = ["id", "title", "host", "deadline"]
+
+
 class EnrollmentSerializer(serializers.ModelSerializer):
     participant = CrowdUserSerializer(many=False, required=False, allow_null=True)
 
@@ -37,6 +45,15 @@ class EnrollmentSerializer(serializers.ModelSerializer):
         except FieldValidationError as e:
             raise ValidationError({"result": False, "message": f"{e.args}"})
         return enrollment
+
+    class Meta:
+        model = Enrollment
+        fields = ["id", "experiment", "participant", "selected_time"]
+
+
+class EnrollmentPreviewSerializer(serializers.ModelSerializer):
+    participant = CrowdUserSerializer(many=False)
+    experiment = ExperimentPreviewSerializer(many=False)
 
     class Meta:
         model = Enrollment
