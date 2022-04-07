@@ -71,6 +71,6 @@ This section has moved here: [https://facebook.github.io/create-react-app/docs/t
 
 # To start the frontend server of CUCROWD
 
-npm i react-script --save
-npm install axios --save
-npm start
+npm i react-script --save  
+npm install axios --save  
+npm start  
