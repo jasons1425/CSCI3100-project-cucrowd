@@ -28,7 +28,11 @@
     text-align: center;
     margin-left: 260px;
     width: 400px;
-
+    color: red;
+    text-decoration: underline;
+}
+.exp_enrolled_list #username{
+    cursor: pointer;
 }
 .exp_enrolled_list #email{
     margin-left: 50px;

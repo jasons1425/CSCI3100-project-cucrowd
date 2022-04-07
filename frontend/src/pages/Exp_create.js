@@ -149,25 +149,88 @@ function create(){
   }
   if(missing==0){
   submit_exp();
-  window.location.pathname='/experiments/add';
   }
 }
 function submit_exp(){
-  let payload = {
-    title: document.getElementById("exp_title").value,
-    subtitle: document.getElementById("subtitle").value,
-    target: document.getElementById("target").value,
-    job_nature: document.getElementById("jobs").value,
-    type: document.getElementById("types").value,
-    duration: document.getElementById("duration").value,
-    salary: document.getElementById("salary").value,
-    venue: document.getElementById("venue").value,
-    deadline: document.getElementById("deadline").value,
-    vacancy:document.getElementById("vacancy").value,
-    description: document.getElementById("description").value,
-    timeslots:document.getElementById("timeslot").value
-};
-  axios.post('http://localhost:8000/api/experiment/', payload, {withCredentials : true},{
+
+  let payload;
+  if(document.getElementById("requirements").value==""){
+      payload = {
+      title: document.getElementById("exp_title").value,
+      subtitle: document.getElementById("subtitle").value,
+      target: document.getElementById("target").value,
+      job_nature: document.getElementById("jobs").value,
+      type: document.getElementById("types").value,
+      duration: document.getElementById("duration").value,
+      salary: document.getElementById("salary").value,
+      venue: document.getElementById("venue").value,
+      deadline: document.getElementById("deadline").value,
+      vacancy:document.getElementById("vacancy").value,
+      description: document.getElementById("description").value,
+      timeslots:document.getElementById("timeslot").value,
+  };
+  }else{
+    payload = {
+      title: document.getElementById("exp_title").value,
+      subtitle: document.getElementById("subtitle").value,
+      target: document.getElementById("target").value,
+      job_nature: document.getElementById("jobs").value,
+      type: document.getElementById("types").value,
+      duration: document.getElementById("duration").value,
+      salary: document.getElementById("salary").value,
+      venue: document.getElementById("venue").value,
+      deadline: document.getElementById("deadline").value,
+      vacancy:document.getElementById("vacancy").value,
+      description: document.getElementById("description").value,
+      timeslots:document.getElementById("timeslot").value,
+      requirements:document.getElementById("requirements").value,
+  }
+}
+  
+  axios.post('http://localhost:8000/api/experiment/', payload, {withCredentials : true})
+  .then((response)=>{
+    console.log(response.data.id)
+    let formData = new FormData();
+    let image = document.querySelector('#image');
+    formData.append("exp_img", image.files[0]);
+    axios.put('http://localhost:8000/api/experiment/'+response.data.id, formData, {withCredentials : true},{
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    })
+    alert("Created Post Successfully ")
+    window.location.pathname='/experiments/add';
+  })
+  .catch((error)=>{
+    console.log(error)
+    if(error.response.data.vacancy!=null&&error.response.data.timeslots!=null&&error.response.data.deadline!=null){
+    alert("Vancancy: "+ error.response.data.vacancy+"\n"+"TimeSlots: "+error.response.data.timeslots+"\n"+"Deadline: "+error.response.data.deadline
+      )
+    }
+    if(error.response.data.vacancy!=null&&error.response.data.timeslots!=null&&error.response.data.deadline==null){
+      alert("Vancancy: "+ error.response.data.vacancy+"\n"+"TimeSlots: "+error.response.data.timeslots+"\n"
+        )
+      }
+      if(error.response.data.vacancy!=null&&error.response.data.deadline!=null&&error.response.data.timeslots==null){
+        alert("Vancancy: "+ error.response.data.vacancy+"\n"+"Deadline: "+error.response.data.deadline+"\n"
+          )
+        }
+        if(error.response.data.deadline!=null&&error.response.data.timeslots!=null&&error.response.data.vacancy==null){
+          alert("TimeSlots: "+ error.response.data.timeslots+"\n"+"Deadline: "+error.response.data.deadline+"\n"
+            )
+          }
+          if(error.response.data.vacancy!=null&&error.response.data.deadline==null&&error.response.data.timeslots==null){
+            alert("Vancancy: "+ error.response.data.vacancy
+              )
+            }
+            if(error.response.data.timeslots!=null&&error.response.data.deadline==null&&error.response.data.vacancy==null){
+              alert("TimeSlots: "+ error.response.data.timeslots
+                )
+              }
+              if(error.response.data.deadline!=null&&error.response.data.timeslots==null&&error.response.data.vacancy==null){
+                alert("deadline: "+ error.response.data.deadline
+                  )
+                }
   })
 }
 
@@ -256,7 +319,7 @@ function submit_exp(){
         <label>Requirements: </label> <br/>
         <textarea rows="10" cols="165" name="requirements" id="requirements" form="requirementform"></textarea><br/>
         
-        <label>TimeSlot:</label><br/>
+        <label>TimeSlot (Enter each allowed time delimited by `;`, e.g. 2022-03-27-16:00;2022-03-28-17:00):</label><br/>
         <textarea rows="12" cols="165" name="timeslot" id="timeslot" form="timeslotform" required></textarea>
         <br/>
 

@@ -16,6 +16,8 @@
     height: 1.5vw;
     width: 50vw;
     font-size: 1vw;
+    border:solid;
+    border-radius: 0.4vw;
 }
 
 .questionnaire_add_time input {
@@ -23,6 +25,8 @@
     height: 1.5vw;
     font-size: 1vw;
     margin-right: 15vw;
+    border:solid;
+    border-radius: 0.4vw;
 }
 
 .questionnaire_add_purpose textarea {
@@ -40,6 +44,8 @@
     height: 1.5vw;
     font-size: 1vw;
     margin-right: 15vw;
+    border:solid;
+    border-radius: 0.4vw;
 }
 
 .questionnaire_add_type select {
@@ -47,6 +53,8 @@
     height: 1.5vw;
     font-size: 1vw;
     margin-right: 15vw;
+    border:solid;
+    border-radius: 0.4vw;
 }
 
 .MCQ_add div {
@@ -56,17 +64,23 @@
 .MCQ_add .add_question input {
     width: 50vw;
     font-size: 1vw;
+    border:solid;
+    border-radius: 0.4vw;
 }
 
 .add_question input {
     width: 50vw;
     font-size: 1vw;
+    border:solid;
+    border-radius: 0.4vw;
 }
 
 .MCQ_add input {
     height: 1.25vw;
     width: 25vw;
     font-size: 1vw;
+    border:solid;
+    border-radius: 0.4vw;
 }
 
 .questionnaire_edit_add_button {

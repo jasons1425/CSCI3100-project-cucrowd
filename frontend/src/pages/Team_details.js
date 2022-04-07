@@ -51,7 +51,7 @@ function Team_details() {
 
           <aside className="details_team_member">
             <p><u>Team Member</u></p>
-            {data.members.map((element, index) => <MemberCard key={index} name={element.info.user.username} sid={element.info.sid} year={year - element.info.admission_year.slice(0,4)} major={element.info.major} avatar={element.info.avator}></MemberCard>)}
+            {data.members.map((element, index) => <MemberCard key={index} name={element.info.user.username} sid={element.info.sid} year={year - element.info.admission_year.slice(0,4)} major={element.info.major} avatar={element.info.avator} id={id}></MemberCard>)}
             {data.teamsize - data.members.length !== 0 && emptyhandling(data.teamsize - data.members.length)}
           </aside>
 
@@ -105,10 +105,11 @@ function Team_details() {
   
 export default Team_details;
 
-function MemberCard({name, year, major, sid, avatar}){
+function MemberCard({name, year, major, sid, avatar, id}){
   return (
-    <div className="membercard" onClick={()=>profile(name)}>
-      <img src={avatar!=null ? require("../components/" + avatar) : require("../components/avatar.jpg")} alt="Avatar"></img>
+    <div className="membercard" onClick={()=>profile(name, id)}>
+      {avatar == undefined && <img src={require("../components/avatar.jpg")} alt="Avatar"></img>}
+      {avatar != undefined && <img src={avatar} alt="Avatar"></img>}
       <div>
         <h4><b>{name}</b></h4>
         <p>{sid}</p>
@@ -122,7 +123,7 @@ function MemberCard({name, year, major, sid, avatar}){
 function EmptyMemberCard({name, year, major, sid, avatar}){
   return (
     <div className="membercard">
-      <img src={avatar!=null ? require("../components/" + avatar) : require("../components/avatar.jpg")} alt="Avatar"></img>
+      <img src={require("../components/avatar.jpg")} alt="Avatar"></img>
       <div>
         <h4><b>{name}</b></h4>
         <p>{sid}</p>
@@ -141,8 +142,8 @@ function emptyhandling(count){
     return array;
 } 
 
-function profile(name){
-    window.location.href = "http://localhost:3000/profile/" + name
+function profile(name, id){
+    window.location.href = "http://localhost:3000/profile/" + name + "/team/" + id
 }
 
 function jointeam(id){

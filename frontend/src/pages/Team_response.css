@@ -77,3 +77,17 @@
     color:red;
     font-size:1vw;
 }
+
+.table_name{
+    background-color: rgb(59, 207, 252);
+    font-size: 1vw;
+    border-radius:0.5vw;
+    padding:0.2vw;
+    width:5vw;
+}
+
+.table_name:hover{
+    background-color: rgb(22, 132, 166);
+    cursor:pointer;
+}
+

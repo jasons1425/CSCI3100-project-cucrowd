@@ -27,7 +27,7 @@ function List(id){
       });
     }, []);
     
-
+  
   function enroll(){
     let selected = document.getElementById("exp_time");
     let payload = {experiment : id.id, selected_time : selected.value};
@@ -49,6 +49,22 @@ function List(id){
   try{
     const timesplit=items.timeslots.split(';');
     console.log(timesplit[0])
+
+    let job;
+    if (items.type=="FT"){
+      job="FullTime"
+    }
+    if (items.type=="Intern"){
+      job="internship"
+    }
+    if (items.type=="PT"){
+      job="PartTime"
+    }
+    if (items.type=="NA"){
+      job="others"
+    }
+
+    console.log(job)
   return(
     <>
     <div >
@@ -61,8 +77,10 @@ function List(id){
       <div id='picture'><img src={items.exp_img} width="90%" height="85%" ></img></div>
       <ul className='exp_detail_list'>
       <li id='exp_date'>{items.post_date.substring(0,10)}</li>
+      
       <li id='exp_title'>{items.title}</li>
       <li id='exp_title'>{items.subtitle}</li>
+      <li id='host'>Created by:&nbsp;&nbsp; <div id='exp_host'onClick={()=>{window.location.pathname='/experiments/'+id.id+'/'+items.host.username;}}> {items.host.username}</div></li>
       </ul>
     </div>
     <div className='exp_detail1'>
@@ -73,7 +91,7 @@ function List(id){
       <li id='description'>{items.requirements}</li>
       <li className='sub-title'><div style={{fontWeight:"bold"}}>Target:</div> &nbsp;&nbsp;{items.target}</li>
       <li className='sub-title'><div style={{fontWeight:"bold"}}>Job Nature:</div> &nbsp;&nbsp;{items.job_nature}</li>
-      <li className='sub-title'><div style={{fontWeight:"bold"}}>Type:</div> &nbsp;&nbsp;{items.type}</li>
+      <li className='sub-title'><div style={{fontWeight:"bold"}}>Type:</div> &nbsp;&nbsp;{job}</li>
       <li className='sub-title'><div style={{fontWeight:"bold"}}>Duration:</div> &nbsp;&nbsp;{items.duration}</li>
       <li className='sub-title'><div style={{fontWeight:"bold"}}>Reward:</div> &nbsp;&nbsp;{items.salary}</li>
       <li className='sub-title'><div style={{fontWeight:"bold"}}>Venue:</div> &nbsp;&nbsp;{items.venue}</li>
