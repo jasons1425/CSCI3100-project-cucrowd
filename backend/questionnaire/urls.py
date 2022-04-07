@@ -10,6 +10,6 @@ class StandardRouter(SimpleRouter):
 
 
 router = StandardRouter()
-router.register(r'questionnaire', views.ExperimentView, basename='questionnaire')
-router.register(r'answer', views.EnrollView, basename="answer")
+router.register(r'questionnaire', views.QuestionnaireView, basename='questionnaire')
+router.register(r'answer', views.AnsView, basename="answer")
 urlpatterns = router.urls
