@@ -18,10 +18,22 @@
     padding-top: 3vh;
     font-size: 0.8vw;
 }
+.exp_detail #host{
+    margin-top: 10px;
+    display: flex;
+    font-size: 20px;
+    padding-left: 1vw;
+}
+.exp_detail #exp_host{
+    text-decoration: underline;
+    color: red;
+}
+.exp_detail #exp_host:hover{
+    cursor: pointer;
+}
 
 .exp_detail #exp_title{
     padding-left: 1vw;
-    padding-top: 1vh;
     font-size: 30px;
     width: 35vw;
     font-weight: bold;

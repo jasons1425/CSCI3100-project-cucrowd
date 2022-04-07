@@ -11,12 +11,13 @@ function Exp(){
     
     const [SearchItems, setSearchItems] = useState("");
     
+   try{
     return(
+        
         <>
             <div className="banner"> 
             <div className='icon'><Ai.AiTwotoneExperiment /> </div>
             <div className='title1'>Experiements</div>
-            
             </div>
             <div className="search">
             <div id="icon"><Ai.AiOutlineSearch /></div>
@@ -29,16 +30,30 @@ function Exp(){
             <div><List input={SearchItems}/></div>
         </>
     );
+}catch(e){
+        return("")
+    }
     
+            
 }
-
-
-
     
 
 function List(props){
 
-    
+    const [identity, setIdentity] = useState([{}]);
+
+  useEffect(() => {
+    axios.get("http://localhost:8000/api/profile/me", {withCredentials : true}).then((response) => {
+        setIdentity(response.data);
+      });
+    }, []);
+    try{
+    if(identity.user.identity=="student user"){
+        document.getElementById("edit_icon").style.display="none";
+    }
+}catch(e){
+    console.log("hi")
+}
   const [items, setItems] = useState([{}]);
 
   useEffect(() => {
@@ -63,7 +78,7 @@ function List(props){
             {matchData.map(item=>(
             <><div className='container1'>
             <ul className='exp_list'>
-                <li className='picture'><img src={item.exp_img} width="90%" height="85%"></img></li>
+                <li className='picture'><img src={item.exp_img} width="300px" height="280px"></img></li>
             <li className='exp_item'>
                     <div id='exp_date'>{item.post_date.substring(0,10)}</div>
                     <div id='exp_title'>{item.title.substring(0,200)}</div>

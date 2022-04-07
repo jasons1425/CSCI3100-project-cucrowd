@@ -23,6 +23,10 @@ import Exp_edit from './pages/Exp_edit';
 import Exp_response from './pages/Exp_response'
 import Exp_detail from './pages/Exp_detail'
 import Team_response from './pages/Team_response'
+import Profile from './pages/Profile'
+import Stu_profile from './pages/Stu_profile';
+import Org_edit from './pages/Org_edit';
+import Org_profile from './pages/Org_profile';
 
 import { useEffect, useState } from 'react';
 
@@ -67,6 +71,10 @@ function App() {
           <Sidebar />
           <Routes>
           <Route path='/' element={<Home/>} />
+          <Route path='/profile' element={<Profile/>} />
+            <Route path='/profile/edit/:username' element={<Org_edit/>} />
+            <Route path='/profile/:username/:feature/:id' element={<Stu_profile/>} />
+            <Route path='/experiments/:id/:username' element={<Org_profile/>} />
             <Route path='/experiments' element={<Exp/>} />
             <Route path='/experiments/:id' element={<Exp_detail/>} />
             <Route path='/experiments/add' element={<Exp_add/>} />

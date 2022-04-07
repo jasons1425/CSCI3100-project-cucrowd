@@ -1,100 +1,137 @@
-.home {
-  position: relative;
-  margin-left: 270px;
+.home{
+  position:relative;
+  margin-left: 11.1%;
   align-items: center;
   justify-content: center;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;  
 }
 
-.container {
-  margin-left: 100px;
+.container{
+  margin-left: 2vw;
+ 
 }
-
+.username{
+  padding-top: 10px;
+  font-size: 25px;
+  margin-left: 110px;
+  font-weight: bold;
+  display:flex;
+}
 .column {
+  
   float: left;
-  width: 500px;
-  padding: 10px;
-  height: 680px;
-  margin: 50px;
+  width: 20vw;
+  padding: 0.5vw;
+  height: 55vh;
+  margin: 2vw;
   border-style: solid;
   border-color: purple;
-  border-radius: 25px;
+  border-radius: 1vw;
+  
 }
 
 .row:after {
+    
   content: "";
   display: table;
   clear: both;
 }
 
-.postphoto {
-  margin-top: 10px;
-  margin-left: 10px;
-  margin-right: 10px;
-  width: 480px;
-  height: 400px;
+.postphoto{
+  margin-top:0.5vw;
+  margin-left: 1.5vw;
+  margin-right: 0.5vw;
+  width: 19vw;
+  height:30vh;
   background-color: white;
+  font-size: 0.8vw;
+
 }
 
-.postauthor {
-  margin-top: 5px;
-  margin-left: 15px;
-  font-size: large;
+.postauthor{
+  margin-top: 0.5vh;
+  margin-left: 0.5vw;
+  font-size:0.8vw;
+  font-weight: bold;
+
 }
 
-.description {
+.description{
   background-color: white;
-  margin-top: 30px;
-  font-size: large;
-  width: 480px;
-  height: 200px;
-  margin-left: 10px;
+  margin-top: 0.5vw;
+  font-size: 0.6vw;
+  width: 19vw;
+  height: 16vh;
+  margin-left: 0.5vw;
+
 }
-.title {
-  margin-left: 100px;
-  font-size: 80px;
-  padding-top: 50px;
-  color: purple;
+.title{
+  margin-left: 4vw;
+  font-size: 3vw;
+  padding-top: 2vw;
+  color:purple;
+  font-weight: bold;
+  
+}
+
+.intro{
+  padding-top: 70px;
+  margin-left: 110px;
+  font-size: 20px;
   font-weight: bold;
 }
 
-.intro {
-  margin-left: 100px;
-  font-size: 25px;
-}
-
-.background1 {
+.background1{
+  
   background-color: white;
 }
 
-.viewmore {
-  margin-left: 1700px;
+.viewmore{
+  margin-left: 70vw;
   display: inline-block;
-  padding: 15px 20px;
-  font-size: 25px;
-  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  padding: 0.8vw 1vw;
+  font-size: 1vw;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
   cursor: pointer;
   text-align: center;
   text-decoration: none;
   color: #fff;
-  background-color: #4caf50;
+  background-color: #4CAF50;
   border: none;
-  border-radius: 25px;
+  border-radius: 1vw;
 }
 
-.viewmore:hover {
-  background-color: #3e8e41;
-}
+.viewmore:hover {background-color: #3e8e41}
 
 .viewmore:active {
-  background-color: #3e8e41;
-  transform: translateY(4px);
+background-color: #3e8e41;
+transform: translateY(4px);
 }
 
-.title-sub {
-  color: #d4af37;
-  padding-top: 10px;
-  margin-left: 100px;
-  font-size: 30px;
+.title-sub{
+  color:#d4af37;
+  padding-top: 1vw;
+  margin-left: 4vw;
+  font-size: 1vw;
   font-weight: bold;
+}
+
+.line1{
+  border-style: solid;
+  border-color: black;
+}
+
+.username #username1{
+  color: purple;
+  text-decoration: underline;
+}
+.username #username1:hover{
+  cursor: pointer;
+}
+
+.home_line{
+
+}
+.home_line #line{
+  border-color: black;
 }

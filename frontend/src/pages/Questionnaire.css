@@ -82,29 +82,30 @@
 }
 
 .questionnaire_search {
-    margin-left: 15vw;
+    margin-left: 22vw;
     padding-bottom: 1vw;
     display: flex;
+    margin-top:2vw;
 }
 
 .questionnaire_search .questionnaire_search_bar {
-    width: 40vw;
-    height: 5vh;
+    width: 33.5vw;
+    height: 4vh;
     border-radius: 0.5vw;
-    font-size: 1vw;
+    font-size: 0.9vw;
 }
 .questionnaire_search .questionnaire_search_icon {
     padding-top: 0.5vw;
     padding-right: 0.75vw;
-    font-size: 2vw;
+    font-size: 1.75vw;
 }
 
 .questionnaire_search .questionnaire_search_edit_icon {
     padding-top: 0.75vw;
     padding-left: 0.5vw;
     padding-right: 0.5vw;
-    margin-left: 3vw;
-    font-size: 1.5vw;
+    margin-left: 2vw;
+    font-size: 1.25vw;
 }
 
 .questionnaire_search .questionnaire_search_edit_icon:hover {

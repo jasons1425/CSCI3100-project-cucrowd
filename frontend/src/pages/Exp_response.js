@@ -37,7 +37,7 @@ function Exp_response() {
         {items.map(item=>(
             <>
             <div className='exp_enrolled_list'>
-            <div id="username">{item.participant.username}</div>
+            <div id="username" onClick={()=>{window.location.pathname='/profile/'+item.participant.username+'/exp/'+params.id;}}>{item.participant.username}</div>
             <div id="email">{item.participant.email}</div>
             <div id="time">{item.selected_time}</div>
             <div id="cancel" onClick={()=>{if (window.confirm("Are you sure you want to cancel the enrollment of " +item.participant.username)) {
