@@ -29,7 +29,7 @@ class StudentPreviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = StudentProfile
-        fields = ["user", "major", "sid", "admission_year"]
+        fields = ["user", "major", "sid", "admission_year", "avatar"]
 
 
 class OrgProfileSerializer(serializers.ModelSerializer):
@@ -45,4 +45,4 @@ class OrgPreviewSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = OrgUserProfile
-        fields = ["user", "org_name", "org_url"]
+        fields = ["user", "org_name", "org_url", "avatar"]
