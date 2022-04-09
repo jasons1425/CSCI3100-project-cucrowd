@@ -7,7 +7,7 @@ from rest_framework.permissions import IsAuthenticated, AllowAny, IsAdminUser
 from rest_framework.exceptions import ValidationError
 from rest_framework.decorators import action
 from .serializers import QuestionnaireSerializer, AnswerSerializer
-from .model import Questionnaire, Answer
+from .models import Questionnaire, Answer
 from datetime import date
 
 
