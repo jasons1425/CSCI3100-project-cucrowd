@@ -1,9 +1,11 @@
 import React from 'react'
+import './sidebar.css';
 import * as Cg from "react-icons/cg";
 import * as Ai from "react-icons/ai";
 import * as Ri from "react-icons/ri";
+import * as Fi from "react-icons/fi";
 import icon from './whitelogo1.png'
-import './sidebar.css';
+import axios from 'axios';
 
 const Sidebardata=[
     {
@@ -26,13 +28,18 @@ const Sidebardata=[
         icon:<Ri.RiTeamFill />,
         path:"/team",
     }, 
+    {
+        title:"Profile",
+        icon:<Cg.CgProfile />,
+        path:"/profile",
+    },
 ]
 
 function Sidebar() {
     return (
         <>
             <div className='Sidebar'>
-                <div className='photo'><img src={icon} width="200" height="50"></img></div>
+                <div className='photo' onClick={()=>{window.location.pathname='/';}}><img src={icon} width="80%" height="10%"></img></div>
                     <hr/>
                     <ul className="SidebarContainer"> 
                         {Sidebardata.map((item, index) => {
@@ -44,9 +51,9 @@ function Sidebar() {
                             );
                         })}
                         <hr className='bottomline'/>
-                        <li className="profile" onClick={()=>{window.location.pathname='/profile';}}>
-                            <div id="proicon"><Cg.CgProfile /></div>
-                            <div id="protitle">Profile</div>
+                        <li className="profile" onClick={()=>logout()}>
+                            <div id="proicon"><Fi.FiLogOut /></div>
+                            <div id="protitle">Logout</div>
                         </li>
                     </ul>
             </div>
@@ -55,3 +62,14 @@ function Sidebar() {
 }
 
 export default Sidebar
+
+function logout(){
+    axios
+        .post("http://localhost:8000/api/logout", null, {withCredentials : true})
+        .then((res)=>{
+            window.location.pathname="/";
+        })
+        .catch((err)=>{
+            alert(err.response.data.message);
+        })
+}
