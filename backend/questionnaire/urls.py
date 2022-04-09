@@ -11,5 +11,5 @@ class StandardRouter(SimpleRouter):
 
 router = StandardRouter()
 router.register(r'questionnaire', views.QuestionnaireView, basename='questionnaire')
-router.register(r'answer', views.AnsView, basename="answer")
+router.register(r'answer', views.AnswerView, basename="answer")
 urlpatterns = router.urls
