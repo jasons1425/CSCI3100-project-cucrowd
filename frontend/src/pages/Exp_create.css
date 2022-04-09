@@ -1,0 +1,145 @@
+.exp_form{
+    width: 1750px;
+    height: 1830px;
+    margin-left: 450px;
+    margin-top: 200px;
+    margin-bottom: 100px;
+    border-radius: 15px;
+    border-color: black;
+    font-size: 30px;
+    padding: 50px;
+
+    
+}
+
+textarea{
+    margin-top: 10px;
+    font-size: 18px;
+    margin-left: 50px;
+    border-radius: 10px;
+    border: solid;
+
+}
+.exp_form #icon{
+    font-size: 50px;
+    font-weight: bold;
+    color: purple;
+    margin-bottom: 30px;
+}
+.exp_form input{
+    width: 500px;
+    height: 50px;
+    border:solid;
+    border-radius: 15px;
+    margin-left: 20px;
+    margin-bottom: 30px;
+    font-size: 20px;
+    padding-left: 10px;
+}
+.exp_form input[name="title"]{
+    width: 1600px;
+    margin-left: 61px;
+}
+
+.exp_form input[name="subtitle"]{
+    width: 1200px;
+}
+
+.exp_form input[name="target"]{
+    width: 1000px;
+    margin-left: 36px;
+}
+.exp_form input[name="duration"]{
+    width: 300px;
+}
+
+.exp_form input[name="salary"]{
+    width: 1000px;
+    margin-top: 10px;
+    margin-left: 36px;
+}
+
+.exp_form input[name="venue"]{
+    width: 1500px;
+    margin-left: 36px;
+}
+
+.exp_form input[name="vavancy"]{
+    margin-left: 36px;
+}
+.exp_form input[name="deadline"]{
+    width: 180px;
+}
+
+.exp_form input[name="image"]{
+    border: none;
+}
+
+.create_exp{
+    margin-top: 20px;
+    margin-left: 30px;
+    display: inline-block;
+    padding: 30px 50px;
+    font-size: 1vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 1vw;
+}
+
+.create_exp:hover {background-color: #3e8e41}
+
+.create_exp:active {
+  background-color: #3e8e41;
+  transform: translateY(4px);
+}
+
+.reset_exp{
+    margin-top: 20px;
+    margin-left: 30px;
+    display: inline-block;
+    padding: 30px 50px;
+    font-size: 1vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 1vw;
+}
+
+.reset_exp:hover {background-color: #3e8e41}
+
+.reset_exp:active {
+  background-color: #3e8e41;
+  transform: translateY(4px);
+}
+
+.back_exp{
+    margin-top: 20px;
+    margin-left: 1100px;
+    display: inline-block;
+    padding: 30px 50px;
+    font-size: 1vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 1vw;
+}
+
+.back_exp:hover {background-color: #3e8e41}
+
+.back_exp:active {
+  background-color: #3e8e41;
+  transform: translateY(4px);
+}

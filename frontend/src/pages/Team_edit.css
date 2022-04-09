@@ -1,0 +1,98 @@
+#team_post_created_title {
+    font-size: 2vw;
+    padding-left: 16vw;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+#team_post_created_line {
+    border-style: solid;
+    border-color: black;
+    margin-left: 10vw;
+    margin-right: 20vw;
+}
+
+#team_post_created_icon {
+    margin-left: 52.5vw;
+    font-size: 1.25vw;
+    border-color: black;
+    border-style: solid;
+    width: 12.5vw;
+    text-align: center;
+    border-radius: 0.5vw;
+    padding: 0.25vw 0 0.25vw 0;
+    margin-top: 1.5vw;
+    margin-bottom: 1.5vw;
+}
+#team_post_created_icon:hover {
+    cursor: pointer;
+    background-color: white;
+}
+
+.team_button #edit {
+    margin-left: 1.25vw;
+    font-size: 1vw;
+    border-radius: 0.5vw;
+    width: 4vw;
+    text-align: center;
+    border-color: black;
+    border-style: solid;
+    position: relative;
+    padding-top: 0.1vw;
+}
+
+.team_button #delete {
+    margin-left: 1.25vw;
+    font-size: 1vw;
+    border-radius: 0.5vw;
+    width: 5vw;
+    text-align: center;
+    border-color: black;
+    border-style: solid;
+    position: relative;
+    padding-top: 0.1vw;
+    margin-right:2.5vw;
+}
+
+.team_button {
+    display: flex;
+    height: 4vh;
+    float: right;
+    margin-right: 2vw;
+    padding-top: 0.5vw;
+}
+
+.team_button #edit:hover {
+    cursor: pointer;
+    background-color: white;
+}
+.team_button #delete:hover {
+    cursor: pointer;
+    background-color: white;
+}
+
+.team_edit_img{
+    padding-top: 2vh;
+    margin-left:10vw;
+    height:20vh;
+    width:15vw;
+}
+
+.team_edit_img img{
+    width:  100%;
+}
+
+.team_button #response{
+    font-size: 1vw;
+    border-radius: 0.5vw;
+    width: 7vw;
+    text-align: center;
+    border-color: black;
+    border-style: solid;
+    position: relative;
+    padding-top: 0.1vw;
+}
+
+.team_button #response:hover{
+    cursor: pointer;
+    background-color:white;
+}

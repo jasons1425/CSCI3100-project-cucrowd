@@ -1,0 +1,116 @@
+.questionnaire_page {
+    margin-left: 11vw;
+}
+
+.questionnaire_header {
+    padding-left: 17vw;
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+    background-color: #f5eac9;
+    font-size: 2vw;
+    display: flex;
+    flex-direction: row;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    position: fixed;
+    width: 100%;
+    z-index: 99;
+}
+
+.questionnaire_space {
+    height: 15vh;
+}
+
+.questionnaire_icon {
+    padding-top: 0.4vh;
+}
+
+.questionnaire_title {
+    padding-left: 1vw;
+}
+
+.questionnaire_post {
+    display: flex;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    margin-left: 6vw;
+    width: 100%;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.questionnaire_img {
+    margin-left: 11vw;
+    display: grid;
+    padding-top: 2vh;
+    border-style: solid;
+    border-width: 0vw;
+    width: 14vw;
+}
+
+.questionnaire_img img {
+    width: 90%;
+    height: 85%;
+}
+
+.questionnaire_post_content {
+    width: 30vw;
+}
+
+.questionnaire_post_content ul {
+    list-style-type: none;
+    height: 22vh;
+    font-size: 1vw;
+}
+
+.questionnaire_post_title {
+    font-size: 1.5vw;
+    margin-bottom: 1vh;
+}
+
+.questionnaire_post {
+    display: flex;
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    margin-left: 6vw;
+    width: 100%;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.questionnaire_post_line {
+    border: 0.02vw solid black;
+    margin-left: 17.5vw;
+    margin-right: 30vw;
+}
+
+.questionnaire_search {
+    margin-left: 22vw;
+    padding-bottom: 1vw;
+    display: flex;
+    margin-top:2vw;
+}
+
+.questionnaire_search .questionnaire_search_bar {
+    width: 33.5vw;
+    height: 4vh;
+    border-radius: 0.5vw;
+    font-size: 0.9vw;
+}
+.questionnaire_search .questionnaire_search_icon {
+    padding-top: 0.5vw;
+    padding-right: 0.75vw;
+    font-size: 1.75vw;
+}
+
+.questionnaire_search .questionnaire_search_edit_icon {
+    padding-top: 0.75vw;
+    padding-left: 0.5vw;
+    padding-right: 0.5vw;
+    margin-left: 2vw;
+    font-size: 1.25vw;
+}
+
+.questionnaire_search .questionnaire_search_edit_icon:hover {
+    cursor: pointer;
+    background-color: white;
+    border-radius: 1vw;
+    border-style: outset;
+}
