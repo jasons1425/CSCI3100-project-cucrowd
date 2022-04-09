@@ -130,7 +130,9 @@ class AnswerView(viewsets.ModelViewSet):
         except KeyError:
             return [permission() for permission in self.permission_classes]
 
-    def create(self, request, *args, **kwargs):
+    @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated],
+            name='answer_questionnaire', url_path=r"answer")
+    def answer(self, request, *args, **kwargs):
         respondent = request.user
         data = request.data
         question_id = data.get('questionnaire', None)
@@ -144,7 +146,7 @@ class AnswerView(viewsets.ModelViewSet):
             question_obj = question_obj[0]
         except (FieldValidationError, AssertionError):
             raise ValidationError({"result": False, "message": "Questionnaire not found."})
-        existing_question_records = self.get_queryset().filter(questionnire=question_obj, respondent=respondent)
+        existing_question_records = self.get_queryset().filter(questionnaire=question_obj, Respondent=respondent)
         if existing_question_records.exists():
             raise ValidationError({"result": False, "message": "The current user already answer the questionnaire"})
         _serializer = self.serializer_class(data=request.data,
