@@ -18,7 +18,7 @@ class QuestionnaireSerializer(serializers.ModelSerializer):
     class Meta:
         model = Questionnaire
         fields = ["id", "title", "host", "description", "deadline", "post_date",
-                  "last_modified", "questionsize", "questiontype", "question", "publishable"]
+                  "last_modified", "questionsize", "questiontype", "question", "publishable","exp_finish"]
 
 
 class QuestionnairePreviewSerializer(serializers.ModelSerializer):
