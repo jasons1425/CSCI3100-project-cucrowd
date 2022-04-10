@@ -74,7 +74,7 @@ function Team_details() {
             <div>
               <h3>{data.title}</h3>
               <p>Description: <br/>{data.description}</p>
-              {data.link !== undefined && <a>Reference link: <br/>{data.link}</a>}
+              {data.link !== "" && <a>Reference link: <br/>{data.link}</a>}
             </div>
           </section>
 
