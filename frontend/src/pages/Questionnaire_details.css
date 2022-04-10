@@ -65,13 +65,22 @@
     box-shadow: 0 0.25vw 0.5vw 0 rgb(70, 163, 255, 50%);
     border-radius: 1vw;
     width: 32.5vw;
-    height: 25vh;
+    min-height: 25vh;
     padding: 2.5vh 2vw 2.5vh 2vw;
 }
 
 .LongQ textarea {
     width: 32.5vw;
     height: 12.5vh;
+    margin-top: 0; 
+    font-size: 1vw;
+    margin-left: 0;
+    border-radius: 0.25vw;
+    border-color: rgb(118, 118, 118);
+}
+
+.LongQ textarea:focus {
+    border-color: -internal-light-dark(rgb(118, 118, 118), rgb(133, 133, 133));
 }
 
 .LongQ p {
