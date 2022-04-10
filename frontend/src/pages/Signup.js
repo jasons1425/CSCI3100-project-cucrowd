@@ -1,43 +1,9 @@
 import './Signup.css'
 import axios from "axios"
-
-function signup(){
-    checkempty_username();
-    checkempty_sid();
-    checkempty_date_of_birth();
-    checkempty_email();
-    checkempty_major();
-    checkempty_admission_year();
-
-    if(checksid() === false){
-        alert("sid format incorrect");
-        return;
-    }
-
-    let payload = {
-        username: document.getElementById("username").value,
-        email: document.getElementById("email").value,
-        sid: document.getElementById("sid").value,
-        gender: document.getElementById("gender").value,
-        major: document.getElementById("major").value,
-        date_of_birth: document.getElementById("birth").value,
-        admission_year: document.getElementById("admission_year").value,
-    }
-
-    axios
-        .post("http://localhost:8000/api/signup", payload)
-        .then((res) => {
-            if(res.data.result){
-                alert("Your account is successfully registered");
-                window.location.pathname = "/" ;
-            }
-        })
-        .catch((err) => {
-            alert(err.response.data.message);
-        })
-}
+import {useState} from "react"
 
 function Signup(){
+    const [signingup, setSignup] = useState(false)
 
     const handleKeypress = event => {
       if (event.charCode === 13) {
@@ -82,11 +48,51 @@ function Signup(){
                         <label htmlFor="admission_year">Admission year: </label>
                         <input type="date" name="admission_year" id="admission_year" onKeyPress={handleKeypress} required></input>
                     </div>
-                    <button type="button" onClick={signup}>Sign up</button>
+                    {signingup == false && <button type="button" onClick={signup}>Sign up</button>}
+                    {signingup == true && <button type="button">Loading</button>}
                 </div>
             </form>
         </div>
     )
+
+    function signup(){
+        setSignup(true);
+        checkempty_username();
+        checkempty_sid();
+        checkempty_date_of_birth();
+        checkempty_email();
+        checkempty_major();
+        checkempty_admission_year();
+    
+        if(checksid() === false){
+            alert("sid format incorrect");
+            setSignup(false)
+            return;
+        }
+    
+        let payload = {
+            username: document.getElementById("username").value,
+            email: document.getElementById("email").value,
+            sid: document.getElementById("sid").value,
+            gender: document.getElementById("gender").value,
+            major: document.getElementById("major").value,
+            date_of_birth: document.getElementById("birth").value,
+            admission_year: document.getElementById("admission_year").value,
+        }
+    
+        axios
+            .post("http://localhost:8000/api/signup", payload)
+            .then((res) => {
+                if(res.data.result){
+                    alert("Your account is successfully registered");
+                    window.location.pathname = "/" ;
+                }
+            })
+            .catch((err) => {
+                setSignup(false);
+                alert(err.response.data.message);
+            })
+    }
 }
 export default Signup
 
