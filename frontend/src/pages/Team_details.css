@@ -73,7 +73,6 @@ h4 {
     flex-direction: row;
     width: 70%;
     margin-bottom: 10vh;
-    margin-top: 5vh;
     margin-left:4vw;
 }
 
@@ -173,4 +172,9 @@ h4 {
 
 .membercard:hover{
     cursor:pointer;
+}
+
+.team_requirements td{
+    width:10vw;
+    padding:1vw;
 }

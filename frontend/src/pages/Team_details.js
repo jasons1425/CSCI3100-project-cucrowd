@@ -10,6 +10,21 @@ function Team_details() {
   const [data, setData] = useState();
   const [loading, isLoading] = useState(true);
   const {id} = useParams();
+  const [joining, setJoining] = useState(false);
+
+  function jointeam(id){
+    setJoining(true)
+    axios
+        .post("http://localhost:8000/api/teamformation/"+id+"/apply", null, {withCredentials:true})
+        .then((res)=>{
+            alert("You have successfully made the request. Please check the updated state in your profile.")
+            window.location.pathname="/team"
+        })
+        .catch((err)=>{
+            alert(err.response.data.message)
+            setJoining(false)
+        })
+  }
 
   useEffect(() => {
     axios
@@ -51,15 +66,15 @@ function Team_details() {
 
           <aside className="details_team_member">
             <p><u>Team Member</u></p>
-            {data.members.map((element, index) => <MemberCard key={index} name={element.info.user.username} sid={element.info.sid} year={year - element.info.admission_year.slice(0,4)} major={element.info.major} avatar={element.info.avator} id={id}></MemberCard>)}
+            {data.members.map((element, index) => <MemberCard key={index} name={element.info.user.username} sid={element.info.sid} year={year - element.info.admission_year.slice(0,4)} major={element.info.major} avatar={element.info.avatar} id={id}></MemberCard>)}
             {data.teamsize - data.members.length !== 0 && emptyhandling(data.teamsize - data.members.length)}
           </aside>
 
           <section className="team_details_info">
             <div>
               <h3>{data.title}</h3>
-              <p>{data.title}</p>
-              <a>{data.link}</a>
+              <p>Description: <br/>{data.description}</p>
+              {data.link !== undefined && <a>Reference link: <br/>{data.link}</a>}
             </div>
           </section>
 
@@ -87,7 +102,7 @@ function Team_details() {
               <p>{data.self_intro}</p>
               </div> 
               <div className="team_contact">
-                <p>{data.contact}</p>
+                <p>Contact: {data.contact}</p>
               </div>
             </div>
           </section>
@@ -96,7 +111,8 @@ function Team_details() {
 
           <div>
             <button className="team_back_button" onClick={()=> window.location.pathname='/team'}>Back</button>
-            <button className="team_join_button" onClick={()=> jointeam(id)}>Join</button>
+            {joining == false && <button className="team_join_button" onClick={()=> jointeam(id)}>Join</button>}
+            {joining == true && <button className="team_join_button">Loading</button>}
           </div>   
       </div>
     )
@@ -109,7 +125,7 @@ function MemberCard({name, year, major, sid, avatar, id}){
   return (
     <div className="membercard" onClick={()=>profile(name, id)}>
       {avatar == undefined && <img src={require("../components/avatar.jpg")} alt="Avatar"></img>}
-      {avatar != undefined && <img src={avatar} alt="Avatar"></img>}
+      {avatar != undefined && <img src={"http://localhost:8000" + avatar} alt="Avatar"></img>}
       <div>
         <h4><b>{name}</b></h4>
         <p>{sid}</p>
@@ -146,14 +162,3 @@ function profile(name, id){
     window.location.href = "http://localhost:3000/profile/" + name + "/team/" + id
 }
 
-function jointeam(id){
-    axios
-        .post("http://localhost:8000/api/teamformation/"+id+"/apply", null, {withCredentials:true})
-        .then((res)=>{
-            alert("You have successfully made the request. Please check the updated state in your profile.")
-            window.location.pathname="/team"
-        })
-        .catch((err)=>{
-            alert(err.response.data.message)
-        })
-}
