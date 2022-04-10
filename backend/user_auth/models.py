@@ -1,3 +1,5 @@
+import datetime
+
 from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.conf import settings
@@ -13,6 +15,7 @@ def get_avatar_fp(instance, filename):
 
 class CrowdUser(AbstractUser):
     is_org = models.BooleanField(default=False, null=False, blank=False)
+    email = models.EmailField(unique=True)
 
 
 def validate_sid(value):
@@ -21,6 +24,18 @@ def validate_sid(value):
     if not(len(value) == 10 and value.isdigit()):
         raise ValidationError("SID should consist of exactly 10 digits.")
     return True
+
+
+def validate_birth(value):
+    if value >= datetime.date.today():
+        raise ValidationError("The birth date must be in the past.")
+    return value
+
+
+def validate_admission(value):
+    if value >= datetime.date.today():
+        raise ValidationError("The admission date must be in the past")
+    return value
 
 
 class StudentProfile(models.Model):
@@ -41,14 +56,14 @@ class StudentProfile(models.Model):
         null=False,
         blank=False
     )
-    date_of_birth = models.DateField(null=False, blank=False)
+    date_of_birth = models.DateField(null=False, blank=False, validators=[validate_birth])
 
     # student user related
     sid = models.CharField(max_length=10, validators=[validate_sid],
                            null=False, blank=False)
     major = models.CharField(max_length=50,
                              null=False, blank=False)
-    admission_year = models.DateField(null=False, blank=False)
+    admission_year = models.DateField(null=False, blank=False, validators=[validate_admission])
 
     def __str__(self):
         return self.user.username
@@ -72,7 +87,7 @@ class OrgUserProfile(models.Model):
         null=False,
         blank=False
     )
-    date_of_birth = models.DateField(null=True, blank=True)
+    date_of_birth = models.DateField(null=True, blank=True, validators=[validate_birth])
 
     # organization user related
     org_name = models.CharField(max_length=100,

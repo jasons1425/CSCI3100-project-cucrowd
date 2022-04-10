@@ -53,7 +53,7 @@ class Experiment(models.Model):
                           editable=False)
     title = models.CharField(max_length=200, default="Title",
                              null=False, blank=False)
-    description = models.TextField(max_length=1000,
+    description = models.TextField(max_length=5000,
                                    default="Enter description for the experiments (max 1000 words)")
     subtitle = models.CharField(max_length=100, default="Subtitle",
                                 null=False, blank=False)
@@ -140,7 +140,7 @@ class Experiment(models.Model):
                                  help_text="Enter each allowed time delimited by `;`, "
                                            "e.g. 2022-03-27-16:00;2022-03-28-17:00",
                                  blank=False, null=False)
-    requirements = models.TextField(max_length=150, default="No requirements",
+    requirements = models.TextField(max_length=500, default="No requirements",
                                     null=False, blank=False)
 
     def __str__(self):
