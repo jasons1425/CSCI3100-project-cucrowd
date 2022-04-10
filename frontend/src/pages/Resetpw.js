@@ -4,7 +4,8 @@ import { toBePartiallyChecked } from '@testing-library/jest-dom/dist/matchers';
 import { useEffect, useState} from 'react';
 
 function Resetpw() {
-    const [isLoading, setLoading] = useState(true);
+    const [isLoadingvalid, setLoadingvalid] = useState(true);
+    const [isLoadinglogout, setLoadinglogout] = useState(true);
 
     useEffect(() => {
         let urlString = window.location.href;
@@ -15,50 +16,60 @@ function Resetpw() {
         axios
             .post("http://localhost:8000/api/password_reset/validate_token/", payload)
             .then((res) => {
-                if(res.data.status == "OK"){
-                    setLoading(false)
-                }
+                setLoadingvalid(false)
+            })
+            .then((res) => {
+                axios
+                    .post("http://localhost:8000/api/logout", null, {withCredentials : true})
+                    .then((res) => {
+                        window.location.reload();
+                    })
+                    .catch((err) => {
+                        setLoadinglogout(false)
+                    })
             })
             .catch((err) => {
                 window.location.href = "/";
+                return;
             })
-        },[]
-    )
-    
-    if(isLoading){
-        return <div></div>
-    }
+            
+    },[])
 
-    return (
-        <div id="resetpw_page">
-            <div id="resetpw">
-                <h1>Reset password</h1>
-                <section id="req">
-                    <p>Your password should fulfill requirements as below:</p>
-                    <ul>
-                        <li>contains at least 8 characters</li>
-                        <li>is <b>not</b> too common</li>
-                        <li>is <b>not</b> entirely numeric</li>
-                        <li>is <b>not</b> too similar to the username</li>
-                        <li>is <b>not</b> too similar to the email address</li>
-                    </ul>
-                </section>
-                <form id="resetpw_form">
-                    <div>
-                        <label htmlFor="new password">New password: </label>
-                        <input type="password" name="new password" id="new password" placeholder="New Password" onChange={()=> new_checkSame()} required></input>
-                    </div>
-                    <div>
-                        <label htmlFor="confirm password">Confirm password: </label>
-                        <input type="password" name="confirm password" id="confirm password" placeholder="Confirm Password" onChange={()=> confirm_checkSame()} required></input>
-                    </div>
-                    <div>
-                        <button type="reset" onClick={()=> resetPassword()}>Reset Password</button>
-                    </div>
-                </form>
+    if(isLoadinglogout || isLoadingvalid){
+        return <div></div>
+    }else{
+ 
+        return (
+            <div id="resetpw_page">
+                <div id="resetpw">
+                    <h1>Reset password</h1>
+                    <section id="req">
+                        <p>Your password should fulfill requirements as below:</p>
+                        <ul>
+                            <li>contains at least 8 characters</li>
+                            <li>is <b>not</b> too common</li>
+                            <li>is <b>not</b> entirely numeric</li>
+                            <li>is <b>not</b> too similar to the username</li>
+                            <li>is <b>not</b> too similar to the email address</li>
+                        </ul>
+                    </section>
+                    <form id="resetpw_form">
+                        <div>
+                            <label htmlFor="new password">New password: </label>
+                            <input type="password" name="new password" id="new password" placeholder="New Password" onChange={()=> new_checkSame()} onKeyPress={handleKeypress} required></input>
+                        </div>
+                        <div>
+                            <label htmlFor="confirm password">Confirm password: </label>
+                            <input type="password" name="confirm password" id="confirm password" placeholder="Confirm Password" onKeyPress={handleKeypress} onChange={()=> confirm_checkSame()} required></input>
+                        </div>
+                        <div>
+                            <button type="reset" onClick={()=> resetPassword()}>Reset Password</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </div>
-    )
+        )
+    }
 }
 export default Resetpw
 
@@ -113,5 +124,11 @@ function new_checkSame(){
         if(document.getElementById("confirm password").classList.contains("is-invalid")){
             document.getElementById("confirm password").classList.remove("is-invalid")
         }
+    }
+}
+
+const handleKeypress = event => {
+    if (event.charCode === 13) {
+      resetPassword();
     }
 }
