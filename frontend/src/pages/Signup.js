@@ -38,6 +38,13 @@ function signup(){
 }
 
 function Signup(){
+
+    const handleKeypress = event => {
+      if (event.charCode === 13) {
+        signup();
+      }
+    }
+
     return (
         <div id="signup_page">
             <form id="signup">
@@ -49,13 +56,13 @@ function Signup(){
                 <div id="signup_form">
                     <div>
                         <label htmlFor="username">Username: </label>
-                        <input type="text" name="username" id="username" placeholder="username" required></input>
+                        <input type="text" name="username" id="username" placeholder="username" onKeyPress={handleKeypress} required></input>
                         <label htmlFor="sid">Sid: </label>
-                        <input type="number" name="sid" id="sid" placeholder="10-digit sid" onChange={() => checksid()} required></input>
+                        <input type="number" name="sid" id="sid" placeholder="10-digit sid" onChange={() => checksid()} onKeyPress={handleKeypress} required></input>
                     </div>
                     <div>
                         <label htmlFor="birth">Date of birth: </label>
-                        <input type="date" name="birth" id="birth" required></input>
+                        <input type="date" name="birth" id="birth" onKeyPress={handleKeypress} required></input>
                         <label htmlFor="gender">Gender: </label>
                         <select name="gender" id="gender" required>
                             <option value="M">M</option>
@@ -65,15 +72,15 @@ function Signup(){
                     </div>
                     <div>
                         <label htmlFor="email">Email address: </label>
-                        <input type="email" name="email" id="email" placeholder="email" required></input>
+                        <input type="email" name="email" id="email" placeholder="email" onKeyPress={handleKeypress} required></input>
                     </div>
                     <div>
                         <label htmlFor="major">Major: </label>
-                        <input type="text" name="major" id="major" placeholder="your major" required></input>
+                        <input type="text" name="major" id="major" placeholder="your major" onKeyPress={handleKeypress} required></input>
                     </div>
                     <div>
                         <label htmlFor="admission_year">Admission year: </label>
-                        <input type="date" name="admission_year" id="admission_year" required></input>
+                        <input type="date" name="admission_year" id="admission_year" onKeyPress={handleKeypress} required></input>
                     </div>
                     <button type="button" onClick={signup}>Sign up</button>
                 </div>
@@ -175,3 +182,4 @@ function checkempty_admission_year(){
         }
     }
 }
+
