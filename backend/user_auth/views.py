@@ -25,6 +25,7 @@ from teamformation.serializers import TeamApplicationSerializer, TeamPreviewSeri
 from datetime import datetime
 import pytz
 import os
+import re
 
 
 class LogInView(APIView):
@@ -148,9 +149,11 @@ class SignUpView(APIView):
                 and gender and date_of_birth and major and admission_year):
             raise ValidationError({'result': False,
                                    'message': "Missing values."})
-        if username != username.lower():
+        r = re.match(r"^[a-z0-9_]{5,20}$", username)
+        if r is None:
             raise ValidationError({'result': False,
-                                   'message': "The username must consist of lowercase characters only."})
+                                   'message': "The username must be of length 5 to 20, "
+                                              "and consist of lowercase alphabets, numbers, and _ only."})
         try:
             date_of_birth = datetime.strptime(date_of_birth, "%Y-%m-%d").date()
             admission_year = datetime.strptime(admission_year, "%Y-%m-%d").date()

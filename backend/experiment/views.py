@@ -161,7 +161,9 @@ class EnrollView(viewsets.ModelViewSet):
             self.perform_create(_serializer)
             return Response(data=_serializer.data, status=status.HTTP_201_CREATED)
         else:
-            return Response(data=_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            err_dict = _serializer.errors
+            err_msg = [str(err_dict[k][0]) for k in err_dict]
+            raise ValidationError({"result": False, "message": '; '.join(err_msg)})
 
     def destroy(self, request, *args, **kwargs):
         user = request.user
