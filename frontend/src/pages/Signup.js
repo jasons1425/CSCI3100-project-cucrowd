@@ -1,43 +1,16 @@
 import './Signup.css'
 import axios from "axios"
-
-function signup(){
-    checkempty_username();
-    checkempty_sid();
-    checkempty_date_of_birth();
-    checkempty_email();
-    checkempty_major();
-    checkempty_admission_year();
-
-    if(checksid() === false){
-        alert("sid format incorrect");
-        return;
-    }
-
-    let payload = {
-        username: document.getElementById("username").value,
-        email: document.getElementById("email").value,
-        sid: document.getElementById("sid").value,
-        gender: document.getElementById("gender").value,
-        major: document.getElementById("major").value,
-        date_of_birth: document.getElementById("birth").value,
-        admission_year: document.getElementById("admission_year").value,
-    }
-
-    axios
-        .post("http://localhost:8000/api/signup", payload)
-        .then((res) => {
-            if(res.data.result){
-                alert("Your account is successfully registered");
-                window.location.pathname = "/" ;
-            }
-        })
-        .catch((err) => {
-            alert(err.response.data.message);
-        })
-}
+import {useState} from "react"
 
 function Signup(){
+    const [signingup, setSignup] = useState(false)
+
+    const handleKeypress = event => {
+      if (event.charCode === 13) {
+        signup();
+      }
+    }
+
     return (
         <div id="signup_page">
             <form id="signup">
@@ -49,13 +22,13 @@ function Signup(){
                 <div id="signup_form">
                     <div>
                         <label htmlFor="username">Username: </label>
-                        <input type="text" name="username" id="username" placeholder="username" required></input>
+                        <input type="text" name="username" id="username" placeholder="username" onKeyPress={handleKeypress} required></input>
                         <label htmlFor="sid">Sid: </label>
-                        <input type="number" name="sid" id="sid" placeholder="10-digit sid" onChange={() => checksid()} required></input>
+                        <input type="number" name="sid" id="sid" placeholder="10-digit sid" onChange={() => checksid()} onKeyPress={handleKeypress} required></input>
                     </div>
                     <div>
                         <label htmlFor="birth">Date of birth: </label>
-                        <input type="date" name="birth" id="birth" required></input>
+                        <input type="date" name="birth" id="birth" onKeyPress={handleKeypress} required></input>
                         <label htmlFor="gender">Gender: </label>
                         <select name="gender" id="gender" required>
                             <option value="M">M</option>
@@ -65,21 +38,61 @@ function Signup(){
                     </div>
                     <div>
                         <label htmlFor="email">Email address: </label>
-                        <input type="email" name="email" id="email" placeholder="email" required></input>
+                        <input type="email" name="email" id="email" placeholder="email" onKeyPress={handleKeypress} required></input>
                     </div>
                     <div>
                         <label htmlFor="major">Major: </label>
-                        <input type="text" name="major" id="major" placeholder="your major" required></input>
+                        <input type="text" name="major" id="major" placeholder="your major" onKeyPress={handleKeypress} required></input>
                     </div>
                     <div>
                         <label htmlFor="admission_year">Admission year: </label>
-                        <input type="date" name="admission_year" id="admission_year" required></input>
+                        <input type="date" name="admission_year" id="admission_year" onKeyPress={handleKeypress} required></input>
                     </div>
-                    <button type="button" onClick={signup}>Sign up</button>
+                    {signingup == false && <button type="button" onClick={signup}>Sign up</button>}
+                    {signingup == true && <button type="button">Loading</button>}
                 </div>
             </form>
         </div>
     )
+
+    function signup(){
+        setSignup(true);
+        checkempty_username();
+        checkempty_sid();
+        checkempty_date_of_birth();
+        checkempty_email();
+        checkempty_major();
+        checkempty_admission_year();
+    
+        if(checksid() === false){
+            alert("sid format incorrect");
+            setSignup(false)
+            return;
+        }
+    
+        let payload = {
+            username: document.getElementById("username").value,
+            email: document.getElementById("email").value,
+            sid: document.getElementById("sid").value,
+            gender: document.getElementById("gender").value,
+            major: document.getElementById("major").value,
+            date_of_birth: document.getElementById("birth").value,
+            admission_year: document.getElementById("admission_year").value,
+        }
+    
+        axios
+            .post("http://localhost:8000/api/signup", payload)
+            .then((res) => {
+                if(res.data.result){
+                    alert("Your account is successfully registered");
+                    window.location.pathname = "/" ;
+                }
+            })
+            .catch((err) => {
+                setSignup(false);
+                alert(err.response.data.message);
+            })
+    }
 }
 export default Signup
 
@@ -175,3 +188,4 @@ function checkempty_admission_year(){
         }
     }
 }
+

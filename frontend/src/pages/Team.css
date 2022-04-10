@@ -32,7 +32,7 @@
     display: flex;
     padding-top: 1vh;
     padding-bottom: 1vh;
-    margin-left: 6vw;
+    margin-left: 12.5vw;
     width: 100%;
     font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
 }
@@ -53,24 +53,24 @@
 }
 
 .team_post_content {
-    width: 30vw;
+    width: 22.5vw;
 }
 
 .team_post_content ul {
     list-style-type: none;
-    height: 22vh;
-    font-size: 1vw;
+    height: auto;
+    font-size: 0.8vw;
 }
 
 .team_post_title {
-    font-size: 1.5vw;
+    font-size: 1.25vw;
     margin-bottom: 1vh;
 }
 
 .team_post_line {
     border: 0.02vw solid black;
-    margin-left: 17.5vw;
-    margin-right: 30vw;
+    margin-left: 21.5vw;
+    margin-right: 27.5vw;
 }
 
 .team_member {
@@ -152,6 +152,9 @@
     border-style: outset;
 }
 
-.team_post_description{
+.team_post_description li{
     text-overflow: ellipsis;
+    width: 20vw;
+    overflow: hidden;
+    white-space: nowrap;
 }

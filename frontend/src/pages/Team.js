@@ -51,7 +51,6 @@ function Team() {
   }
 
   if(!isLoading && !isLoadingUser){
-    console.log(User)
     return (
       <div className="team_page">
 
@@ -99,10 +98,12 @@ function TeamPost({title, id, vacancy, target, closing, members, index, descript
         <div className="team_post_content">
           <ul>
             <li className="team_post_title">{title}</li>
-            <li className='team_post_description'>Description:{description}</li>
+            <div className='team_post_description'>
+            <li>Description: {description}</li>
             <li>Vacancies: {vacancy}</li>
             <li>Target members: {target}</li>
             <li>Post closing date: {closing}</li>
+            </div>
             <li><a href={"http://localhost:3000/team/" + id}>More..</a></li>
           </ul>
         </div>
