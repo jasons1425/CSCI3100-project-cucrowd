@@ -45,10 +45,10 @@ function Login() {
                 <img className="image" src={logo} alt="cu-crowd-logo"></img>
                 <div className="form-signin">
                     <form>
-                        <div className="form-floating">
+                        <div className="form-floating loginbtn">
                             <input className="form-control" type="text" name="username" id="username" placeholder="username" onKeyPress={handleKeypress} required></input>
                         </div>
-                        <div className="form-floating">
+                        <div className="form-floating loginbtn">
                             <input className="form-control" type="password" name="password" id="password" placeholder="password" onKeyPress={handleKeypress} required></input>
                         </div>
                         <div>
