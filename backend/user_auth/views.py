@@ -18,7 +18,8 @@ from rest_framework.exceptions import ValidationError, status
 from rest_framework.decorators import action, parser_classes
 from rest_framework.parsers import MultiPartParser, FormParser
 from django_rest_passwordreset.signals import reset_password_token_created
-from user_auth.models import StudentProfile, OrgUserProfile, validate_sid, get_avatar_fp
+from user_auth.models import StudentProfile, OrgUserProfile, validate_sid, \
+    get_avatar_fp, validate_birth, validate_admission
 from user_auth.serializers import StudentProfileSerializer, OrgProfileSerializer
 from experiment.serializers import EnrollmentSerializer, ExperimentSerializer, EnrollmentPreviewSerializer
 from teamformation.serializers import TeamApplicationSerializer, TeamPreviewSerializer
@@ -165,6 +166,8 @@ class SignUpView(APIView):
         try:
             validate_email(email)
             validate_sid(sid)
+            validate_birth(date_of_birth)
+            validate_admission(admission_year)
             user_model = get_user_model()
             # new_user = user_model.objects.create_user(username=username, email=email,
             #                                           password=password, gender=gender,
