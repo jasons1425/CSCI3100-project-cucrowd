@@ -6,14 +6,14 @@ import { useState} from 'react';
 
 function Forgotpw() {
   const [isSending, setSending] = useState(false);
-  document.addEventListener("keypress", function(e){
-    if(e.keyCode === 13 || e.which === 13){
-      e.preventDefault();
-      return false;
+  
+  const handleKeypress = event => {
+    if (event.charCode === 13) {
+      sendemail();
     }
-  })
+  }
 
-  function sendemail(e){
+  function sendemail(){
     let payload = { email : document.getElementById("email").value}
     if(document.querySelector("#email").classList.contains("is-invalid")){
       document.querySelector("#email").classList.remove("is-invalid");
@@ -43,9 +43,9 @@ function Forgotpw() {
         <p>A confirmation letter and link for resetting the password will be sent to your mailbox.</p>
         <hr></hr>
         <label htmlFor="email">Email: </label>
-        <input type="email" name="email" id="email" placeholder="email" required></input>
+        <input type="email" name="email" id="email" placeholder="email" onKeyPress={handleKeypress} required></input>
         <div>
-          <button type="reset" id="forgotpw-button"  onClick={(e) => sendemail(e)}>Send</button>
+          <button type="reset" id="forgotpw-button" onClick={() => sendemail()}>Send</button>
         </div>
         <div>&nbsp;{isSending && <section id="loading_forgotpw">Loading... Please wait.</section>}</div>
       </form>
