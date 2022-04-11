@@ -78,7 +78,7 @@ function Profile() {
           alert("Save Avatar Successfully ")
           window.location.reload();
         }}>Save Avatar</div>
-        <div id="org">The Chinese University of Hong Kong</div>
+        <div id="org">{items.org_name}</div>
         <div id="sid">SID:{items.sid}</div>
         <div id="major">Major: {items.major}</div>
         <div id="admission">Admission Year: {items.admission_year}</div>
