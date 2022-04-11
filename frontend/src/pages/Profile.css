@@ -131,8 +131,9 @@
     border-radius: 20px;
     margin-top: 50px;
     margin-left: 500px;
+    padding-bottom: 40px;
     width: 1550px;
-    height: 280px;
+    height: auto;
 }
 .exp_card #title{
     font-size: 30px;
@@ -309,7 +310,8 @@
     margin-top: 50px;
     margin-left: 500px;
     width: 1550px;
-    height: 280px;
+    height: auto;
+    padding-bottom: 40px;
 }
 .team_card #title{
     font-size: 30px;
