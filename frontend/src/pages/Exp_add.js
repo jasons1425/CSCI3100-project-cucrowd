@@ -55,7 +55,7 @@ function List(){
       {matchData.map(item=>(
       <><div className='container1'>
       <ul className='exp_list'>
-          <li className='picture'><img src={item.exp_img} width="300px" height="280px"></img></li>
+          <li className='picture'><img src={item.exp_img} width="88%" height="88%"></img></li>
       <li className='exp_item'>
               <div id='exp_date'>{item.post_date.substring(0,10)}</div>
               <div id='exp_title'>{item.title.substring(0,200)}</div>
