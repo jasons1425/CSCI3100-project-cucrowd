@@ -62,8 +62,9 @@ function Profile() {
     <div style={{display:"flex"}}>
     <div className='left_card'>
         <div id="avatar"><img id="avatar1" src={"http://localhost:8000"+items.avatar} width="300px" height="300px"/></div>
+        <div id="imgpreview"><img id="imgpreview1" src="" width="300px" height="300px"/></div>
         <label>
-        <input type="file" name="image" id="changeavatar" />
+        <input type="file" name="image" id="changeavatar" accept ="image/*" onChange={(e)=>{Imgpreview(e);}}/>
         <div id="uploadimg" >Upload Avatar</div>
         </label>
         <div id="saveimg" onClick={()=>{
@@ -201,6 +202,10 @@ function Profile() {
     }catch(e){
       return("")
   }
+}
+function Imgpreview(e){
+  console.log("hi");
+  document.getElementById("imgpreview1").src=URL.createObjectURL(e.target.files[0]);
 }
 function Hide(){
     const [items, setItems] = useState([{}]);
