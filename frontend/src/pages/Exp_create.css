@@ -1,74 +1,72 @@
 .exp_form{
-    width: 1750px;
-    height: 1830px;
-    margin-left: 450px;
-    margin-top: 200px;
-    margin-bottom: 100px;
-    border-radius: 15px;
-    border-color: black;
-    font-size: 30px;
-    padding: 50px;
+    width: 75.20412548345509vw;
+    height:155.21628498727736vh;
+    margin-left: 18vw;
+    margin-top:16.063528413910094vh;
+    margin-bottom: 8.481764206955047vh;
+    font-size: 1vw;
+    padding: 2vw;
 
     
 }
 
 textarea{
-    margin-top: 10px;
-    font-size: 18px;
-    margin-left: 50px;
-    border-radius: 10px;
+    margin-top: 0.4vw;
+    font-size: 0.7vw;
+    margin-left: 2vw;
+    border-radius: 0.4vw;
     border: solid;
 
 }
 .exp_form #icon{
-    font-size: 50px;
+    font-size: 2vw;
     font-weight: bold;
     color: purple;
-    margin-bottom: 30px;
+    margin-bottom: 1.7vw;
 }
 .exp_form input{
-    width: 500px;
-    height: 50px;
+    width: 20vw;
+    height: 2vw;
     border:solid;
-    border-radius: 15px;
-    margin-left: 20px;
-    margin-bottom: 30px;
-    font-size: 20px;
-    padding-left: 10px;
+    border-radius: 0.6vw;
+    margin-left: 0.8594757198109153vw;
+    margin-bottom: 1.1vw;
+    font-size: 0.8594757198109153vw;
+    padding-left: 0.4vw;
 }
 .exp_form input[name="title"]{
-    width: 1600px;
-    margin-left: 61px;
+    width: 64.75805758487323vw;
+    margin-left: 2.2214009454232916vw;
 }
 
 .exp_form input[name="subtitle"]{
-    width: 1200px;
+    width: 50vw;
 }
 
 .exp_form input[name="target"]{
-    width: 1000px;
-    margin-left: 36px;
+    width: 40vw;
+    margin-left: 1.3vw;
 }
 .exp_form input[name="duration"]{
-    width: 300px;
+    width: 12vw;
 }
 
 .exp_form input[name="salary"]{
-    width: 1000px;
-    margin-top: 10px;
-    margin-left: 36px;
+    width: 40vw;
+    margin-top: 0.4vw;
+    margin-left: 1.24vw;
 }
 
 .exp_form input[name="venue"]{
-    width: 1500px;
-    margin-left: 36px;
+    width: 61vw;
+    margin-left: 1.24vw;
 }
 
 .exp_form input[name="vavancy"]{
-    margin-left: 36px;
+    margin-left: 1vw;
 }
 .exp_form input[name="deadline"]{
-    width: 180px;
+    width: 7vw;
 }
 
 .exp_form input[name="image"]{
@@ -76,10 +74,10 @@ textarea{
 }
 
 .create_exp{
-    margin-top: 20px;
-    margin-left: 30px;
+    margin-top: 0.7vw;
+    margin-left: 1vw;
     display: inline-block;
-    padding: 30px 50px;
+    padding: 1vw 2vw;
     font-size: 1vw;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     cursor: pointer;
@@ -95,14 +93,14 @@ textarea{
 
 .create_exp:active {
   background-color: #3e8e41;
-  transform: translateY(4px);
+  transform: translateY(0.1vw);
 }
 
 .reset_exp{
-    margin-top: 20px;
-    margin-left: 30px;
+    margin-top: 0.7vw;
+    margin-left: 1vw;
     display: inline-block;
-    padding: 30px 50px;
+    padding: 1vw 2vw;
     font-size: 1vw;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     cursor: pointer;
@@ -118,14 +116,14 @@ textarea{
 
 .reset_exp:active {
   background-color: #3e8e41;
-  transform: translateY(4px);
+  transform: translateY(0.1vw);
 }
 
 .back_exp{
-    margin-top: 20px;
-    margin-left: 1100px;
+    margin-top: 0.7vw;
+    margin-left: 45vw;
     display: inline-block;
-    padding: 30px 50px;
+    padding: 1.3vw 2vw;
     font-size: 1vw;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     cursor: pointer;
@@ -141,5 +139,5 @@ textarea{
 
 .back_exp:active {
   background-color: #3e8e41;
-  transform: translateY(4px);
+  transform: translateY(0.1vw);
 }
