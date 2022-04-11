@@ -178,11 +178,11 @@ class EnrollView(viewsets.ModelViewSet):
         exp_time = instance.selected_time
         user_email = user.email
         send_mail(f"Experiment Enrollment Canceled",
-                  f"Dear {user.username},\n"
-                  f"Your enrollment of the below experiment is canceled.\n"
-                  f"title: {exp_name:<100}\n"
-                  f"time: {exp_time}\n\n"
-                  f"Regards, CU Crowd Project team",
+                  f"Dear {user.username},\n\n"
+                  f"Your enrollment of the below experiment is canceled.\n\n"
+                  f"Title : {exp_name:<100}\n"
+                  f"Time : {exp_time}\n\n"
+                  f"Yours Sincerely,\nCUCrowd Project team",
                   EMAIL_HOST_USER,
                   [user_email],
                   fail_silently=False)
