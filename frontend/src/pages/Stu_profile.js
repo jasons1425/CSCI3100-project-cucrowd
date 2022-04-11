@@ -1,7 +1,6 @@
 import React, { useState ,useEffect} from 'react'
 import * as Cg from "react-icons/cg";
 import axios from "axios";
-import './Stu_profile.css'
 import {useLocation,useParams} from 'react-router-dom';
 
 function Stu_profile() {
