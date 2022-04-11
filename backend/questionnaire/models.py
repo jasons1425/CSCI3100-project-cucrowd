@@ -19,7 +19,7 @@ def validate_size(value):
             '%(value)s is not an validate number, it is too small.',
             params={'value': value}
         )
-    if value > 30:
+    if value > 10:
         raise FieldValidationError(
             '%(value)s is not an validate number, it is too large.',
             params={'value': value}
@@ -42,7 +42,7 @@ class Questionnaire(models.Model):
     post_date = models.DateField(auto_now_add=True)
     last_modified = models.DateField(auto_now=True)
     questionsize = models.IntegerField(validators=[validate_size], default = "Please enter the number of questions here.",
-                            help_text="Please enter an integer number. (Minimum is 1 and Maximum is 30)",null=False, blank=False)
+                            help_text="Please enter an integer number. (Minimum is 1 and Maximum is 10)",null=False, blank=False)
     questiontype = models.CharField(
         max_length=6,
         choices=[
@@ -57,9 +57,11 @@ class Questionnaire(models.Model):
     )
     question = models.TextField(max_length=5000,default = "Please type the question here.", 
                                                 help_text="Type each question delimited by `;`, "
-                                                "e.g. 1.How old are you?; 2.Where do you live?",null=False, blank=False)
+                                                "e.g. How old are you?; Where do you live?",null=False, blank=False)
     publishable = models.BooleanField(default=True, null=False, blank=False)
-   
+    exp_finish= models.CharField(max_length=100,default = "Please type the expected finishing time here.",  help_text="Please enter the the expected finishing time",
+                            null=False, blank=False)
+
     def __str__(self):
         return self.title
 
@@ -76,13 +78,11 @@ class Answer(models.Model):
                                 null=False, blank=False)
     Ans = models.TextField(max_length=3000,default = "Please type the answer here.", 
                                                 help_text="Type each answer delimited by `;`, "
-                                                "e.g. 1.6 years old; 2.Hong Kong",null=False, blank=False)
+                                                "e.g. 6 years old; Hong Kong",null=False, blank=False)
     def __str__(self):
         return self.Ans
 
     def save(self, *args, **kwargs):
         self.full_clean()
-        super().save(*args, **kwargs)    
-                            
-
+        super().save(*args, **kwargs)  
 
