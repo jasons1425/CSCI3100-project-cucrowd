@@ -215,6 +215,9 @@ function Hide(){
         document.getElementById("org").style.display="none";
         document.getElementById("org_info_card_container").style.display="none";
     }else{
+        document.getElementById("changeavatar").style.display="none";
+        document.getElementById("uploadimg").style.display="none";
+        document.getElementById("saveimg").style.display="none";
         document.getElementById("sid").style.display="none";
         document.getElementById("major").style.display="none";
         document.getElementById("admission").style.display="none";
