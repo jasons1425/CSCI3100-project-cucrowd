@@ -33,7 +33,7 @@ try{
     </div><div style={{ display: "flex" }}>
         <div className='left_card'>
           <div id="avatar"><img id="avatar1" src={"http://localhost:8000"+items.avatar} width="300px" height="300px" /></div>
-          <div id="org" style={{bottom:"0px"}}>The Chinese University of Hong Kong</div>
+          <div id="org" style={{bottom:"0px"}}>{items.org_name}</div>
         </div>
         <div className='right_card'>
           <div id="fullname">Username: <div style={{ marginLeft: "52px", fontWeight: "lighter" }}>{items.user.username}</div></div>
