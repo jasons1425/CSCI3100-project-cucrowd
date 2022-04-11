@@ -179,10 +179,11 @@ class SignUpView(APIView):
             if new_profile is None:
                 new_user.delete()
                 raise AssertionError
-            send_mail("Account created!",
-                      f"Thank you for signing up, {new_user.username}.\n"
-                      f"Your initial password is \t {password}.\n"
-                      f"You can also change your password via the 'Forgot Password' function.",
+            send_mail("Welcome to CUCrowd",
+                      f"Dear {new_user.username},\n\n"
+                      f"Thank you for signing up in CUCrowd. Your initial password is {password}.\n\n"
+                      f"You can also change your password via the 'Forgot Password' function.\n\n"
+                      f"Yours Sincerely,\nCUCrowd project team",
                       EMAIL_HOST_USER,
                       [email],
                       fail_silently=False)
@@ -340,8 +341,8 @@ def password_reset_token_created(sender, instance, reset_password_token, *args, 
     email_message = f"Dear {user_name},\n\n" \
                     f"Please click the below link to reset your password.\n\n" \
                     f"{reset_url}\n\n" \
-                    f"Regards, CU Crowd project team\n\n" \
-                    f"你是忘記了，還是害怕想起來？"
+                    f"If you have not submitted a request to reset password, please ignore this email.\n\n" \
+                    f"Yours Sincerely,\nCUCrowd project team"
     send_mail("Reset Password Email",
               email_message,
               EMAIL_HOST_USER,

@@ -168,12 +168,12 @@ class TeamView(viewsets.ModelViewSet):
             field1 = ('admission year', profile.admission_year)
             field2 = ('major', profile.major)
         send_mail(f"New application for your team '{team_title}'",
-                  f"Dear {host.username},\n"
-                  f"Your have received a new application for your team '{team_title}'.\n"
+                  f"Dear {host.username},\n\n"
+                  f"Your have received a new application for your team '{team_title}'.\n\n"
                   f"name: {user.username:<100}\n"
                   f"{field1[0]}: {field1[1]}\n"
                   f"{field2[0]}: {field2[1]}\n\n"
-                  f"Regards, CU Crowd Project team",
+                  f"Yours Sincerely,\nCUCrowd Project team",
                   EMAIL_HOST_USER,
                   [host.email],
                   fail_silently=False)
