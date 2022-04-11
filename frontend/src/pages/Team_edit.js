@@ -76,10 +76,12 @@ function Team_edit_post({title, vacancy, target, closing, id, description}){
                 <div className="team_post_content">
                     <ul>
                     <li className="team_post_title">{title}</li>
-                    <li className='team_post_description'>Description: {description}</li>
-                    <li>Vacancies: {vacancy}</li>
-                    <li>Target members: {target}</li>
-                    <li>Post closing date: {closing}</li>
+                    <div className="team_post_description">
+                      <li className='team_post_description'>Description: {description}</li>
+                      <li>Vacancies: {vacancy}</li>
+                      <li>Target members: {target}</li>
+                      <li>Post closing date: {closing}</li>
+                    </div>
                     </ul>
                     <div className='team_button'>
                         <div id='response' onClick={()=>responseTeam(id)}><Bi.BiCommentCheck/>&nbsp;Response</div>

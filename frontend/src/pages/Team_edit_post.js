@@ -13,7 +13,20 @@ function Team_edit_post() {
     const [data, setData] = useState();
     const [user, setUser] = useState();
     const [check,setCheck] = useState();
+    const [previousCheck,setPCheck] = useState();
 
+    function resetTeam(){
+        document.getElementById("team_title").value = data.title;
+        document.getElementById("team_self_intro").value = data.self_intro;
+        document.getElementById("team_description").value = data.description;
+        document.getElementById("team_requirements").value = data.requirements;
+        document.getElementById("team_link").value = data.link;
+        document.getElementById("team_contact").value = data.contact;
+        document.getElementById("team_deadline").value = data.deadline;
+        document.getElementById("team_teamsize").value = data.teamsize;
+        setCheck(previousCheck)
+
+    }
 
     useEffect(()=>{
         axios
@@ -21,6 +34,7 @@ function Team_edit_post() {
             .then((res)=>{
                 setData(res.data);
                 setCheck(res.data.publishable)
+                setPCheck(res.data.publishable)
                 isLoadingUser(false)
             });
         axios
@@ -175,13 +189,3 @@ function saveTeam(id, post_date){
         })
 }
 
-function resetTeam(){
-    document.getElementById("team_title").value = ""
-    document.getElementById("team_self_intro").value = ""
-    document.getElementById("team_description").value = ""
-    document.getElementById("team_requirements").value = ""
-    document.getElementById("team_link").value = ""
-    document.getElementById("team_contact").value = ""
-    document.getElementById("team_deadline").value = ""
-    document.getElementById("team_teamsize").value = ""
-}

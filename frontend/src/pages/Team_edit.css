@@ -50,15 +50,13 @@
     border-style: solid;
     position: relative;
     padding-top: 0.1vw;
-    margin-right:2.5vw;
 }
 
 .team_button {
     display: flex;
     height: 4vh;
-    float: right;
-    margin-right: 2vw;
-    padding-top: 0.5vw;
+    float:right;
+    padding-top: 2vw;
 }
 
 .team_button #edit:hover {

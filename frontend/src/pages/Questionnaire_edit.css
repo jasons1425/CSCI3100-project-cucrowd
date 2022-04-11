@@ -68,3 +68,16 @@
     cursor: pointer;
     background-color: white;
 }
+
+.questionnaire_edit_img img{
+    width:10vw;
+}
+
+.questionnaire_edit_img{
+    margin-left: 11vw;
+    display: grid;
+    padding-top: 2vh;
+    border-style: solid;
+    border-width: 0vw;
+    width: 10vw;
+}

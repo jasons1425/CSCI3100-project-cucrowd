@@ -7,7 +7,7 @@ function Questionnaire_add() {
     const [number, setNumber] = useState(1);
 
     function changeQuestionNumber(){
-        let x = document.getElementById("questionnaire_number").value;
+        let x = document.document.getElementbyId("questionnaire_number").value;
         if(x > 10){
             setNumber(10);
         }else{
@@ -16,7 +16,7 @@ function Questionnaire_add() {
     }
 
     function changeType(){
-        let x = document.getElementById("questionnaire_type").value;
+        let x = document.document.getElementbyId("questionnaire_type").value;
         if(x === "MC"){
             setType(1);
         }else if(x === "longQ"){
@@ -88,7 +88,7 @@ function Questionnaire_add() {
         </section>
         <div>
             <button className="questionnaire_edit_back_button" onClick={()=> window.location.pathname="/question/edit"}>Back</button>
-            <button className="questionnaire_edit_add_button" onClick={()=>addPost()}>Add New Post</button>
+            <button className="questionnaire_edit_add_button" onClick={()=>addPost(type, number)}>Add New Post</button>
         </div>
       </div>
     )
@@ -149,6 +149,32 @@ function Form(){
     )
 }
 
-function addPost(){
+function addPost(type, number){
+    const question = "";
+    let answer = [];
+    let error = [];
+    let check = 1;
+    if (type == 1){
+        for(var x = 0; x < number; x++){
+            answer.push("" + document.getElementbyId(""+(x+1)).value + "," + document.getElementbyId(""+(x+1)+"A").value + "," + document.getElementbyId(""+(x+1)+"B").value + "," + document.getElementbyId(""+(x+1)+"C").value + "," + document.getElementbyId(""+(x+1)+"D").value + ";");
+        }
+    }else if (type == 2 || type == 3){
+        for(var x = 0; x < number; x++){
+            if (document.getElementbyId(""+(x+1)).value == ""){
+                check = 0;
+                error.push(""+(x+1));
+            }
+            question = question + document.getElementbyId(""+(x+1)).value + ";";
+        }
+    }else if (type == 4){
+        if (document.getElementbyId(""+(x+1)).value == ""){
+            check = 0;
+            error = "link of google form";
+        }
+        question = question + document.getElementbyId("googleForm").value + ";";
+    }
 
+    if(check == 0){
+        alert("You have not finished " + error);
+    }
 }

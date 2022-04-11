@@ -88,7 +88,7 @@ function Profile() {
         <hr className='profile_line'/>
         <div id="email">Email: <div style={{marginLeft:"113px", fontWeight:"lighter"}}>{items.user.email}</div></div>
         <hr className='profile_line'/>
-        <div id="password">Password: <div style={{marginLeft:"57px", fontWeight:"lighter"}}>***************</div></div>
+        <div id="password">Password: <div style={{marginLeft:"57px", fontWeight:"lighter"}}>***************</div><div id="edit_icon" onClick={()=>changePassword(items.user.email)}><Io.IoMdCreate/></div></div>
         <hr className='profile_line'/>
         <div id="birth">Date of Birth: <div style={{marginLeft:"20px", fontWeight:"lighter"}}>{items.date_of_birth}</div></div>
         <hr className='profile_line'/>
@@ -230,3 +230,21 @@ function Hide(){
 }
 
 export default Profile
+
+function changePassword(email){
+  if(window.confirm("upon clicking reset password, you are forced to log out and an email for changing password will be sent to your sign up email. Are you sure?")){
+    let payload = {email : email}
+    axios
+    .post("http://localhost:8000/api/password_reset/", payload)
+    .then((res) => {
+      if(res.data.status == "OK"){
+        window.alert("Email has been successfully sent to your mailbox. Please check!")
+        axios
+        .post("http://localhost:8000/api/logout", null, {withCredentials : true})
+        .then((res)=>{
+            window.location.pathname="/";
+        })
+      }
+    })
+  }
+}
