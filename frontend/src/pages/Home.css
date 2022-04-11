@@ -55,6 +55,10 @@
   font-weight: bold;
 
 }
+.postauthor:hover{
+    cursor: pointer;
+}
+
 
 .description{
   background-color: white;
