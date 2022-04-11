@@ -86,19 +86,19 @@ class Exp_list extends React.Component{
      
             <>
             {this.state.items.length > 0 && <div className='column'>
-                <div className='postauthor'>{this.state.items[0].title.substring(0,200)}</div>
+                <div className='postauthor' onClick={()=>{window.location.pathname='/experiments/'+this.state.items[0].id;}}>{this.state.items[0].title.substring(0,200)}</div>
                 <div className='postphoto'><img src={this.state.items[0].exp_img} width="440px" height="390px" ></img></div>
                 <div className='home_line'><hr id="line"/></div>
                 <div className='description'>{this.state.items[0].description}</div>
             </div>}
             {this.state.items.length > 1 && <div className='column'>
-                <div className='postauthor'>{this.state.items[1].title.substring(0,200)}</div>
+                <div className='postauthor' onClick={()=>{window.location.pathname='/experiments/'+this.state.items[1].id;}}>{this.state.items[1].title.substring(0,200)}</div>
                 <div className='postphoto'><img src={this.state.items[1].exp_img} width="440px" height="390px" ></img></div>
                 <div className='home_line'><hr id="line"/></div>
                 <div className='description'>{this.state.items[1].description}</div>
             </div>}
             {this.state.items.length > 2 && <div className='column'>
-                <div className='postauthor'>{this.state.items[2].title.substring(0,200)}</div>
+                <div className='postauthor' onClick={()=>{window.location.pathname='/experiments/'+this.state.items[2].id;}}>{this.state.items[2].title.substring(0,200)}</div>
                 <div className='postphoto'><img src={this.state.items[2].exp_img} width="440px" height="390px" ></img></div>
                 <div className='home_line'><hr id="line"/></div>
                 <div className='description'>{this.state.items[2].description}</div>
