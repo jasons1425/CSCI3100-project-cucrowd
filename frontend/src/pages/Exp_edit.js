@@ -282,19 +282,19 @@ function Exp_edit() {
     <input type="text" name="target" id="target" defaultValue={items.target} required/>
     </label>
 
-    <label style={{marginLeft:"20px"}}>Duration:
+    <label style={{marginLeft:"0.8vw"}}>Duration:
     <input type="text" name="duration" id="duration" defaultValue={items.duration} required/>
     </label><br/>
 
     <label>Job Nature:</label>
-    <select name="jobs" id="jobs" form="jobform" style={{margin:"20px"}} defaultValue={items.job_nature} required>
+    <select name="jobs" id="jobs" form="jobform" style={{margin:"0.8vw"}} defaultValue={items.job_nature} required>
     {job.map(item=>(
     <option value={item.code}>{item.display}</option>
     ))}
     </select>
 
-    <label style={{marginLeft:"20px"}}>Type:</label>
-    <select name="types" id="types" form="typeform" style={{margin:"20px"}} defaultValue={items.type} required>
+    <label style={{marginLeft:"0.8vw"}}>Type:</label>
+    <select name="types" id="types" form="typeform" style={{margin:"0.8vw"}} defaultValue={items.type} required>
     <option value="FT">FullTime</option>
     <option value="PT">PartTime</option>
     <option value="Intern">Internship</option>
@@ -305,7 +305,7 @@ function Exp_edit() {
     <input type="text" name="salary" id="salary" defaultValue={items.salary} required/>
     </label>
 
-    <label style={{marginLeft:"20px"}}>Deadline</label>
+    <label style={{marginLeft:"0.8vw"}}>Deadline</label>
     <input type="date" id="deadline" name="deadline"
     min="2022-04-01" max="2023-3-31" defaultValue={items.deadline} required/><br/>
 
@@ -317,7 +317,7 @@ function Exp_edit() {
     <input type="text" name="vacancy" id="vacancy" defaultValue={items.vacancy} required/>
     </label>
 
-    <label style={{marginLeft:"20px"}} for="image">Image:</label>
+    <label style={{marginLeft:"0.8vw"}} for="image">Image:</label>
     <input type="file" name="image" id="image" /><br />
 
     
@@ -328,7 +328,7 @@ function Exp_edit() {
     <label>Requirements: </label> <br/>
     <textarea rows="10" cols="165" name="requirements" id="requirements" form="requirementform" defaultValue={items.requirements}></textarea><br/>
     
-    <label>TimeSlot (Enter each allowed time delimited by `;`, e.g. 2022-03-27-16:00;2022-03-28-17:00):</label><br/>
+    <label>TimeSlot:</label><br/>
     <textarea rows="12" cols="165" name="timeslot" id="timeslot" form="timeslotform" defaultValue={items.timeslots} required></textarea>
     <br/>
 
