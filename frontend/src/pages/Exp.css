@@ -25,7 +25,7 @@
 }
 
 .exp_space{
-    height: 200px;
+    height: 16.963528413910094vh;
 }
 .picture{
     margin-left: 11vw;
@@ -50,8 +50,8 @@
 
 .exp_item{
     width: 30vw;
-    padding-bottom: 50px;
-    height:200px;
+    padding-bottom: 2.1486892995272884vw;
+    height:16.963528413910094vh;
 }
 .exp_item #exp_date{
     padding-left: 1vw;
@@ -63,7 +63,7 @@
 }
 .exp_item #exp_subtitle{
     padding-left: 1vw;
-    font-size: 20px;
+    font-size: 0.8vw;
     font-weight: bold;
 }
 
@@ -109,40 +109,40 @@
 }
 
 .search{
-    margin-left: 800px;
-    margin-top: 230px;
-    padding-bottom: 20px;
+    margin-left: 29vw;
+    margin-top: 9.1vw;
+    padding-bottom: 0.8594757198109153vw;
     display: flex;
 }
 
 .search #bar{
-    width: 800px;
-    height: 50px;
-    border-radius: 10px;
-    font-size: 20px;
+    width: 34.379028792436614vw;
+    height: 4vh;
+    border-radius: 0.42973785990545765vw;
+    font-size: 0.8594757198109153vw;
 }
 .search #icon{
-    padding-top: 10px;
-    padding-right: 15px;
-    font-size: 40px;
+    padding-top: 0.42973785990545765vw;
+    padding-right: 0.6446067898581865vw;
+    font-size: 1.7189514396218306vw;
 }
 
 .search #edit_icon{
-    padding-top: 15px;
-    padding-left: 10px;
-    padding-right: 10px;
-    margin-left:60px;
-    font-size: 30px;
+    padding-top: 0.6446067898581865vw;
+    padding-left: 0.42973785990545765vw;
+    padding-right: 0.42973785990545765vw;
+    margin-left:2.578427159432746vw;
+    font-size: 1.289213579716373vw;
 }
 
 .search #edit_icon:hover{
     cursor: pointer;
     background-color:white;
-    border-radius: 10px;
+    border-radius: 0.42973785990545765vw;
     border-style:outset;
   }
 
 
 .container1{
-    height: 350px;
+    height: 13.671875vw;
 }
