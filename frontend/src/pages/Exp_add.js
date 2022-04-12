@@ -12,7 +12,7 @@ function Exp_add() {
   return (
     <><div className="banner">
       <div className='icon'><Ai.AiTwotoneExperiment /> </div>
-      <div className='title1'>Experiements</div>
+      <div className='title1'>Experiments</div>
     </div>
 
     <div className='post_created'>
