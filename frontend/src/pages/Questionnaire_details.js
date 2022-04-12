@@ -82,23 +82,21 @@ function Questionnaire_details() {
                             <p>{data.description}</p>
                         </div>
                     </div>
-
-                    {data.questiontype !== "gf" && <div className="progress_bar">
+                    {data.questiontype === "gf" && <GoogleForm key={number} question={data.question}/>}
+                    {data.questiontype !== "gf" && <><div className="progress_bar">
                         <div className="bar" id="bar" style={{width: (100/maxno)*number + "%"}}></div>
                     </div>
-                    }
-
+                    
                     <div className="questionnaire">
                         <div className="questionnaire_left_icon">{number !== 1 && <BiCaretLeft onClick={()=> {setNumber(number - 1); updateQuestionAnswer(data.questiontype, number);}}/>}</div>
                         <div className="question">
                             {data.questiontype === "lq" && <LongQ key={number} number={number} question={data.question.split(";")[number-1]}/>}
                             {data.questiontype === "mc" && <MC key={number} number={number} question={data.question.split(";")[number-1]}/>}
                             {data.questiontype === "sc" && <Scoring key={number} number={number} question={data.question.split(";")[number-1]}/>}
-                            {data.questiontype === "gf" && <GoogleForm key={number} question={data.question}/>}
                         
                         </div>
                         <div className="questionnaire_right_icon">{number !== maxno && <BiCaretRight onClick={()=> {setNumber(number + 1); updateQuestionAnswer(data.questiontype, number);}}/>}</div>
-                    </div>
+                    </div></>}
                     
                     <div>
                         <button className="questionnaire_back_button" type="button" onClick={()=> window.location.pathname="/question"}>Back</button>
@@ -176,9 +174,9 @@ function Questionnaire_details() {
 
     function GoogleForm({question}){
         return(        
-            <div className="googleForm">
+            <div className="googleForm" onClick={() => window.open(question, "_blank")}>
                 <Gi.GiClick/>
-                <a href={question} target="_blank">Click to Google Form</a>
+                <span>Click to Google Form</span>
             </div>
         )
     }

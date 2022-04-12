@@ -61,9 +61,8 @@ function Questionnaire() {
             <input id="questionnaire_search_bar" className="questionnaire_search_bar" type="text" placeholder="Search..." onChange={(e)=>{questionnaireSearch()}}/>
             <div className="questionnaire_search_edit_icon" onClick={()=>{window.location.pathname='/question/edit';}}><Io.IoMdCreate/></div>
         </div>
-
         <section>
-          {dataArray.filter((element) => {return element.questiontype = "gf"}).map((element,index) => <QuestionnairePost key={index} id={element.id} title={element.title} type={element.questiontype} closing={element.deadline} description={element.description}/>)}
+          {dataArray.filter((element) => {return element.questiontype = "gf"}).map((element,index) => <QuestionnairePost key={index} id={element.id} title={element.title} type={element.questiontype} closing={element.deadline} description={element.description} time={element.exp_finish}/>)}
         </section>
 
       </div>
@@ -74,7 +73,7 @@ function Questionnaire() {
 export default Questionnaire
 
 
-function QuestionnairePost({id, type, title, description}){
+function QuestionnairePost({id, type, title, description, time}){
   return(
     <div>
       <div className="questionnaire_post">
@@ -89,7 +88,7 @@ function QuestionnairePost({id, type, title, description}){
               <li className="questionnaire_post_title">{title}</li>
               <li>Question type: {type == "mc" && <b>MC</b>} {type == "lq" && <b>Long Question</b>} {type == "gf" && <b>Google Form</b>} {type == "sc" && <b>Scoring</b>}</li>
               <li><div className="questionnaire_decription">Description: {description}</div></li>
-              <li>Expected finishing time: <b>10 mins</b></li>
+              <li><div className="questionnaire_time">Expected finishing time: <b>{time}</b></div></li>
               <li><a href={"http://localhost:3000/question/" + id}>More..</a></li>
             </ul>
           </div>
