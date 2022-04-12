@@ -22,7 +22,7 @@ function Team() {
       let x = document.getElementById("team_search_bar").value
       x = x.toLowerCase()
       setDataArray(data.filter((element)=>{
-          return element.title.includes(x);
+          return element.title.toLowerCase().includes(x);
       }))
   }
 
