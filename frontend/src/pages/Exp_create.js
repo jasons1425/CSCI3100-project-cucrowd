@@ -319,7 +319,7 @@ function submit_exp(){
         <label>Requirements: </label> <br/>
         <textarea rows="10" cols="165" name="requirements" id="requirements" form="requirementform"></textarea><br/>
         
-        <label>TimeSlot:</label><br/>
+        <label>TimeSlot (Enter each allowed time delimited by `;`, e.g. 2022-03-27-16:00;2022-03-28-17:00):</label><br/>
         <textarea rows="12" cols="165" name="timeslot" id="timeslot" form="timeslotform" required></textarea>
         <br/>
 
