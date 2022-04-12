@@ -71,6 +71,7 @@ textarea{
 
 .exp_form input[name="image"]{
     border: none;
+    padding-right: 20vw;
 }
 
 .create_exp{
