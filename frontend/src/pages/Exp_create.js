@@ -309,7 +309,7 @@ function submit_exp(){
         </label>
 
         <label style={{marginLeft:"0.8vw"}} for="image">Image:</label>
-        <input type="file" name="image" id="image" /><br />
+        <input type="file" style={{width:"0vw"}} name="image" id="image" /><br />
 
         
         <label>Description:</label><br/>
