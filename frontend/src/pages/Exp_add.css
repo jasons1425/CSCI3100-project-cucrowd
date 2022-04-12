@@ -1,8 +1,8 @@
 .post_created #title{
-    font-size: 50px;
-    margin-top: 220px;
-    padding-left: 150px;
-    padding-bottom: 20px;
+    font-size: 2vw;
+    margin-top: 9vw;
+    padding-left: 6vw;
+    padding-bottom: 0.8594757198109153vw;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 
 }
@@ -14,80 +14,76 @@
 }
 
 .post_created{
-    margin-left: 550px;
-    margin-right: 550px;
+    margin-left: 23.635582294800173vw;
+    margin-right: 23.635582294800173vw;
 }
 
 .post_created #icon{
-    margin-left: 1100px;
-    font-size: 25px;
+    margin-left: 41.271164589600346vw;
+    font-size: 1vw;
     border-color: black;
     border-style: solid;
-    padding-right: 1px;
-    width: 250px;
+    padding-right: 0.042973785990545764vw;
+    width: 10.043446497636441vw;
     text-align: center;
-    padding-top: 10px;
-    padding-bottom: 10px;
-    border-radius: 10px;
-    margin-bottom: 40px;
+    padding-top: 0.4vw;
+    padding-bottom: 0.4vw;
+    border-radius: 0.4vw;
+    margin-bottom: 1.7189514396218306vw;
 }
 .post_created #icon:hover{
     cursor: pointer;
     background-color:white;
 }
 .exp_button #edit{
- 
-    font-size: 25px;
-    border-radius: 10px;
-    padding-right: 10px;
-    width: 100px;
-    padding-bottom: 15px;
+    font-size: 1vw;
+    border-radius: 0.42vw;
+    padding-right: 0.42vw;
+    width: 4vw;
+    padding-bottom: 0.58vw;
     text-align: center;
     justify-content: center;
-    padding-top: 15px;
+    padding-top: 0.58vw;
     border-color: black;
     border-style: solid ;
     position: relative;
-    bottom: 80px;
+    bottom: 6.2vh;
 }
 
 .exp_button #delete{
-
-    margin-left: 30px;
-    font-size: 25px;
-    padding-right: 10px;
-    padding-left: 10px;
-    border-radius: 10px;
-    width: 120px;
+    margin-left: 1.2vw;
+    font-size: 1vw;
+    padding-right: 0.42vw;
+    padding-left: 0.42vw;
+    border-radius: 0.42vw;
+    width: 4.6vw;
     text-align: center;
     justify-content: center;
-    padding-top: 15px;
+    padding-top: 0.58vw;
     border-color: black;
     border-style: solid;
     position: relative;
-    bottom: 80px;
+    bottom: 6.2vh;
 }
 .exp_button #response{
-
-    margin-left: 0px;
-    margin-right: 30px;
-    font-size: 25px;
-    padding-right: 10px;
-    padding-left: 10px;
-    border-radius: 10px;
-    width: 150px;
+    margin-right: 1.2vw;
+    font-size: 1vw;
+    padding-right: 0.42vw;
+    padding-left: 0.42vw;
+    border-radius: 0.42vw;
+    width: 5.8vw;
     text-align: center;
     justify-content: center;
-    padding-top: 15px;
+    padding-top: 0.58vw;
     border-color: black;
     border-style: solid;
     position: relative;
-    bottom: 80px;
+    bottom: 6.2vh;
 }
 .exp_button{
     display:flex;
-    margin-left: 1350px;
-    padding-bottom: 30px;
+    margin-left: 52vw;
+    padding-bottom: 1.2vw;
     
 }
 

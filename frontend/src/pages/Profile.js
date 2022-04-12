@@ -62,8 +62,9 @@ function Profile() {
     <div style={{display:"flex"}}>
     <div className='left_card'>
         <div id="avatar"><img id="avatar1" src={"http://localhost:8000"+items.avatar} width="300px" height="300px"/></div>
+        <div id="imgpreview"><img id="imgpreview1" src="" width="300px" height="300px"/></div>
         <label>
-        <input type="file" name="image" id="changeavatar" />
+        <input type="file" name="image" id="changeavatar" accept ="image/*" onChange={(e)=>{Imgpreview(e);}}/>
         <div id="uploadimg" >Upload Avatar</div>
         </label>
         <div id="saveimg" onClick={()=>{
@@ -202,6 +203,10 @@ function Profile() {
       return("")
   }
 }
+function Imgpreview(e){
+  console.log("hi");
+  document.getElementById("imgpreview1").src=URL.createObjectURL(e.target.files[0]);
+}
 function Hide(){
     const [items, setItems] = useState([{}]);
 
@@ -215,6 +220,9 @@ function Hide(){
         document.getElementById("org").style.display="none";
         document.getElementById("org_info_card_container").style.display="none";
     }else{
+        document.getElementById("changeavatar").style.display="none";
+        document.getElementById("uploadimg").style.display="none";
+        document.getElementById("saveimg").style.display="none";
         document.getElementById("sid").style.display="none";
         document.getElementById("major").style.display="none";
         document.getElementById("admission").style.display="none";

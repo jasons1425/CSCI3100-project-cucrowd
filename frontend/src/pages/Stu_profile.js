@@ -35,9 +35,9 @@ if(items.gender=="NA"){
     </div><div style={{ display: "flex" }}>
         <div className='left_card'>
           <div id="avatar"><img id="avatar1" src={items.avatar} width="300px" height="300px" /></div>
-          <div id="sid"style={{bottom:"0px"}}>SID:{items.sid}</div>
-          <div id="major"style={{bottom:"0px"}}>Major: {items.major}</div>
-          <div id="admission"style={{bottom:"0px"}}>Admission Year: {items.admission_year}</div>
+          <div id="sid"style={{marginTop:"410px"}}>SID:{items.sid}</div>
+          <div id="major"style={{marginTop:"0px"}}>Major: {items.major}</div>
+          <div id="admission"style={{marginTop:"0px"}}>Admission Year: {items.admission_year}</div>
         </div>
         <div className='right_card'>
           <div id="fullname">Username: <div style={{ marginLeft: "52px", fontWeight: "lighter" }}>{items.user.username}</div></div>

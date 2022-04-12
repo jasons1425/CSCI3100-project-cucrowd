@@ -15,7 +15,24 @@
     height:300px;
     border-radius: 200px;
     overflow: hidden;
+    position: absolute;
+  
 }
+
+.left_card #imgpreview{
+    margin-left: 80px;
+    margin-top: 40px;
+    border: 10px;
+    width: 300px;
+    height:300px;
+    border-radius: 200px;
+    overflow: hidden;
+    z-index: 1;
+    position: absolute;
+}
+
+
+
 .left_card #chnage{
     display: flex;
 }
@@ -35,14 +52,14 @@
     text-align: center;
     font-size: 23px;
     color: gray;
-    margin-top: 30px;
+    margin-top: 380px;
     margin-bottom: 15px;
     position: relative;
-    bottom: 70px;
+    bottom: 0px;
 }
 
 .left_card #sid{
-    margin-top: 0px;
+    margin-top: 10px;
     text-align: center;
     font-size: 23px;
     color: gray;
@@ -67,7 +84,6 @@
     bottom: 50px;
     color: gray;
 }
-
 
 .right_card{
     background-color: #f5eac9;
