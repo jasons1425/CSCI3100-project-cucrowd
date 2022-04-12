@@ -19,7 +19,7 @@ function Questionnaire_add() {
         let x = document.document.getElementbyId("questionnaire_type").value;
         if(x === "MC"){
             setType(1);
-        }else if(x === "longQ"){
+        }else if(x === "LongQ"){
             setType(2);
         }else if(x === "scoring"){
             setType(3);
@@ -45,6 +45,7 @@ function Questionnaire_add() {
         
         
         <section className="questionnaire_add">
+            <div id='icon'>Create Questionnaire</div>
             <div className="questionnaire_add_title">
                 <label htmlFor="questionnaire_title">Title</label>
                 <input type="text" placeholder="Type your questionnaire title here" name="questionnaire_title" id="questionnaire_title"></input>
@@ -80,10 +81,10 @@ function Questionnaire_add() {
             </div>
 
             <div>
-                {type === 1 && <MCQ number={number}/>}
-                {type === 2 && <Question number={number}/>}
-                {type === 3 && <Question number={number}/>}
-                {type === 4 && <Form />}    
+                {type == 1 && <MCQ number={number}/>}
+                {type == 2 && <Question number={number}/>}
+                {type == 3 && <Question number={number}/>}
+                {type == 4 && <Form />}    
             </div>
         </section>
         <div>

@@ -21,7 +21,7 @@ function Team_add() {
       </div>
 
       <section className="team_add">
-            <div id='icon'>CU CROWD</div>
+            <div id='icon'>Create Team Formation</div>
             <div className="team_add_title">
                 <label htmlFor="team_title">Title:</label>
                 <input type="text" placeholder="Type your team formation title here" name="team_title" id="team_title"></input>

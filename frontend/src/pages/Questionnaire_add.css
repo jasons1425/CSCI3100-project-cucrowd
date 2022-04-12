@@ -130,3 +130,10 @@
 .questionnaire_edit_back_button:hover {
     background-color: #3e8e41;
 }
+
+.questionnaire_add #icon{
+    font-size: 50px;
+    font-weight: bold;
+    color: purple;
+    margin-bottom: 30px;
+}
