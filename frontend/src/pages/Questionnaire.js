@@ -19,7 +19,7 @@ function Questionnaire() {
     let x = document.getElementById("questionnaire_search_bar").value
     x = x.toLowerCase()
     setDataArray(data.filter((element)=>{
-        return element.title.includes(x);
+        return element.title.toLowerCase().includes(x);
     }))
   }
 
