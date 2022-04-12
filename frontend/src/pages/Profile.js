@@ -7,8 +7,10 @@ import * as Io from "react-icons/io";
 
 function Profile() {
     const [items, setItems] = useState([{}]);
-    const [teams, setTeams] = useState();
-    const [leadingTeams, setLeadingTeams] = useState();
+    const [teams, setTeams] = useState(0);
+    const [question, setQuestion] = useState(0);
+    const [leadingTeams, setLeadingTeams] = useState(0);
+    const [avatar, setAvatar] = useState();
 
   useEffect(() => {
     axios.get("http://localhost:8000/api/profile/me", {withCredentials : true}).then((response) => {
@@ -52,6 +54,14 @@ function Profile() {
         })
   }, []);
 
+  useEffect(() => {
+    axios
+        .get("http://localhost:8000/api/questionnaire", {withCredentials:true})
+        .then((res)=>{
+          setQuestion(res.data);
+        })
+  }, []);
+
    try{
   return (
       <>
@@ -61,8 +71,8 @@ function Profile() {
             </div>
     <div style={{display:"flex"}}>
     <div className='left_card'>
-        <div id="avatar"><img id="avatar1" src={"http://localhost:8000"+items.avatar} width="300px" height="300px"/></div>
-        <div id="imgpreview"><img id="imgpreview1" src="" width="300px" height="300px"/></div>
+        <div id="avatar"><img id="avatar1" src={"http://localhost:8000"+items.avatar} width="100%" height="100%"/></div>
+        <div id="imgpreview" style={{"display":"none"}}><img id="imgpreview1" src="" width="100%" height="100%" /></div>
         <label>
         <input type="file" name="image" id="changeavatar" accept ="image/*" onChange={(e)=>{Imgpreview(e);}}/>
         <div id="uploadimg" >Upload Avatar</div>
@@ -85,15 +95,16 @@ function Profile() {
         <div id="admission">Admission Year: {items.admission_year}</div>
     </div>
     <div className='right_card'>
-        <div id="fullname">Username: <div style={{marginLeft:"52px", fontWeight:"lighter"}}>{items.user.username}</div></div>
+        <div id="fullname">Username: <div style={{marginLeft:"2.184vw", fontWeight:"lighter"}}>{items.user.username}</div></div>
         <hr className='profile_line'/>
-        <div id="email">Email: <div style={{marginLeft:"113px", fontWeight:"lighter"}}>{items.user.email}</div></div>
+        <div id="email">Email: <div style={{marginLeft:"4.746vw", fontWeight:"lighter"}}>{items.user.email}</div></div>
         <hr className='profile_line'/>
-        <div id="password">Password: <div style={{marginLeft:"57px", fontWeight:"lighter"}}>***************</div><div id="edit_icon" onClick={()=>changePassword(items.user.email)}><Io.IoMdCreate/></div></div>
+        <div id="password">Password: <div style={{marginLeft:"2.394vw", fontWeight:"lighter"}}>***************</div><div id="edit_icon" onClick={()=>changePassword(items.user.email)}><Io.IoMdCreate/></div></div>
         <hr className='profile_line'/>
-        <div id="birth">Date of Birth: <div style={{marginLeft:"20px", fontWeight:"lighter"}}>{items.date_of_birth}</div></div>
+        <div id="birth">Date of Birth: <div style={{marginLeft:"0.84vw", fontWeight:"lighter"}}>{items.date_of_birth}</div></div>
         <hr className='profile_line'/>
-        <div id="gender">Gender:<div style={{marginLeft:"93px", fontWeight:"lighter"}}> {gender}</div></div>
+        <div id="gender">Gender:<div style={{marginLeft:"3.906vw", fontWeight:"lighter"}}> {gender}</div></div>
+        <div id="notif">* If you need to modify the personal information, please send an email to csci3100cucrowd@gmail.com</div>
     </div>
     </div>
     <section id="org_info_card_container">
@@ -145,7 +156,14 @@ function Profile() {
             <div id="subtitle1">Title</div>
         </div>
         <hr style={{borderColor:"black"}}/>
-        {leadingTeams.map(item=>(
+        {leadingTeams == 0 && <>
+            <div style={{display:"flex"}}>
+        
+            <div id="team_title">Empty</div>
+            </div>
+            </>
+        }
+        {leadingTeams != 0 && leadingTeams.map(item=>(
             <>
         <div style={{display:"flex"}}>
         
@@ -174,7 +192,14 @@ function Profile() {
             <div id="subtitle1">Title</div>
         </div>
         <hr style={{borderColor:"black"}}/>
-        {teams.map(item=>(
+        {teams == 0 && <>
+            <div style={{display:"flex"}}>
+        
+            <div id="team_title">Empty</div>
+            </div>
+            </>
+        }
+        {teams != 0 && teams.map(item=>(
             <>
         <div style={{display:"flex"}}>
         
@@ -193,7 +218,35 @@ function Profile() {
         <div className='team_card_line'><hr id="line"/></div>
         </>))}
     </div>
+    </section>
 
+    <section id="questionnaire_container">
+    <div className='question_card'>
+     
+        <div id="title">Posted questionnaire</div>
+        
+        <div style={{display:"flex"}}>
+            <div id="subtitle1">Title</div>
+        </div>
+        <hr style={{borderColor:"black"}}/>
+        {question == 0 &&
+          <>
+            <div style={{display:"flex"}}>
+        
+            <div id="question_title">Empty</div>
+          </div>
+          </>
+        }
+        {question != 0 && question.map(item=>(
+            <>
+        <div style={{display:"flex"}}>
+        
+            <div id="question_title">{item.title}</div>
+            <div id="cancel" onClick={{}}>Cancel</div>
+        </div>
+        <div className='question_card_line'><hr id="line"/></div>
+        </>))}
+    </div>
     </section>
     <Hide/>
     </>
@@ -202,11 +255,16 @@ function Profile() {
     }catch(e){
       return("")
   }
+
+  function Imgpreview(e){
+    console.log("hi");
+    document.getElementById("imgpreview").removeAttribute("style");
+    document.getElementById("avatar").setAttribute("style", "display:none");
+    document.getElementById("imgpreview1").src=URL.createObjectURL(e.target.files[0]);
+  
+  }
 }
-function Imgpreview(e){
-  console.log("hi");
-  document.getElementById("imgpreview1").src=URL.createObjectURL(e.target.files[0]);
-}
+
 function Hide(){
     const [items, setItems] = useState([{}]);
 
