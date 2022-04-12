@@ -70,7 +70,7 @@ function List(id){
     <div >
       <div className="banner"> 
             <div className='icon'><Ai.AiTwotoneExperiment /> </div>
-            <div className='title1'>Experiements</div>
+            <div className='title1'>Experiments</div>
             </div>
         <div className='exp_space'></div>
         <div className='exp_detail'>
