@@ -125,7 +125,7 @@ function TeamMember({members}){
       <p><b>Team member</b></p>
       <table>
         <tbody>
-          {members.map((element,index) => <tr key={index}><td>{element.info.sid}</td><td>Year {year - element.info.admission_year.slice(0,4)}</td><td>{element.info.major}</td></tr>)}
+          {members.map((element,index) => <tr key={index}><td>{element.info.user.username}</td><td>Year {year - element.info.admission_year.slice(0,4)}</td><td>{element.info.major}</td></tr>)}
         </tbody>
       </table>
     </div>

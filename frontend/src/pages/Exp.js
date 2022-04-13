@@ -17,7 +17,7 @@ function Exp(){
         <>
             <div className="banner"> 
             <div className='icon'><Ai.AiTwotoneExperiment /> </div>
-            <div className='title1'>Experiements</div>
+            <div className='title1'>Experiments</div>
             </div>
             <div className="search">
             <div id="icon"><Ai.AiOutlineSearch /></div>
@@ -78,7 +78,7 @@ function List(props){
             {matchData.map(item=>(
             <><div className='container1'>
             <ul className='exp_list'>
-                <li className='picture'><img src={item.exp_img} width="88%" height="88%"></img></li>
+                <li className='picture'><img src={item.exp_img==null? sample:item.exp_img} width="88%" height="88%"></img></li>
             <li className='exp_item'>
                     <div id='exp_date'>{item.post_date.substring(0,10)}</div>
                     <div id='exp_title'>{item.title.substring(0,200)}</div>

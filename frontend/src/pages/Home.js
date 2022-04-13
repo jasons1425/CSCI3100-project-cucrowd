@@ -77,19 +77,19 @@ class Exp_list extends React.Component{
                 <div className='postauthor' onClick={()=>{window.location.pathname='/experiments/'+this.state.items[0].id;}}>{this.state.items[0].title.substring(0,200)}</div>
                 <div className='postphoto'><img src={this.state.items[0].exp_img} width="95%" height="95%" ></img></div>
                 <div className='home_line'><hr id="line"/></div>
-                <div className='description'>{this.state.items[0].description}</div>
+                <div className='description'>{this.state.items[0].description.substring(0,200) + "..."}</div>
             </div>}
             {this.state.items.length > 1 && <div className='column'>
                 <div className='postauthor' onClick={()=>{window.location.pathname='/experiments/'+this.state.items[1].id;}}>{this.state.items[1].title.substring(0,200)}</div>
                 <div className='postphoto'><img src={this.state.items[1].exp_img} width="95%" height="95%" ></img></div>
                 <div className='home_line'><hr id="line"/></div>
-                <div className='description'>{this.state.items[1].description}</div>
+                <div className='description'>{this.state.items[1].description.substring(0,200) + "..."}</div>
             </div>}
             {this.state.items.length > 2 && <div className='column'>
                 <div className='postauthor' onClick={()=>{window.location.pathname='/experiments/'+this.state.items[2].id;}}>{this.state.items[2].title.substring(0,200)}</div>
                 <div className='postphoto'><img src={this.state.items[2].exp_img} width="95%" height="95%" ></img></div>
                 <div className='home_line'><hr id="line"/></div>
-                <div className='description'>{this.state.items[2].description}</div>
+                <div className='description'>{this.state.items[2].description.substring(0,200) + "..."}</div>
             </div>}
             </>
          
@@ -150,31 +150,31 @@ class Team_list extends React.Component{
       <div >     
             <>
             {this.state.items.length > 0 && <div className='column'>
-                <div className='postauthor' onClick={() => {window.location.href = "http://localhost:3000/team/" + this.state.items[0].id}}>{this.state.items[0].title.substring(0,200)}</div>
+                <div className='postauthor' onClick={() => {window.location.href = "http://localhost:3000/team/" + this.state.items[0].id}}>{this.state.items[0].title.substring(0,200) + "..."}</div>
                 {this.state.items[0].teamsize == 2 && <div className='postphoto'><img src={member2} width="95%" height="95%" ></img></div>}
                 {this.state.items[0].teamsize == 3 && <div className='postphoto'><img src={member3} width="95%" height="95%" ></img></div>}
                 {this.state.items[0].teamsize == 4 && <div className='postphoto'><img src={member4} width="95%" height="95%" ></img></div>}
                 {this.state.items[0].teamsize == 5 && <div className='postphoto'><img src={member5} width="95%" height="95%" ></img></div>}      
                 <div className='home_line'><hr id="line"/></div>
-                <div className='description'>{this.state.items[0].description}</div>
+                <div className='description'>{this.state.items[0].description.substring(0,200) + "..."}</div>
             </div>}
             {this.state.items.length > 1 && <div className='column'>
-                <div className='postauthor' onClick={() => {window.location.href = "http://localhost:3000/team/" + this.state.items[1].id}}>{this.state.items[1].title.substring(0,200)}</div>
+                <div className='postauthor' onClick={() => {window.location.href = "http://localhost:3000/team/" + this.state.items[1].id}}>{this.state.items[1].title.substring(0,200) + "..."}</div>
                 {this.state.items[1].teamsize == 2 && <div className='postphoto'><img src={member2} width="95%" height="95%" ></img></div>}
                 {this.state.items[1].teamsize == 3 && <div className='postphoto'><img src={member3} width="95%" height="95%" ></img></div>}
                 {this.state.items[1].teamsize == 4 && <div className='postphoto'><img src={member4} width="95%" height="95%" ></img></div>}
                 {this.state.items[1].teamsize == 5 && <div className='postphoto'><img src={member5} width="95%" height="95%" ></img></div>}
                 <div className='home_line'><hr id="line"/></div>
-                <div className='description'>{this.state.items[1].description}</div>
+                <div className='description'>{this.state.items[1].description.substring(0,200) + "..."}</div>
             </div>}
             {this.state.items.length > 2 && <div className='column'>
-                <div className='postauthor' onClick={() => {window.location.href = "http://localhost:3000/team/" + this.state.items[2].id}}>{this.state.items[2].title.substring(0,200)}</div>
+                <div className='postauthor' onClick={() => {window.location.href = "http://localhost:3000/team/" + this.state.items[2].id}}>{this.state.items[2].title.substring(0,200) + "..."}</div>
                 {this.state.items[2].teamsize == 2 && <div className='postphoto'><img src={member2} width="95%" height="95%" ></img></div>}
                 {this.state.items[2].teamsize == 3 && <div className='postphoto'><img src={member3} width="95%" height="95%" ></img></div>}
                 {this.state.items[2].teamsize == 4 && <div className='postphoto'><img src={member4} width="95%" height="95%" ></img></div>}
                 {this.state.items[2].teamsize == 5 && <div className='postphoto'><img src={member5} width="95%" height="95%" ></img></div>}
                 <div className='home_line'><hr id="line"/></div>
-                <div className='description'>{this.state.items[2].description}</div>
+                <div className='description'>{this.state.items[2].description.substring(0,200) + "..."}</div>
             </div>}
             </>
          
@@ -219,23 +219,25 @@ class Quest_list extends React.Component{
                 {this.state.items[0].questiontpye == "sc" && <div className='postphoto'><img src={scoringimg} width="95%" height="95%" ></img></div>}
                 {this.state.items[0].questiontype == "lq" && <div className='postphoto'><img src={longquestionimg} width="95%" height="95%" ></img></div>}
                 <div className='home_line'><hr id="line"/></div>
-                <div className='description'>{this.state.items[0].description}</div>
+                <div className='description'>{this.state.items[0].description.substring(0,200) + "..."}</div>
             </div>}
             {this.state.items.length > 1 && <div className='column'>
                 <div className='postauthor'> onClick={() => {window.location.href = "http://localhost:3000/question/" + this.state.items[1].id}} {this.state.items[1].title.substring(0,200)}</div>
                 {this.state.items[0].questiontype == "mc" && <div className='postphoto'><img src={mcimg} width="95%" height="95%" ></img></div>}
                 {this.state.items[0].questiontype == "gf" && <div className='postphoto'><img src={googleFormimg} width="95%" height="95%" ></img></div>}
                 {this.state.items[0].questiontpye == "sc" && <div className='postphoto'><img src={scoringimg} width="95%" height="95%" ></img></div>}
-                {this.state.items[0].questiontype == "lq" && <div className='postphoto'><img src={longquestionimg} width="95%" height="95%" ></img></div>}                <div className='home_line'><hr id="line"/></div>
-                <div className='description'>{this.state.items[1].description}</div>
+                {this.state.items[0].questiontype == "lq" && <div className='postphoto'><img src={longquestionimg} width="95%" height="95%" ></img></div>}                
+                <div className='home_line'><hr id="line"/></div>
+                <div className='description'>{this.state.items[1].description.substring(0,200) + "..."}</div>
             </div>}
             {this.state.items.length > 2 && <div className='column'>
                 <div className='postauthor' onClick={() => {window.location.href = "http://localhost:3000/question/" + this.state.items[2].id}} >{this.state.items[2].title.substring(0,200)}</div>
                 {this.state.items[0].questiontype == "mc" && <div className='postphoto'><img src={mcimg} width="95%" height="95%" ></img></div>}
                 {this.state.items[0].questiontype == "gf" && <div className='postphoto'><img src={googleFormimg} width="95%" height="95%" ></img></div>}
                 {this.state.items[0].questiontpye == "sc" && <div className='postphoto'><img src={scoringimg} width="95%" height="95%" ></img></div>}
-                {this.state.items[0].questiontype == "lq" && <div className='postphoto'><img src={longquestionimg} width="95%" height="95%" ></img></div>}                <div className='home_line'><hr id="line"/></div>
-                <div className='description'>{this.state.items[2].description}</div>
+                {this.state.items[0].questiontype == "lq" && <div className='postphoto'><img src={longquestionimg} width="95%" height="95%" ></img></div>}                
+                <div className='home_line'><hr id="line"/></div>
+                <div className='description'>{this.state.items[2].description.substring(0,200) + "..."}</div>
             </div>}
             </>
          

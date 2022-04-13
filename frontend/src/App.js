@@ -57,7 +57,7 @@ function App() {
               <Route path='/signup' element={<Signup />} />
               <Route path='/forgetpd' element={<Forgotpw />} />
               <Route path='/resetpassword' element={<Resetpw />} />
-              <Route path='*' element={<>404 Not Found</>} />
+              <Route path='*' element={<Not_Found/>} />
             </Routes>
           </Router>
         </div>
@@ -103,3 +103,7 @@ function App() {
   }
 }
 export default App;
+
+function Not_Found(){
+  window.location.pathname="/";
+}
