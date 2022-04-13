@@ -23,12 +23,39 @@
 
 .team_select_table{
     font-size:1.25vw;
-    width:50vw;
-    margin-left:15vw; 
+    margin-left:10vw;
 }
 
 .team_select_table_title td{
     font-size:1.25vw !important;
+}
+
+.team_select_table_title td:nth-child(1){
+    width:15vw;
+}
+
+.team_select_table_title td:nth-child(2){
+    width:8vw;
+}
+
+.team_select_table_title td:nth-child(3){
+    width:15vw;
+}
+
+.team_select_table_title td:nth-child(4){
+    width:10vw;
+}
+
+.team_select_table_title td:nth-child(5){
+    width:8vw;
+}
+
+.team_select_table_title td:nth-child(6){
+    width:8vw;
+}
+
+.team_select_table_title td:nth-child(7){
+    width:8vw;
 }
 
 .team_select_table td{
@@ -83,7 +110,7 @@
     font-size: 1vw;
     border-radius:0.5vw;
     padding:0.2vw;
-    width:5vw;
+    width:auto;
 }
 
 .table_name:hover{
