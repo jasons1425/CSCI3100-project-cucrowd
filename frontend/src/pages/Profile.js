@@ -220,7 +220,7 @@ function Profile() {
     </div>
     </section>
 
-    <section id="questionnaire_container">
+    {/* <section id="questionnaire_container">
     <div className='question_card'>
      
         <div id="title">Posted questionnaire</div>
@@ -247,7 +247,7 @@ function Profile() {
         <div className='question_card_line'><hr id="line"/></div>
         </>))}
     </div>
-    </section>
+    </section> */}
     <Hide/>
     </>
   )
