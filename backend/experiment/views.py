@@ -16,7 +16,7 @@ from django.core.mail import send_mail
 # ref: https://stackoverflow.com/a/35987077/16418649
 class ExperimentView(viewsets.ModelViewSet):
     serializer_class = ExperimentSerializer
-    queryset = Experiment.objects.all()
+    queryset = Experiment.objects.all().order_by('-post_date')
     permission_classes_by_action = {
         'create': [IsAuthenticated],
         'list': [AllowAny],
