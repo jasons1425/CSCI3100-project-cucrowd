@@ -11,6 +11,7 @@ class TeammatesInline(admin.TabularInline):
 class TeamformationAdmin(admin.ModelAdmin):
     list_display = ("id", "title", "host", "teamsize", "post_date", "publishable")
     inlines = [TeammatesInline]
+    ordering = ['-post_date']
 
     def save_model(self, request, obj, form, change):
         if getattr(obj, 'host', None) is None:

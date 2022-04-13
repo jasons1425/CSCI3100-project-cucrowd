@@ -18,7 +18,7 @@ class TeamView(viewsets.ModelViewSet):
     serializer_classes = {
         'list': TeamPreviewSerializer
     }
-    queryset = Teamformation.objects.all()
+    queryset = Teamformation.objects.all().order_by('-post_date')
     permission_classes_by_action = {
         'create': [IsAuthenticated],
         'list': [AllowAny],

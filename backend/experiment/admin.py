@@ -11,6 +11,7 @@ class EnrollmentInline(admin.TabularInline):
 class ExperimentAdmin(admin.ModelAdmin):
     list_display = ("id", "host", "title", "post_date")
     search_fields = ("id", "host__username", "title")
+    ordering = ['-post_date', 'id']
     inlines = [EnrollmentInline]
 
     def save_model(self, request, obj, form, change):
