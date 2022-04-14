@@ -1,0 +1,427 @@
+.left_card{
+    background-color: #f5eac9;
+    margin-top: 10.5vw;
+    margin-left: 20.5vw;
+    width: 19.32vw;
+    height: 23.1vw;
+    border-radius: 20px;
+}
+
+.left_card #avatar{
+    margin-left: 3.36vw;
+    margin-top: 1.68vw;
+    border: 10px;
+    width: 12.6vw;
+    height:12.6vw;
+    border-radius: 10vw;
+    overflow: hidden;
+}
+
+#avatar1{
+    object-fit:cover;
+}
+
+.left_card #imgpreview{
+    margin-left: 3.36vw;
+    margin-top: 1.68vw;
+    border: 10px;
+    width: 12.6vw;
+    height:12.6vw;
+    border-radius: 200px;
+    overflow: hidden;
+}
+
+
+
+.left_card #change{
+    display: flex;
+}
+
+.left_card #username{
+    text-align: center;
+    font-size: 28px;
+    text-decoration: underline;
+    color: black;
+    margin-top: 30px;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+.left_card #org{
+    text-align: center;
+    font-size: 1.15vw;
+    color: gray;
+    margin-top: 2vw;
+    margin-bottom: 0.63vw;
+    position: relative;
+}
+
+.left_card #sid{
+    margin-top: 0.42vw;
+    text-align: center;
+    font-size: 1.1vw;
+    color: gray;
+    margin-bottom: 0.63vw;
+    position: relative;
+    bottom: 2.1vw;
+}
+.left_card #major{
+
+    text-align: center;
+    font-size: 1.1vw;
+    color: gray;
+    margin-bottom: 0.63vw;
+    position: relative;
+    bottom: 2.1vw;
+}
+.left_card #admission{
+
+    text-align: center;
+    font-size: 1.1vw;
+    position: relative;
+    bottom: 2.1vw;
+    color: gray;
+}
+
+.right_card{
+    background-color: #f5eac9;
+    margin-top: 10.5vw;
+    margin-left: 2.1vw;
+    width: 42vw;
+    height: auto;
+    border-radius: 20px;
+}
+.right_card #fullname{
+    display: flex;
+    margin-top: 2.52vw;
+    margin-bottom: 1.26vw;
+    font-size: 1.4vw;
+    padding-left: 1.5vw;
+    font-weight: bold;
+}
+.right_card #email{
+    display: flex;
+    margin-top: 1.26vw;
+    margin-bottom: 1.26vw;
+    font-size: 1.4vw;
+    padding-left: 1.5vw;
+    font-weight: bold;
+}
+.right_card #password{
+    display: flex;
+    margin-top: 1.26vw;
+    margin-bottom: 1.26vw;
+    font-size: 1.4vw;
+    padding-left: 1.5vw;
+    font-weight: bold;
+}
+.right_card #birth{
+    display: flex;
+    margin-top: 1.26vw;
+    margin-bottom: 1.26vw;
+    font-size: 1.4vw;
+    padding-left: 1.5vw;
+    font-weight: bold;
+}
+.right_card #gender{
+    display: flex;
+    margin-top: 1.26vw;
+    margin-bottom: 0.84vw;
+    font-size: 1.4vw;
+    padding-left: 1.5vw;
+    font-weight: bold;
+}
+.right_card #mobile_no{
+    display: flex;
+    margin-top: 1.26vw;
+    margin-bottom: 0.84vw;
+    font-size: 1.4vw;
+    padding-left: 1.5vw;
+    font-weight: bold;
+}
+
+.exp_card{
+    background-color: #f5eac9;
+    border-radius: 20px;
+    margin-top: 3vw;
+    margin-left: 21vw;
+    padding-bottom: 2vw;
+    width: 65vw;
+    height: auto;
+}
+.exp_card #title{
+    font-size: 1.7vw;
+    margin-left: 1vw;
+    padding-top: 1vw;
+    font-weight: bold;
+}
+
+.exp_card #subtitle1{
+    font-size: 1.7vw;
+    margin-left: 21vw;
+    margin-top: 1vw;
+}
+.exp_card #subtitle2{
+    font-size: 1.7vw;
+    margin-left: 25vw;
+    margin-top: 1vw;
+}
+
+.exp_card #exp_title{
+    text-align: center;
+    width:46.2vw;
+    font-size: 1.2vw;
+    padding-top: 0.5vw;
+    margin-bottom: 0.5vw;
+}
+.exp_card #time{
+    margin-left: 1.344vw;
+    font-size: 1.2vw;
+    text-align: center;
+    width: 10vw;
+    padding-top: 0.5vw;
+    margin-bottom: 0.5vw;
+}
+.profile_line{
+    border-color: black;
+    border-style: dashed;
+}
+
+.exp_card #cancel{
+    margin-left: 1.68vw;
+    height: 1.47vw;
+    position: relative;
+    width: 4.2vw;
+    padding-top: 0.25vw;
+    padding-bottom: 0.25vw;
+    font-size: 1vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 1vw;
+
+}
+.exp_card #cancel:hover {background-color: #3e8e41}
+
+.exp_card #cancel:active {
+  background-color: #3e8e41;
+  transform: translateY(4px);
+}
+
+.right_card #edit_icon{
+    margin-left:15vw;
+    font-size: 1.5vw;
+    padding-top: 0.25vw;
+    padding-left: 0.25vw;
+    padding-right: 0.25vw;
+}
+
+.right_card #edit_icon:hover{
+    cursor: pointer;
+    background-color:#ffd861;
+    border-radius: 10px;
+  }
+
+  .org_info_card{
+    background-color: #f5eac9;
+    border-radius: 20px;
+    margin-top: 2.5vw;
+    margin-left: 20vw;
+    width: 65.1vw;
+    height: auto;
+}
+
+.org_info_card #title{
+    font-size: 1.2vw;
+    margin-left: 1vw;
+    padding-top: 1vw;
+    font-weight: bold;
+}
+
+.org_info_card #intro{
+    height: auto;
+    width: 62.5vw;
+    margin-top: 0.5vw;
+    margin-left: 1.5vw;
+    font-size: 1vw;
+}
+
+.org_info_card #title1{
+    font-size: 1.2vw;
+    margin-left: 1vw;
+    font-weight: bold;
+    margin-top: 1vw;
+    display: flex;
+}
+.org_info_card #title2{
+    font-size: 1.2vw;
+    margin-left: 1vw;
+    padding-top: 1vw;
+    font-weight: bold;
+    display: flex;
+    padding-bottom: 1.1vw;
+}
+
+.left_card #changeavatar{
+    display:none;
+    margin-left: 2.5vw;
+}
+.left_card #uploadimg{
+    font-size:1vw;
+    width:6vw;
+    cursor: pointer;
+    border-radius: 12px;
+    text-align: center;
+    background-color: #4CAF50;
+    margin-left: 1vw;
+    color:white;
+    padding: 0.5vw;
+    position: relative;
+}
+.left_card #saveimg{
+    background-color:#4CAF50 ;
+    width: 6vw;
+    font-size:1vw;
+    text-align: center;
+    padding:0.5vw;
+    border-radius: 12px;
+    color: white;
+    position: relative;
+    margin-left: 11.5vw;
+    bottom: 2.25vw;
+}
+.left_card #saveimg:hover{
+    cursor: pointer;
+    }
+
+.org_info_card #edit_icon{
+    margin-left:1180px;
+    font-size: 30px;
+    margin-top: 10px;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+}
+.org_info_card #edit_icon:hover{
+    cursor: pointer;
+    background-color:#ffd861;
+    border-radius: 10px;
+}
+
+.team_card{
+    background-color: #f5eac9;
+    border-radius: 20px;
+    margin-top: 3vw;
+    margin-left: 21vw;
+    padding-bottom: 2vw;
+    width: 65vw;
+    height: auto;
+}
+.team_card #title{
+    font-size: 1.7vw;
+    margin-left: 1vw;
+    padding-top: 1vw;
+    font-weight: bold;
+}
+
+.team_card #subtitle1{
+    font-size: 1.7vw;
+    margin-left: 21vw;
+    margin-top: 1vw;
+}
+
+.team_card #team_title{
+    text-align: center;
+    width:46.2vw;
+    font-size: 1.2vw;
+    padding-top: 0.5vw;
+    margin-bottom: 0.5vw;
+}
+
+.team_card #cancel{
+    margin-left: 1.68vw;
+    height: 1.47vw;
+    position: relative;
+    width: 4.2vw;
+    padding-top: 0.25vw;
+    padding-bottom: 0.25vw;
+    font-size: 1vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 1vw;
+}
+.team_card #cancel:hover {background-color: #3e8e41}
+
+.team_card #cancel:active {
+  background-color: #3e8e41;
+  transform: translateY(4px);
+}
+
+.right_card #notif{
+    padding:0.1vw;
+    margin-left:1vw;
+    color:grey;
+    font-size:0.8vw;
+}
+
+.question_card{
+    background-color: #f5eac9;
+    border-radius: 20px;
+    margin-top: 3vw;
+    margin-left: 21vw;
+    padding-bottom: 2vw;
+    width: 65vw;
+    height: auto;
+}
+.question_card #title{
+    font-size: 1.7vw;
+    margin-left: 1vw;
+    padding-top: 1vw;
+    font-weight: bold;
+}
+
+.question_card #subtitle1{
+    font-size: 1.7vw;
+    margin-left: 21vw;
+    margin-top: 1vw;
+}
+
+.question_card #question_title{
+    text-align: center;
+    width:46.2vw;
+    font-size: 1.2vw;
+    padding-top: 0.5vw;
+    margin-bottom: 0.5vw;
+}
+
+.question_card #cancel{
+    margin-left: 1.68vw;
+    height: 1.47vw;
+    position: relative;
+    width: 4.2vw;
+    padding-top: 0.25vw;
+    padding-bottom: 0.25vw;
+    font-size: 1vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 1vw;
+}
+.question_card #cancel:hover {background-color: #3e8e41}
+
+.question_card #cancel:active {
+  background-color: #3e8e41;
+  transform: translateY(4px);
+}
