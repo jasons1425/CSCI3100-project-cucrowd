@@ -264,7 +264,7 @@ function Exp_edit() {
     <>
     <div className="banner">
       <div className='icon'><Ai.AiTwotoneExperiment /> </div>
-      <div className='title1'>Experiments</div>
+      <div className='title1'>Experiements</div>
     </div>
 
 <div className='exp_form'>
@@ -318,7 +318,7 @@ function Exp_edit() {
     </label>
 
     <label style={{marginLeft:"0.8vw"}} for="image">Image:</label>
-    <input type="file" style={{width:"0vw"}} name="image" id="image" /><br />
+    <input type="file" name="image" id="image" /><br />
 
     
     <label>Description:</label><br/>
@@ -328,7 +328,7 @@ function Exp_edit() {
     <label>Requirements: </label> <br/>
     <textarea rows="10" cols="165" name="requirements" id="requirements" form="requirementform" defaultValue={items.requirements}></textarea><br/>
     
-    <label>TimeSlot (Enter each allowed time delimited by `;`, e.g. 2022-03-27-16:00;2022-03-28-17:00) :</label><br/>
+    <label>TimeSlot:</label><br/>
     <textarea rows="12" cols="165" name="timeslot" id="timeslot" form="timeslotform" defaultValue={items.timeslots} required></textarea>
     <br/>
 

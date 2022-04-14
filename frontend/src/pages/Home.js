@@ -165,7 +165,7 @@ class Team_list extends React.Component{
                 {this.state.items[1].teamsize == 4 && <div className='postphoto'><img src={member4} width="95%" height="95%" ></img></div>}
                 {this.state.items[1].teamsize == 5 && <div className='postphoto'><img src={member5} width="95%" height="95%" ></img></div>}
                 <div className='home_line'><hr id="line"/></div>
-                <div className='description'>{this.state.items[1].description.substring(0,200) + "..."}</div>
+                <div className='description'>{this.state.items[1].description.substring(0,200)}</div>
             </div>}
             {this.state.items.length > 2 && <div className='column'>
                 <div className='postauthor' onClick={() => {window.location.href = "http://localhost:3000/team/" + this.state.items[2].id}}>{this.state.items[2].title.substring(0,200) + "..."}</div>
@@ -174,7 +174,7 @@ class Team_list extends React.Component{
                 {this.state.items[2].teamsize == 4 && <div className='postphoto'><img src={member4} width="95%" height="95%" ></img></div>}
                 {this.state.items[2].teamsize == 5 && <div className='postphoto'><img src={member5} width="95%" height="95%" ></img></div>}
                 <div className='home_line'><hr id="line"/></div>
-                <div className='description'>{this.state.items[2].description.substring(0,200) + "..."}</div>
+                <div className='description'>{this.state.items[2].description.substring(0,200)}</div>
             </div>}
             </>
          

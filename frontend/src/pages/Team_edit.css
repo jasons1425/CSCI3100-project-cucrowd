@@ -69,14 +69,18 @@
 }
 
 .team_edit_img{
+    margin-left: 11vw;
+    display: grid;
     padding-top: 2vh;
-    margin-left:10vw;
+    border-style: solid;
+    border-width: 0vw;
     height:20vh;
     width:15vw;
 }
 
 .team_edit_img img{
-    width:  100%;
+    height: 95%;
+    width:  90%;
 }
 
 .team_button #response{

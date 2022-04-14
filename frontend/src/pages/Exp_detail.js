@@ -70,11 +70,11 @@ function List(id){
     <div >
       <div className="banner"> 
             <div className='icon'><Ai.AiTwotoneExperiment /> </div>
-            <div className='title1'>Experiments</div>
+            <div className='title1'>Experiements</div>
             </div>
         <div className='exp_space'></div>
         <div className='exp_detail'>
-      <div id='picture'><img src={items.exp_img==null? sample:items.exp_img} width="90%" height="85%" ></img></div>
+      <div id='picture'><img src={items.exp_img} width="90%" height="85%" ></img></div>
       <ul className='exp_detail_list'>
       <li id='exp_date'>{items.post_date.substring(0,10)}</li>
       
