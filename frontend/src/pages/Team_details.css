@@ -57,6 +57,7 @@
     width:6vw;
     margin-right: 2vw;
     border-radius: 50%;
+    object-fit:cover;
 }
 
 .membercard:hover {
