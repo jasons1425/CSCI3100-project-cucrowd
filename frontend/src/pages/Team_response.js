@@ -28,7 +28,7 @@ function Team_response() {
             axios
             .post("http://localhost:8000/api/teamformation/" + id + "/update_state", payload, {withCredentials:true})
             .then((res) => {
-                alert("You have successful added " + user + " into your team")
+                alert("You have successfully added " + user + " into your team")
                 window.location.reload()
             })
             .catch((err) => {
@@ -46,7 +46,7 @@ function Team_response() {
             axios
             .post("http://localhost:8000/api/teamformation/" + id + "/update_state", payload, {withCredentials:true})
             .then((res) => {
-                alert("You have successful rejected " + user + " into your team")
+                alert("You have successfully rejected " + user + " into your team")
                 window.location.reload()
             })
             .catch((err) => {
