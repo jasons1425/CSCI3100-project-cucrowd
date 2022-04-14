@@ -17,6 +17,10 @@
     overflow: hidden;
 }
 
+#avatar1{
+    object-fit:cover;
+}
+
 .left_card #imgpreview{
     margin-left: 3.36vw;
     margin-top: 1.68vw;

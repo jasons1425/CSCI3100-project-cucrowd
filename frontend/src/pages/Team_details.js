@@ -73,7 +73,7 @@ function Team_details() {
           <section className="team_details_info">
             <div>
               <h3>{data.title}</h3>
-              <p>Description: <br/>{data.description}</p>
+              <p id="description">Description: <br/>{data.description}</p>
               {data.link !== "" && <a>Reference link: <br/>{data.link}</a>}
             </div>
           </section>
@@ -98,8 +98,8 @@ function Team_details() {
 
             <div className="team_info_contact">
               <div className="team_self_intro">
-              <h4><u>Introduction of the Leader</u></h4>
-              <p>{data.self_intro}</p>
+                <h4><u>Introduction of the Leader</u></h4>
+                <p>{data.self_intro}</p>
               </div> 
               <div className="team_contact">
                 <p>Contact: {data.contact}</p>
