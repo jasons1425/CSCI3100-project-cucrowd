@@ -53,7 +53,8 @@
 }
 
 .membercard img {
-    width: 5.5vw;
+    height:6vw;
+    width:6vw;
     margin-right: 2vw;
     border-radius: 50%;
 }
@@ -74,17 +75,19 @@ h4 {
     width: 70%;
     margin-bottom: 10vh;
     margin-left:4vw;
+    height:12.5vw;
+    white-space: pre-line;
 }
 
 .team_details_info div {
-    white-space: initial;
     font-size: 1vw;
 }
+
 
 .team_all_details {
     display: flex;
     justify-content: center;
-    height: 20vh;
+    height: auto;
     margin-top: 2.5vh;
     margin-bottom: 5vh;
 }
@@ -118,6 +121,8 @@ h4 {
     width: 30vw;
     text-align: center;
     font-size: 1vw;
+    height:10vw;
+    white-space: pre-line;
 }
 
 .team_dotted_line {
@@ -132,7 +137,6 @@ h4 {
 .team_self_intro p {
     margin: 0;
     text-align: left;
-    white-space: initial;
 }
 
 .team_self_intro h4 {
