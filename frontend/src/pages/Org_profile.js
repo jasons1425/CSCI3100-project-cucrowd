@@ -36,11 +36,11 @@ try{
           <div id="org" style={{bottom:"0px"}}>{items.org_name}</div>
         </div>
         <div className='right_card'>
-          <div id="fullname">Username: <div style={{ marginLeft: "52px", fontWeight: "lighter" }}>{items.user.username}</div></div>
+          <div id="fullname">Username: <div style={{ marginLeft: "2.184vw", fontWeight: "lighter" }}>{items.user.username}</div></div>
           <hr className='profile_line' />
-          <div id="email">Email: <div style={{ marginLeft: "113px", fontWeight: "lighter" }}>{items.user.email}</div></div>
+          <div id="email">Email: <div style={{ marginLeft: "4.746vw", fontWeight: "lighter" }}>{items.user.email}</div></div>
           <hr className='profile_line' />
-          <div id="gender">Gender:<div style={{ marginLeft: "93px", fontWeight: "lighter" }}> {gender}</div></div>
+          <div id="gender">Gender:<div style={{ marginLeft: "3.906vw", fontWeight: "lighter" }}> {gender}</div></div>
         </div>
       </div>
       <section id="org_info_card_container">
@@ -49,11 +49,11 @@ try{
     <div id="title">Organiztion Introduction:</div>
     </div>
     <div id="intro">{items.org_intro}</div>
-    <div id="title1">Organiztion Website: <div style={{marginLeft:"20px", fontWeight:"lighter"}}>{items.org_url}</div></div>
-    <div id="title2">Organiztion Email:<div style={{marginLeft:"20px", fontWeight:"lighter"}}>{items.org_email}</div></div>
+    <div id="title1">Organiztion Website: <div style={{marginLeft:"0.84vw", fontWeight:"lighter"}}>{items.org_url}</div></div>
+    <div id="title2">Organiztion Email:<div style={{marginLeft:"0.84vw", fontWeight:"lighter"}}>{items.org_email}</div></div>
     </div>
     </section>
-      <button className='back_exp' style={{ marginLeft: "1800px" }} onClick={()=>{window.location.pathname='/experiments/'+id;}}>Back</button>
+      <button className='back_exp' style={{ marginLeft: "75.6vw" }} onClick={()=>{window.location.pathname='/experiments/'+id;}}>Back</button>
       </>
   )}catch(e){
     return("")
