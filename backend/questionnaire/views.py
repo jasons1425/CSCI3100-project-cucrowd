@@ -146,7 +146,7 @@ class AnswerView(viewsets.ModelViewSet):
             question_obj = question_obj[0]
         except (FieldValidationError, AssertionError):
             raise ValidationError({"result": False, "message": "Questionnaire not found."})
-        existing_question_records = self.get_queryset().filter(questionnaire=question_obj, Respondent=respondent)
+        existing_question_records = self.get_queryset().filter(questionnaire=question_obj, respondent=respondent)
         if existing_question_records.exists():
             raise ValidationError({"result": False, "message": "The current user already answer the questionnaire"})
         _serializer = self.serializer_class(data=request.data,
