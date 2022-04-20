@@ -41,7 +41,7 @@ class QuestionnaireView(viewsets.ModelViewSet):
                 del request.data[key]
         if type(request.data) is not dict:  # i.e. is immutable QueryDict
             request.data._mutable = False
-        _serializer = self.get_serializer_class()(data=request.data, context={"host": host})
+        _serializer = self.serializer_class(data=request.data, context={"host": host})
         if _serializer.is_valid(raise_exception=True):
             self.perform_create(_serializer)
             return Response(data=_serializer.data, status=status.HTTP_201_CREATED)
@@ -132,7 +132,7 @@ class AnswerView(viewsets.ModelViewSet):
 
     @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated],
             name='answer_questionnaire', url_path=r"answer")
-    def answer(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         respondent = request.user
         data = request.data
         question_id = data.get('questionnaire', None)
