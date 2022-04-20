@@ -37,8 +37,8 @@ class AnswerSerializer(serializers.ModelSerializer):
             respondent = self.context['respondent']
             validated_data['respondent'] = respondent
         if self.context.get("questionnaire", None):
-            ans_obj = self.context['questionnaire']
-            validated_data['questionnaire'] = ans_obj
+            question_obj = self.context['questionnaire']
+            validated_data['questionnaire'] = question_obj
         try:
             answer = Answer.objects.create(**validated_data)
         except FieldValidationError as e:

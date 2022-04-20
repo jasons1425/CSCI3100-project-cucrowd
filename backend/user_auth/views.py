@@ -23,6 +23,7 @@ from user_auth.models import StudentProfile, OrgUserProfile, validate_sid, \
 from user_auth.serializers import StudentProfileSerializer, OrgProfileSerializer
 from experiment.serializers import EnrollmentSerializer, ExperimentSerializer, EnrollmentPreviewSerializer
 from teamformation.serializers import TeamApplicationSerializer, TeamPreviewSerializer
+from questionnaire.serializers import QuestionnaireSerializer,QuestionnairePreviewSerializer,AnswerSerializer,AnswerPreviewSerializer
 from datetime import datetime
 import pytz
 import os
@@ -303,6 +304,22 @@ class ProfileView(ModelViewSet):
         user = request.user
         leading_teams = user.teamformation_set.all()
         serializer = TeamPreviewSerializer(leading_teams, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated],
+            name='get hosting questionnaire', url_path=r"me/hosting_questionnaire")
+    def hosting_questionnaire(self, request, *args, **kwargs):
+        user = request.user
+        hosted = user.questionnaire_set.all()
+        serializer = QuestionnaireSerializer(hosted, many=True)
+        return Response(serializer.data)
+
+    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated],
+            name='get joining questionnaire', url_path=r"me/joining_questionnaire")
+    def joining(self, request, *args, **kwargs):
+        user = request.user
+        joined = user.answer_set.all()
+        serializer = AnswerSerializer(joined, many=True)
         return Response(serializer.data)
 
     # ref: https://stackoverflow.com/a/24420192/16418649

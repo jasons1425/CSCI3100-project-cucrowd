@@ -41,7 +41,7 @@ class QuestionnaireView(viewsets.ModelViewSet):
                 del request.data[key]
         if type(request.data) is not dict:  # i.e. is immutable QueryDict
             request.data._mutable = False
-        _serializer = self.get_serializer_class()(data=request.data, context={"host": host})
+        _serializer = self.serializer_class(data=request.data, context={"host": host})
         if _serializer.is_valid(raise_exception=True):
             self.perform_create(_serializer)
             return Response(data=_serializer.data, status=status.HTTP_201_CREATED)
@@ -130,9 +130,7 @@ class AnswerView(viewsets.ModelViewSet):
         except KeyError:
             return [permission() for permission in self.permission_classes]
 
-    @action(detail=True, methods=['POST'], permission_classes=[IsAuthenticated],
-            name='answer_questionnaire', url_path=r"answer")
-    def answer(self, request, *args, **kwargs):
+    def create(self, request, *args, **kwargs):
         respondent = request.user
         data = request.data
         question_id = data.get('questionnaire', None)
@@ -146,16 +144,19 @@ class AnswerView(viewsets.ModelViewSet):
             question_obj = question_obj[0]
         except (FieldValidationError, AssertionError):
             raise ValidationError({"result": False, "message": "Questionnaire not found."})
-        existing_question_records = self.get_queryset().filter(questionnaire=question_obj, Respondent=respondent)
+        existing_question_records = self.get_queryset().filter(questionnaire=question_obj, respondent=respondent)
         if existing_question_records.exists():
             raise ValidationError({"result": False, "message": "The current user already answer the questionnaire"})
         _serializer = self.serializer_class(data=request.data,
                                             context={"respondent": respondent, "questionnaire": question_obj})
+        
         if _serializer.is_valid(raise_exception=False):
             self.perform_create(_serializer)
             return Response(data=_serializer.data, status=status.HTTP_201_CREATED)
         else:
-            return Response(data=_serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+            err_dict = _serializer.errors
+            err_msg = [str(err_dict[k][0]) for k in err_dict]
+            raise ValidationError({"result": False, "message": '; '.join(err_msg)})
 
     def destroy(self, request, *args, **kwargs):
         user = request.user
