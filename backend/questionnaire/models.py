@@ -74,15 +74,16 @@ class Answer(models.Model):
     questionnaire = models.ForeignKey(Questionnaire, default="",
                                       on_delete=models.CASCADE,
                                       null=False, blank=False)    
-    Respondent = models.ForeignKey(StudentProfile,on_delete=models.CASCADE,
+    respondent = models.ForeignKey(StudentProfile,on_delete=models.CASCADE,
                                 null=False, blank=False)
     Ans = models.TextField(max_length=3000,default = "Please type the answer here.", 
                                                 help_text="Type each answer delimited by `;`, "
                                                 "e.g. 6 years old; Hong Kong",null=False, blank=False)
     def __str__(self):
-        return self.Ans
+        title = self.questionnaire.title
+        username = self.respondent.username
+        return ' - '.join([title, username])
 
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)  
-
