@@ -74,7 +74,7 @@ class Answer(models.Model):
     questionnaire = models.ForeignKey(Questionnaire, default="",
                                       on_delete=models.CASCADE,
                                       null=False, blank=False)    
-    respondent = models.ForeignKey(StudentProfile,on_delete=models.CASCADE,
+    respondent = models.ForeignKey(settings.AUTH_USER_MODEL,on_delete=models.CASCADE,
                                 null=False, blank=False)
     Ans = models.TextField(max_length=3000,default = "Please type the answer here.", 
                                                 help_text="Type each answer delimited by `;`, "
@@ -86,4 +86,4 @@ class Answer(models.Model):
 
     def save(self, *args, **kwargs):
         self.full_clean()
-        super().save(*args, **kwargs)  
+        super().save(*args, **kwargs) 
