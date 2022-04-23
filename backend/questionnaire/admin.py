@@ -18,7 +18,8 @@ class QuestionnaireAdmin(admin.ModelAdmin):
 
 
 class AnswerAdmin(admin.ModelAdmin):
-    list_display = ("id", "questionnaire", "Respondent")
+    list_display = ("id", "questionnaire", "respondent")
 
 admin.site.register(Questionnaire, QuestionnaireAdmin)
 admin.site.register(Answer, AnswerAdmin)
+
