@@ -11,9 +11,9 @@
  
 }
 .username{
-  padding-top: 10px;
-  font-size: 25px;
-  margin-left: 110px;
+  padding-top: 0.6vh;
+  font-size: 1vw;
+  margin-left: 4.4vw;
   font-weight: bold;
   display:flex;
 }
