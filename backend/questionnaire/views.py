@@ -158,13 +158,13 @@ class AnswerView(viewsets.ModelViewSet):
             err_msg = [str(err_dict[k][0]) for k in err_dict]
             raise ValidationError({"result": False, "message": '; '.join(err_msg)})
 
-    # def destroy(self, request, *args, **kwargs):
-    #     user = request.user
-    #     instance = self.get_object()
-    #     host = instance.questionnaire.host
-    #     respondent = instance.respondent
-    #     if user.id != host.id and user.id != respondent.id:
-    #         raise ValidationError({"result": False,
-    #                                "message": "Only questionnaire host and respondent can cancel the answer."})
-    #     res = super().destroy(request, *args, **kwargs)
-    #     return res
+    def destroy(self, request, *args, **kwargs):
+        user = request.user
+        instance = self.get_object()
+        host = instance.questionnaire.host
+        respondent = instance.respondent
+        if 1:
+            raise ValidationError({"result": False,
+                                   "message": "The answer cannot be canceled."})
+        res = super().destroy(request, *args, **kwargs)
+        return res
