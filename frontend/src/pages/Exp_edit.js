@@ -78,78 +78,84 @@ function Exp_edit() {
 
       function save(){
         let missing=0;
-        if (document.getElementById("exp_title").value==""){
-          document.getElementById("exp_title").style.borderColor="red";
-          missing=1;
-        }else{
-          document.getElementById("exp_title").style.borderColor="black";
-        }
-        if (document.getElementById("subtitle").value==""){
-          document.getElementById("subtitle").style.borderColor="red";
-          missing=1;
-        }else{
-          document.getElementById("subtitle").style.borderColor="black";
-        }
-        if (document.getElementById("target").value==""){
-          document.getElementById("target").style.borderColor="red";
-          missing=1;
-        }else{
-          document.getElementById("target").style.borderColor="black";
-        }
-        if (document.getElementById("jobs").value==""){
-          document.getElementById("jobs").style.borderColor="red";
-          missing=1;
-        }else{
-          document.getElementById("jobs").style.borderColor="black";
-        }
-        if (document.getElementById("types").value==""){
-          document.getElementById("types").style.borderColor="red";
-          missing=1;
-        }else{
-          document.getElementById("types").style.borderColor="black";
-        }
-        if (document.getElementById("duration").value==""){
-          document.getElementById("duration").style.borderColor="red";
-          missing=1;
-        }else{
-          document.getElementById("duration").style.borderColor="black";
-        }
-        if (document.getElementById("salary").value==""){
-          document.getElementById("salary").style.borderColor="red";
-          missing=1;
-        }else{
-          document.getElementById("salary").style.borderColor="black";
-        }
-        if (document.getElementById("venue").value==""){
-          document.getElementById("venue").style.borderColor="red";
-          missing=1;
-        }else{
-          document.getElementById("venue").style.borderColor="black";
-        }
-        if (document.getElementById("deadline").value==""){
-          document.getElementById("deadline").style.borderColor="red";
-          missing=1;
-        }else{
-          document.getElementById("deadline").style.borderColor="black";
-        }
-        if (document.getElementById("vacancy").value==""){
-          document.getElementById("vacancy").style.borderColor="red";
-          missing=1;
-        }else{
-          document.getElementById("vacancy").style.borderColor="black";
-        }
-        if (document.getElementById("description").value==""){
-          document.getElementById("description").style.borderColor="red";
-          missing=1;
-        }else{
-          document.getElementById("description").style.borderColor="black";
-        }
-        if (document.getElementById("timeslot").value==""){
-          document.getElementById("timeslot").style.borderColor="red";
-          missing=1;
-        }else{
-          document.getElementById("timeslot").style.borderColor="black";
-        }
+  if (document.getElementById("exp_title").value==""||document.getElementById("exp_title").value.length>200){
+    document.getElementById("exp_title").style.borderColor="red";
+    missing=1;
+  }else{
+    document.getElementById("exp_title").style.borderColor="black";
+  }
+  if (document.getElementById("subtitle").value==""||document.getElementById("subtitle").value.length>100){
+    document.getElementById("subtitle").style.borderColor="red";
+    missing=1;
+  }else{
+    document.getElementById("subtitle").style.borderColor="black";
+  }
+  if (document.getElementById("target").value==""||document.getElementById("target").value.length>100){
+    document.getElementById("target").style.borderColor="red";
+    missing=1;
+  }else{
+    document.getElementById("target").style.borderColor="black";
+  }
+  if (document.getElementById("jobs").value==""){
+    document.getElementById("jobs").style.borderColor="red";
+    missing=1;
+  }else{
+    document.getElementById("jobs").style.borderColor="black";
+  }
+  if (document.getElementById("types").value==""){
+    document.getElementById("types").style.borderColor="red";
+    missing=1;
+  }else{
+    document.getElementById("types").style.borderColor="black";
+  }
+  if (document.getElementById("duration").value==""||document.getElementById("duration").value.length>100){
+    document.getElementById("duration").style.borderColor="red";
+    missing=1;
+  }else{
+    document.getElementById("duration").style.borderColor="black";
+  }
+  if (document.getElementById("salary").value==""||document.getElementById("salary").value.length>100){
+    document.getElementById("salary").style.borderColor="red";
+    missing=1;
+  }else{
+    document.getElementById("salary").style.borderColor="black";
+  }
+  if (document.getElementById("venue").value==""||document.getElementById("venue").value.length>100){
+    document.getElementById("venue").style.borderColor="red";
+    missing=1;
+  }else{
+    document.getElementById("venue").style.borderColor="black";
+  }
+  if (document.getElementById("deadline").value==""){
+    document.getElementById("deadline").style.borderColor="red";
+    missing=1;
+  }else{
+    document.getElementById("deadline").style.borderColor="black";
+  }
+  if (document.getElementById("vacancy").value==""){
+    document.getElementById("vacancy").style.borderColor="red";
+    missing=1;
+  }else{
+    document.getElementById("vacancy").style.borderColor="black";
+  }
+  if (document.getElementById("description").value==""||document.getElementById("description").value.length>5000){
+    document.getElementById("description").style.borderColor="red";
+    missing=1;
+  }else{
+    document.getElementById("description").style.borderColor="black";
+  }
+  if (document.getElementById("timeslot").value==""||document.getElementById("timeslot").value.length>1000){
+    document.getElementById("timeslot").style.borderColor="red";
+    missing=1;
+  }else{
+    document.getElementById("timeslot").style.borderColor="black";
+  }
+  if (document.getElementById("requirements").value.length>500){
+    document.getElementById("requirements").style.borderColor="red";
+    missing=1;
+  }else{
+    document.getElementById("requirements").style.borderColor="black";
+  }
       
       
       
@@ -169,7 +175,7 @@ function Exp_edit() {
         //console.log(document.getElementById("timeslot").value);
       
         if(missing==1){
-         alert("Missing required fields")
+         alert("Missing required field(s) or field(s) exceed word limit")
         }
         if(missing==0){
         save_exp();

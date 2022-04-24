@@ -314,14 +314,6 @@ class ProfileView(ModelViewSet):
         serializer = QuestionnaireSerializer(hosted, many=True)
         return Response(serializer.data)
 
-    @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated],
-            name='get joining questionnaire', url_path=r"me/joining_questionnaire")
-    def joining(self, request, *args, **kwargs):
-        user = request.user
-        joined = user.answer_set.all()
-        serializer = AnswerSerializer(joined, many=True)
-        return Response(serializer.data)
-
     # ref: https://stackoverflow.com/a/24420192/16418649
     @action(detail=False, methods=['POST'], permission_classes=[IsAuthenticated],
             name='upload profile avatar', url_path=r"upload")
