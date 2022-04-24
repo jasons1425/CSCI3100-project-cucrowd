@@ -71,6 +71,7 @@
     padding-top: 0.5vh;
     padding-left: 1vw;
     font-size: 0.6vw;
+    overflow-wrap: break-word;
 }
 
 .exp_item #exp_duration{
