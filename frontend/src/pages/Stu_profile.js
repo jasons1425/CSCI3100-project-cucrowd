@@ -35,7 +35,7 @@ if(items.gender=="NA"){
     </div><div style={{ display: "flex" }}>
         <div className='left_card'>
           <div id="avatar"><img id="avatar1" src={items.avatar} width="100%" height="100%" /></div>
-          <div id="sid"style={{marginTop:"5vw"}}>SID:{items.sid}</div>
+          <div id="sid"style={{marginTop:"2.8vw"}}>SID:{items.sid}</div>
           <div id="major"style={{marginTop:"0px"}}>Major: {items.major}</div>
           <div id="admission"style={{marginTop:"0px"}}>Admission Year: {items.admission_year}</div>
         </div>
