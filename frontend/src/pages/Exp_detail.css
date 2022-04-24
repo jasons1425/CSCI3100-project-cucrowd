@@ -48,16 +48,16 @@
     margin-left: 11vw;
 }
 .sub-title{
-    padding-top: 0.6446067898581865vw;
+    padding-top: 0.2446067898581865vw;
     padding-left: 12vw;
     font-size: 0.90743446497636442vw;
-    padding-bottom: 1vh;
+    padding-bottom: 0.7vh;
     display: flex;
 
 }
 .exp_detail1 #description{
     padding-left: 12vw;
-    padding-bottom: 3.008165019338204vw;
+    padding-bottom: 1.6008165019338204vw;
     width: 50vw;
     font-size: 0.90743446497636442vw;
     white-space: pre-line;
