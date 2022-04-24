@@ -54,19 +54,19 @@ function Exp_create() {
 
 function create(){
   let missing=0;
-  if (document.getElementById("exp_title").value==""){
+  if (document.getElementById("exp_title").value==""||document.getElementById("exp_title").value.length>200){
     document.getElementById("exp_title").style.borderColor="red";
     missing=1;
   }else{
     document.getElementById("exp_title").style.borderColor="black";
   }
-  if (document.getElementById("subtitle").value==""){
+  if (document.getElementById("subtitle").value==""||document.getElementById("subtitle").value.length>100){
     document.getElementById("subtitle").style.borderColor="red";
     missing=1;
   }else{
     document.getElementById("subtitle").style.borderColor="black";
   }
-  if (document.getElementById("target").value==""){
+  if (document.getElementById("target").value==""||document.getElementById("target").value.length>100){
     document.getElementById("target").style.borderColor="red";
     missing=1;
   }else{
@@ -84,19 +84,19 @@ function create(){
   }else{
     document.getElementById("types").style.borderColor="black";
   }
-  if (document.getElementById("duration").value==""){
+  if (document.getElementById("duration").value==""||document.getElementById("duration").value.length>100){
     document.getElementById("duration").style.borderColor="red";
     missing=1;
   }else{
     document.getElementById("duration").style.borderColor="black";
   }
-  if (document.getElementById("salary").value==""){
+  if (document.getElementById("salary").value==""||document.getElementById("salary").value.length>100){
     document.getElementById("salary").style.borderColor="red";
     missing=1;
   }else{
     document.getElementById("salary").style.borderColor="black";
   }
-  if (document.getElementById("venue").value==""){
+  if (document.getElementById("venue").value==""||document.getElementById("venue").value.length>100){
     document.getElementById("venue").style.borderColor="red";
     missing=1;
   }else{
@@ -114,17 +114,23 @@ function create(){
   }else{
     document.getElementById("vacancy").style.borderColor="black";
   }
-  if (document.getElementById("description").value==""){
+  if (document.getElementById("description").value==""||document.getElementById("description").value.length>5000){
     document.getElementById("description").style.borderColor="red";
     missing=1;
   }else{
     document.getElementById("description").style.borderColor="black";
   }
-  if (document.getElementById("timeslot").value==""){
+  if (document.getElementById("timeslot").value==""||document.getElementById("timeslot").value.length>1000){
     document.getElementById("timeslot").style.borderColor="red";
     missing=1;
   }else{
     document.getElementById("timeslot").style.borderColor="black";
+  }
+  if (document.getElementById("requirements").value.length>500){
+    document.getElementById("requirements").style.borderColor="red";
+    missing=1;
+  }else{
+    document.getElementById("requirements").style.borderColor="black";
   }
 
 
@@ -145,7 +151,7 @@ function create(){
   console.log(document.getElementById("timeslot").value);
 
   if(missing==1){
-   alert("Missing required fields")
+   alert("Missing required field(s) or field(s) exceed word limit")
   }
   if(missing==0){
   submit_exp();
