@@ -61,6 +61,7 @@
     width: 50vw;
     font-size: 0.90743446497636442vw;
     white-space: pre-line;
+    overflow-wrap: break-word;
 }
 .enroll{
     margin-bottom: 2.1486892995272884vw;
