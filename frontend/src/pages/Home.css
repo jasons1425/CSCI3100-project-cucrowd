@@ -79,9 +79,9 @@
 }
 
 .intro{
-  padding-top: 70px;
-  margin-left: 110px;
-  font-size: 20px;
+  padding-top: 1.2vh;
+  margin-left: 4.4vw;
+  font-size: 0.8vw;
   font-weight: bold;
 }
 
@@ -123,6 +123,7 @@ transform: translateY(4px);
 .line1{
   border-style: solid;
   border-color: black;
+  margin-top: 4vh;
 }
 
 .username #username1{
