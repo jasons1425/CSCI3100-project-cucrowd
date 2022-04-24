@@ -6,7 +6,9 @@ from user_auth.serializers import CrowdUserSerializer, StudentProfileSerializer,
     OrgProfileSerializer, StudentPreviewSerializer, OrgPreviewSerializer
 
 
+# serializer class of teammate profile details
 class TeammateSerializer(serializers.ModelSerializer):
+    # provide different info according to the account type of the teammate
     info = serializers.SerializerMethodField()
 
     class Meta:
@@ -26,6 +28,7 @@ class TeammateSerializer(serializers.ModelSerializer):
             return None   # No profile found
 
 
+# serializer class of teammate profile preview
 class TeammatePreviewSerializer(serializers.ModelSerializer):
     info = serializers.SerializerMethodField()
 
@@ -46,11 +49,14 @@ class TeammatePreviewSerializer(serializers.ModelSerializer):
             return None   # No profile found
 
 
+# serializer class of team details view for team hosts
 class TeamPrivateDetailSerializer(serializers.ModelSerializer):
     members = serializers.SerializerMethodField()
     host = CrowdUserSerializer(many=False, required=False, allow_null=True)
 
     def create(self, validated_data):
+        # assign the requesting user as the team host upon creating
+        #   this is to prevent admins / users from creating teams in others' names
         if self.context.get("host", None):
             host = self.context['host']
             validated_data['host'] = host
@@ -63,16 +69,20 @@ class TeamPrivateDetailSerializer(serializers.ModelSerializer):
                   "requirements", "link", "contact", "deadline", "teamsize",
                   "publishable", "post_date", "members"]
 
+    # return all applicants
     def get_members(self, team):
         applicants = team.teammates_set.all()
         return TeammateSerializer(applicants, many=True).data
 
 
+# serializer class of team details view for public users
 class TeamPublicDetailSerializer(serializers.ModelSerializer):
     members = serializers.SerializerMethodField()
     host = CrowdUserSerializer(many=False, required=False, allow_null=True)
 
     def create(self, validated_data):
+        # assign the requesting user as the team host upon creating
+        #   this is to prevent admins / users from creating teams in others' names
         if self.context.get("host", None):
             host = self.context['host']
             validated_data['host'] = host
@@ -85,11 +95,13 @@ class TeamPublicDetailSerializer(serializers.ModelSerializer):
                   "requirements", "link", "contact", "deadline", "teamsize",
                   "publishable", "post_date", "members"]
 
+    # return only accepted applicants
     def get_members(self, team):
         applicants = team.teammates_set.filter(state="accepted")
         return TeammatePreviewSerializer(applicants, many=True).data
 
 
+# serializer class of team listing preview for all users
 class TeamPreviewSerializer(serializers.ModelSerializer):
     members = serializers.SerializerMethodField()
 
@@ -98,11 +110,13 @@ class TeamPreviewSerializer(serializers.ModelSerializer):
         fields = ["id", "title", "teamsize", "deadline", "requirements",
                   "description", "members"]
 
+    # only return accepted applicants
     def get_members(self, team):
         applicants = team.teammates_set.filter(state="accepted")
         return TeammatePreviewSerializer(applicants, many=True).data
 
 
+# serializer class of team application view for host users
 class TeamApplicationSerializer(serializers.ModelSerializer):
     team = TeamPreviewSerializer(many=False, source="teamformation")
     applicant = CrowdUserSerializer(many=False, source="info")

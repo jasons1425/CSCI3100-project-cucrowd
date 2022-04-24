@@ -33,7 +33,7 @@ def validate_size(value):
         )
 
 
-# Create your models here.
+# configuration of the Team model in DB
 class Teamformation(models.Model):
     id = models.UUIDField(primary_key=True,
                           default=uuid.uuid4,editable=False)
@@ -74,6 +74,7 @@ class Teamformation(models.Model):
         super().save(*args, **kwargs)
 
 
+# configuration of the Teammate model in DB
 class Teammates(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     info = models.ForeignKey(settings.AUTH_USER_MODEL,
