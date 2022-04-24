@@ -25,8 +25,6 @@ def validate_size(value):
             params={'value': value}
         )
     
-
-
 # Create your models here.
 class Questionnaire(models.Model):
     id = models.UUIDField(primary_key=True,
@@ -84,6 +82,17 @@ class Answer(models.Model):
         username = self.respondent.username
         return ' - '.join([title, username])
 
+    def clean(self, *args, **kwargs):
+        if getattr(self, "questionnaire", None) is None or getattr(self, "respondent", None) is None:
+            raise FieldValidationError("Answer must have both questionnaire and respondent.")
+        questionsize = self.questionnaire.questionsize
+        answer = self.Ans.split(';')
+        try:
+                assert len(answer) == questionsize
+        except AssertionError:
+            raise FieldValidationError(" Answers do not match the questionsize.")
+        super().clean(*args, **kwargs)        
+
     def save(self, *args, **kwargs):
         self.full_clean()
-        super().save(*args, **kwargs) 
+        super().save(*args, **kwargs)  
