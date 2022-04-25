@@ -35,7 +35,7 @@ function Profile() {
       gender="Female"
   }
   if(items.gender=="NA"){
-    gender="Others"
+    gender="NA"
   }
 
   useEffect(() => {
@@ -75,7 +75,7 @@ function Profile() {
         <div id="imgpreview" style={{"display":"none"}}><img id="imgpreview1" src="" width="100%" height="100%" /></div>
         <label>
         <input type="file" name="image" id="changeavatar" accept ="image/*" onChange={(e)=>{Imgpreview(e);}}/>
-        <div id="uploadimg" >Upload Avatar</div>
+        <div id="uploadimg" >Select Avatar</div>
         </label>
         <div id="saveimg" onClick={()=>{
           let formData = new FormData();
