@@ -1,8 +1,8 @@
 import './Questionnaire_edit.css'
 import * as Ri from "react-icons/ri";
-import * as Io from "react-icons/io";
 import * as Im from "react-icons/im";
 import * as Md from "react-icons/md";
+import * as Bi from "react-icons/bi";
 import longquestionimg from '../components/LongQ.png'
 import mcimg from '../components/MC.png'
 import scoringimg from '../components/scoring.jpg'
@@ -66,7 +66,7 @@ function Questionnaire_edit() {
         </div>
 
         <section>
-            {data.filter((element) => {return element.host.username == profile.username}).map((element,index) => <QuestionnairePost id={element.id} title={element.title} type={element.questiontype} closing={element.deadline} description={element.description}/>)}
+            {data.filter((element) => {return element.host.username == profile.username}).map((element,index) => <QuestionnairePost id={element.id} title={element.title} type={element.questiontype} closing={element.deadline} description={element.description} eft={element.exp_finish}/>)}
         </section>
       </div>
     )
@@ -76,7 +76,7 @@ function Questionnaire_edit() {
   
 export default Questionnaire_edit;
 
-function QuestionnairePost({id, type, title, description}){
+function QuestionnairePost({id, type, title, description, eft}){
     return(
       <div>
         <div className="questionnaire_post">
@@ -91,15 +91,34 @@ function QuestionnairePost({id, type, title, description}){
               <li className="questionnaire_post_title">{title}</li>
               <li>Question type: {type == "mc" && <b>MC</b>} {type == "lq" && <b>Long Question</b>} {type == "gf" && <b>Google Form</b>} {type == "sc" && <b>Scoring</b>}</li>
               <li><div className="questionnaire_decription">Description: {description}</div></li>
-              <li>expected finishing time: <b>10 mins</b></li>
+              <li>expected finishing time: <b>{eft}</b></li>
             </ul>
             <div className='questionnaire_button'>
-              <div id='edit'><Io.IoMdCreate/>&nbsp;Edit</div>
-              <div id='delete'><Im.ImBin/>&nbsp;Delete</div>
+              {type !== "gf" && <div id='response' onClick={()=>responseQuest(id)}><Bi.BiCommentCheck/>&nbsp;Response</div>}
+              <div id='delete' onClick={() => deletePost(id, title)}><Im.ImBin/>&nbsp;Delete</div>
               </div>
             </div>
           </div>
           <hr className="questionnaire_post_line"/>
       </div>
     )
+}
+
+function deletePost(id, title){
+    if(window.confirm("Are you sure to delete this post: " + title + "?")){
+      axios
+      .delete("http://localhost:8000/api/questionnaire/" + id, {withCredentials:true})
+      .then((res)=>{
+          alert("The questionnaire is successfully deleted.")
+          window.location.pathname="/question/edit"
+      })
+      .catch((err)=>{
+          alert("Error occurs. The questionnaire cannot be deleted.")
+          alert(err.response.data.message)
+      })
+    }
+}
+
+function responseQuest(id){
+    window.location.pathname="/question/response/" + id;
 }

@@ -119,6 +119,9 @@
 }
 
 .questionnaire_post_title{
+    text-overflow: ellipsis;
     font-size: 1.5vw;
     margin-bottom: 1vh;
+    overflow: hidden;
+    white-space: nowrap;
 }

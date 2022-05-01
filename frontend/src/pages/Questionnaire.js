@@ -62,7 +62,7 @@ function Questionnaire() {
             <div className="questionnaire_search_edit_icon" onClick={()=>{window.location.pathname='/question/edit';}}><Io.IoMdCreate/></div>
         </div>
         <section>
-          {dataArray.filter((element) => {return element.questiontype = "gf"}).map((element,index) => <QuestionnairePost key={index} id={element.id} title={element.title} type={element.questiontype} closing={element.deadline} description={element.description} time={element.exp_finish}/>)}
+          {dataArray.map((element,index) => <QuestionnairePost key={index} id={element.id} title={element.title} type={element.questiontype} closing={element.deadline} description={element.description} time={element.exp_finish}/>)}
         </section>
 
       </div>
@@ -85,7 +85,7 @@ function QuestionnairePost({id, type, title, description, time}){
           </div>
           <div className="questionnaire_post_content">
             <ul>
-              <li className="questionnaire_post_title">{title}</li>
+              <li><div className="questionnaire_post_title">{title}</div></li>
               <li>Question type: {type == "mc" && <b>MC</b>} {type == "lq" && <b>Long Question</b>} {type == "gf" && <b>Google Form</b>} {type == "sc" && <b>Scoring</b>}</li>
               <li><div className="questionnaire_decription">Description: {description}</div></li>
               <li><div className="questionnaire_time">Expected finishing time: <b>{time}</b></div></li>

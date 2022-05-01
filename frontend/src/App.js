@@ -27,6 +27,7 @@ import Profile from './pages/Profile'
 import Stu_profile from './pages/Stu_profile';
 import Org_edit from './pages/Org_edit';
 import Org_profile from './pages/Org_profile';
+import Quest_response from './pages/Questionnaire_response'
 
 import { useEffect, useState } from 'react';
 
@@ -84,7 +85,8 @@ function App() {
             <Route path='/question' element={<Questionnaire/>} />
             <Route path='/question/:id' element={<Questionnaire_details/>} />
             <Route path='/question/edit' element={<Questionnaire_edit/>} />          
-            <Route path='/question/add' element={<Questionnaire_add/>} />  
+            <Route path='/question/add' element={<Questionnaire_add/>} /> 
+            <Route path='/question/response/:id' element={<Quest_response/>} /> 
             <Route path='/team' element={<Team/>} />
             <Route path='/team/:id' element={<Team_details/>} />
             <Route path='/team/edit' element={<Team_edit/>} />
