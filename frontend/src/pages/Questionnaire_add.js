@@ -1,13 +1,14 @@
 import './Questionnaire_add.css'
 import * as Ri from "react-icons/ri";
 import {useState} from 'react'
+import axios from 'axios'
 
 function Questionnaire_add() {
     const [type, setType] = useState(1);
     const [number, setNumber] = useState(1);
 
     function changeQuestionNumber(){
-        let x = document.document.getElementbyId("questionnaire_number").value;
+        let x = document.getElementById("questionnaire_number").value;
         if(x > 10){
             setNumber(10);
         }else{
@@ -16,10 +17,10 @@ function Questionnaire_add() {
     }
 
     function changeType(){
-        let x = document.document.getElementbyId("questionnaire_type").value;
+        let x = document.getElementById("questionnaire_type").value;
         if(x === "MC"){
             setType(1);
-        }else if(x === "LongQ"){
+        }else if(x === "longQ"){
             setType(2);
         }else if(x === "scoring"){
             setType(3);
@@ -87,7 +88,7 @@ function Questionnaire_add() {
                 {type == 4 && <Form />}    
             </div>
         </section>
-        <div>
+        <div className="questionnaire_add_button">
             <button className="questionnaire_edit_back_button" onClick={()=> window.location.pathname="/question/edit"}>Back</button>
             <button className="questionnaire_edit_add_button" onClick={()=>addPost(type, number)}>Add New Post</button>
         </div>
@@ -151,31 +152,179 @@ function Form(){
 }
 
 function addPost(type, number){
-    const question = "";
-    let answer = [];
+    var question = "";
     let error = [];
     let check = 1;
-    if (type == 1){
-        for(var x = 0; x < number; x++){
-            answer.push("" + document.getElementbyId(""+(x+1)).value + "," + document.getElementbyId(""+(x+1)+"A").value + "," + document.getElementbyId(""+(x+1)+"B").value + "," + document.getElementbyId(""+(x+1)+"C").value + "," + document.getElementbyId(""+(x+1)+"D").value + ";");
-        }
-    }else if (type == 2 || type == 3){
-        for(var x = 0; x < number; x++){
-            if (document.getElementbyId(""+(x+1)).value == ""){
-                check = 0;
-                error.push(""+(x+1));
-            }
-            question = question + document.getElementbyId(""+(x+1)).value + ";";
-        }
-    }else if (type == 4){
-        if (document.getElementbyId(""+(x+1)).value == ""){
-            check = 0;
-            error = "link of google form";
-        }
-        question = question + document.getElementbyId("googleForm").value + ";";
+
+    if(document.getElementById("questionnaire_title").value == ""){
+        document.getElementById("questionnaire_title").style.borderColor="red"
+        check = 0
+        error.push("title");
+    }else{
+        document.getElementById("questionnaire_title").style.borderColor="black"
     }
 
-    if(check == 0){
-        alert("You have not finished " + error);
+    if(document.getElementById("questionnaire_purpose").value == ""){
+        document.getElementById("questionnaire_purpose").style.borderColor="red"
+        check = 0
+        error.push("description");
+    }else{
+        document.getElementById("questionnaire_purpose").style.borderColor="black"
     }
+
+    if(document.getElementById("questionnaire_deadline").value == ""){
+        document.getElementById("questionnaire_deadline").style.borderColor="red"
+        check = 0
+        error.push("deadline");
+    }else{
+        document.getElementById("questionnaire_deadline").style.borderColor="black"
+    }
+
+    if(document.getElementById("questionnaire_eft").value == ""){
+        document.getElementById("questionnaire_eft").style.borderColor="red"
+        error.push("expected finishing time");
+        check = 0
+    }else{
+        document.getElementById("questionnaire_eft").style.borderColor="black"
+    }
+
+
+
+    if (type == 1){
+        var questiontype = "mc"
+        for(var x = 0; x < number; x++){
+            if(x != 0){
+                question = question + ";"
+            }
+
+            if (document.getElementById(""+(x+1)).value == "" || document.getElementById(""+(x+1)).value.includes(";")){
+                check = 0;
+                error.push("question "+(x+1));
+                document.getElementById(""+(x+1)).style.borderColor="red"
+            }else{
+                document.getElementById(""+(x+1)).style.borderColor="black"
+            }
+
+            if (document.getElementById(""+(x+1)+"A").value == "" || document.getElementById(""+(x+1)+"A").value.includes(";") || document.getElementById(""+(x+1)+"A").value.includes(",")){
+                check = 0;
+                error.push(""+(x+1)+"A");
+                document.getElementById(""+(x+1)+"A").style.borderColor="red"
+            }else{
+                document.getElementById(""+(x+1)+"A").style.borderColor="black"
+            }
+
+
+            if (document.getElementById(""+(x+1)+"B").value == "" || document.getElementById(""+(x+1)+"B").value.includes(";") || document.getElementById(""+(x+1)+"B").value.includes(",")){
+                check = 0;
+                error.push(""+(x+1)+"B");
+                document.getElementById(""+(x+1)+"B").style.borderColor="red"
+            }else{
+                document.getElementById(""+(x+1)+"B").style.borderColor="black"
+            }
+
+
+            if (document.getElementById(""+(x+1)+"C").value == "" || document.getElementById(""+(x+1)+"C").value.includes(";") || document.getElementById(""+(x+1)+"C").value.includes(",")){
+                check = 0;
+                error.push(""+(x+1)+"C");
+                document.getElementById(""+(x+1)+"C").style.borderColor="red"
+            }else{
+                document.getElementById(""+(x+1)+"C").style.borderColor="black"
+            }
+
+
+            if (document.getElementById(""+(x+1)+"D").value == "" || document.getElementById(""+(x+1)+"D").value.includes(";") || document.getElementById(""+(x+1)+"D").value.includes(",")){
+                check = 0;
+                error.push(""+(x+1)+"D");
+                document.getElementById(""+(x+1)+"D").style.borderColor="red"
+            }else{
+                document.getElementById(""+(x+1)+"D").style.borderColor="black"
+            }
+
+            question = question + document.getElementById(""+(x+1)).value + "," + document.getElementById(""+(x+1)+"A").value + "," + document.getElementById(""+(x+1)+"B").value + "," + document.getElementById(""+(x+1)+"C").value + "," + document.getElementById(""+(x+1)+"D").value;
+        }
+
+
+    }else if (type == 2 || type == 3){
+        if(type == 2){
+            var questiontype = "lq"
+        }else if(type == 3){
+            var questiontype = "sc"
+        }
+        for(var x = 0; x < number; x++){
+
+            if(x != 0){
+                question = question + ";"
+            }
+
+            if (document.getElementById(""+(x+1)).value == "" || document.getElementById(""+(x+1)).value.includes(";")){
+                check = 0;
+                error.push(""+(x+1));
+                document.getElementById(""+(x+1)).style.borderColor="red"
+            }else{
+                document.getElementById(""+(x+1)).style.borderColor="black"
+            }
+
+            question = question + document.getElementById(""+(x+1)).value;
+        }
+
+
+
+    }else if (type == 4){
+        var questiontype = "gf"
+        if (document.getElementById("googleForm").value == ""){
+            check = 0;
+            error = "link of google form";
+            document.getElementById("googleForm").style.borderColor="red"
+        }else{
+            document.getElementById("googleForm").style.borderColor="black"
+        }
+
+        question = question + document.getElementById("googleForm").value;
+    }
+
+
+    if(check == 0 && questiontype != "mc"){
+        alert(error + " cannot be empty or contain ';' symbol");
+        return
+    }else if(check == 0 && questiontype == "mc"){
+        alert(error + " cannot be empty or contain ';'/',' symbol");
+        return
+    }
+
+    let payload = {
+        title : document.getElementById("questionnaire_title").value,
+        description : document.getElementById("questionnaire_purpose").value,
+        deadline : document.getElementById("questionnaire_deadline").value,
+        questionsize : number,
+        questiontype : questiontype,
+        question : question,
+        exp_finish : document.getElementById("questionnaire_eft").value
+    }
+
+    axios
+        .post("http://localhost:8000/api/questionnaire", payload, {withCredentials:true})
+        .then((res) => {
+            alert("Post is successfully published");
+            window.location.pathname='/question';
+        })
+        .catch((err) => {
+            let message = ""
+            if(err.response.data.title){
+                message += "Title: " + err.response.data.title + "\n"
+                document.getElementById("questionnaire_title").style.borderColor="red"
+            }
+            if(err.response.data.description){
+                message += "Description: " + err.response.data.description + "\n"
+                document.getElementById("questionnaire_purpose").style.borderColor="red"
+            }
+            if(err.response.data.deadline){
+                message += "Deadline: " + err.response.data.deadline + "\n"
+                document.getElementById("questionnaire_deadline").style.borderColor="red"
+            }
+            if(err.response.data.message){
+                message += err.response.data.message + "\n"
+            }
+            alert(message)
+        })
+    
 }

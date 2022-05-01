@@ -11,9 +11,9 @@
  
 }
 .username{
-  padding-top: 10px;
-  font-size: 25px;
-  margin-left: 110px;
+  padding-top: 0.6vh;
+  font-size: 1vw;
+  margin-left: 4.4vw;
   font-weight: bold;
   display:flex;
 }
@@ -39,7 +39,7 @@
 
 .postphoto{
   margin-top:0.5vw;
-  margin-left: 1.5vw;
+  margin-left: 0.9vw;
   margin-right: 0.5vw;
   width: 19vw;
   height:30vh;
@@ -79,9 +79,9 @@
 }
 
 .intro{
-  padding-top: 70px;
-  margin-left: 110px;
-  font-size: 20px;
+  padding-top: 1.2vh;
+  margin-left: 4.4vw;
+  font-size: 0.8vw;
   font-weight: bold;
 }
 
@@ -123,6 +123,7 @@ transform: translateY(4px);
 .line1{
   border-style: solid;
   border-color: black;
+  margin-top: 4vh;
 }
 
 .username #username1{

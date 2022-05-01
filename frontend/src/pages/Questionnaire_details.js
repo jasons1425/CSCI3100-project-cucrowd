@@ -88,20 +88,42 @@ function Questionnaire_details() {
                     </div>
                     
                     <div className="questionnaire">
-                        <div className="questionnaire_left_icon">{number !== 1 && <BiCaretLeft onClick={()=> {setNumber(number - 1); updateQuestionAnswer(data.questiontype, number);}}/>}</div>
+                        <div className="questionnaire_left_icon">{number !== 1 && <BiCaretLeft onClick={()=> {
+                            if(data.questiontype == "mc"){
+                                updateQuestionAnswer(data.questiontype, number)
+                                setNumber(number - 1)
+                                return
+                            }
+                            if(document.getElementById(""+number).value.includes(";") && data.questiontype == "lq"){
+                                alert("You cannot include ';' symbol in your answer")
+                                return
+                            }else{
+                                updateQuestionAnswer(data.questiontype, number)
+                                setNumber(number - 1)}}}/>}</div>
                         <div className="question">
                             {data.questiontype === "lq" && <LongQ key={number} number={number} question={data.question.split(";")[number-1]}/>}
                             {data.questiontype === "mc" && <MC key={number} number={number} question={data.question.split(";")[number-1]}/>}
                             {data.questiontype === "sc" && <Scoring key={number} number={number} question={data.question.split(";")[number-1]}/>}
                         
                         </div>
-                        <div className="questionnaire_right_icon">{number !== maxno && <BiCaretRight onClick={()=> {setNumber(number + 1); updateQuestionAnswer(data.questiontype, number);}}/>}</div>
+                        <div className="questionnaire_right_icon">{number !== maxno && <BiCaretRight onClick={()=> {
+                            if(data.questiontype == "mc"){
+                                updateQuestionAnswer(data.questiontype, number)
+                                setNumber(number + 1)
+                                return
+                            }
+                            if(document.getElementById(""+number).value.includes(";") && data.questiontype == "lq"){
+                                alert("You cannot include ';' symbol in your answer")
+                                return
+                            }else{
+                                updateQuestionAnswer(data.questiontype, number)
+                                setNumber(number + 1)}}}/>}</div>
                     </div></>}
                     
                     <div>
                         <button className="questionnaire_back_button" type="button" onClick={()=> window.location.pathname="/question"}>Back</button>
                     {data.questiontype !== "gf" &&
-                        <button className="questionnaire_submit_button" type="button" onClick={() => submitQuest()}>Submit</button>
+                        <button className="questionnaire_submit_button" type="button" onClick={() => submitQuest(number)}>Submit</button>
                     }
                     </div>
                 </div>
@@ -159,13 +181,16 @@ function Questionnaire_details() {
     }
 
     function Scoring({number, question}){
+        if(answer[number-1] == undefined){
+            answer[number-1] = 1;
+        }
         return(
             <div className="scoring">
                     <p>Question {number}: <br/> {question}</p>
-                    <input type="range" defaultValue={answer[number-1]==undefined ? 1 : answer[number-1]} min="1" max="10" className="slider" name={number} id={number} onChange={()=> update(number)}></input>
+                    <input type="range" defaultValue={answer[number-1]} min="1" max="10" className="slider" name={number} id={number} onChange={()=> update(number)}></input>
                     <div className="bubble">
-                        <div className="bubble_img" id="bubble_img" style={answer[number-1] == undefined ? {marginLeft : "-0.5%"} : {marginLeft : (-0.5 + (answer[number-1] -1) * (97/9)) + "%"}}>
-                            {answer[number-1]==undefined ? 1 : answer[number-1]}
+                        <div className="bubble_img" id="bubble_img" style={{marginLeft : (-0.5 + (answer[number-1] -1) * (97/9)) + "%"}}>
+                            {answer[number-1]}
                         </div>
                     </div>
             </div>
@@ -201,19 +226,45 @@ function Questionnaire_details() {
             let temp_state = [...answer];
             let temp_element = {...temp_state[number-1]};
             temp_element = document.getElementById("" + number).value;
+            if(temp_element == ""){
+                temp_element = undefined
+            }
             temp_state[number-1] = temp_element;
             setAnswer(temp_state);
         }
     }
 
-    function submitQuest(){
+    function submitQuest(number){
         var check = true;
         var check_array = [];
         var answerString = "";
+        var empty = false;
         var error = "You have not finished question ";
+
+        if(data.questiontype != "mc"){
+            if(document.getElementById("" + number).value.includes(";")){
+                alert("You cannot include ';' symbol in your answer")
+                return
+            }
+        }
+
         for (var i = 0; i < maxno; i++){
-            answerString = answerString + answer[i] + "; ";
-            if(answer[i] == undefined || answer[i] == null){
+            if(i != 0){
+                answerString = answerString + ";";
+            }
+            if (data.questiontype !== "mc" && data.questiontype !== "gf" && i == number-1){
+                if(document.getElementById("" + number).value == ""){
+                    empty = true;
+                }
+                answerString = answerString + document.getElementById("" + number).value;
+            }else{
+                answerString = answerString + answer[i];
+            }
+
+            if((answer[i] == undefined || answer[i] == null) && (i != number-1 || empty) && (data.questiontype == "lq" || data.questiontype == "sc")){
+                check_array.push(i+1);
+                check = false;
+            }else if((answer[i] == undefined || answer[i] == null) && data.questiontype == "mc"){
                 check_array.push(i+1);
                 check = false;
             }
@@ -231,22 +282,20 @@ function Questionnaire_details() {
         }
 
         let payload = {
-            username : profile.username,
-            email : null,
-            ans : answerString
+            Ans : answerString,
+            questionnaire : data.id
         }
 
-        axios
-            .post("http://localhost:8000/api/answer/" + data.id, payload, {withCredentials : true})
+            axios
+            .post("http://localhost:8000/api/answer/", payload, {withCredentials : true})
             .then((res) => {
                 alert("Your response has submitted");
                 window.location.pathname = "/question";
             })
-            .catach((err) => {
-                alert(err.response.data);
+            .catch((err) => {
+                alert(err.response.data.message);
             })
-
-
+        
     }
 }
   

@@ -1,10 +1,10 @@
 .left_card{
-    background-color: #f5eac9;
     margin-top: 10.5vw;
     margin-left: 20.5vw;
     width: 19.32vw;
     height: 23.1vw;
     border-radius: 20px;
+
 }
 
 .left_card #avatar{
@@ -53,7 +53,7 @@
 .left_card #org{
     text-align: center;
     font-size: 1.15vw;
-    color: gray;
+    color: purple;
     margin-top: 2vw;
     margin-bottom: 0.63vw;
     position: relative;
@@ -87,12 +87,13 @@
 }
 
 .right_card{
-    background-color: #f5eac9;
+
     margin-top: 10.5vw;
     margin-left: 2.1vw;
     width: 42vw;
     height: auto;
     border-radius: 20px;
+
 }
 .right_card #fullname{
     display: flex;
@@ -144,13 +145,14 @@
 }
 
 .exp_card{
-    background-color: #f5eac9;
+    background-color: #b9e6ed;
     border-radius: 20px;
     margin-top: 3vw;
     margin-left: 21vw;
     padding-bottom: 2vw;
     width: 65vw;
     height: auto;
+    
 }
 .exp_card #title{
     font-size: 1.7vw;
@@ -166,7 +168,7 @@
 }
 .exp_card #subtitle2{
     font-size: 1.7vw;
-    margin-left: 25vw;
+    margin-left: 23vw;
     margin-top: 1vw;
 }
 
@@ -236,6 +238,7 @@
     margin-left: 20vw;
     width: 65.1vw;
     height: auto;
+    border-style: solid;
 }
 
 .org_info_card #title{
@@ -316,7 +319,7 @@
 }
 
 .team_card{
-    background-color: #f5eac9;
+    background-color: #b9e6ed;
     border-radius: 20px;
     margin-top: 3vw;
     margin-left: 21vw;

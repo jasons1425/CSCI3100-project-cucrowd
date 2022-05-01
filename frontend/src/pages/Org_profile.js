@@ -32,7 +32,7 @@ try{
       <div className='title1'>Profile</div>
     </div><div style={{ display: "flex" }}>
         <div className='left_card'>
-          <div id="avatar"><img id="avatar1" src={"http://localhost:8000"+items.avatar} width="300px" height="300px" /></div>
+          <div id="avatar"><img id="avatar1" src={"http://localhost:8000"+items.avatar} width="100%" height="100%" /></div>
           <div id="org" style={{bottom:"0px"}}>{items.org_name}</div>
         </div>
         <div className='right_card'>
@@ -44,7 +44,7 @@ try{
         </div>
       </div>
       <section id="org_info_card_container">
-    <div className='org_info_card'> 
+    <div className='org_info_card' style={{ marginTop: "0vh"}}> 
     <div style={{display:"flex"}}>
     <div id="title">Organiztion Introduction:</div>
     </div>

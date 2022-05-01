@@ -1,0 +1,125 @@
+.quest_select_title{
+    display:flex;
+    flex-direction: row;
+    margin-left: 17.5vw;
+    margin-bottom:2vw;
+}
+
+.quest_select_title p{
+    font-size:2vw;
+    margin-top:1vw;
+    margin-right:27.5vw;
+}
+
+.quest_select_line{
+    border: 0.02vw solid black;
+    margin-left: 15vw;
+    margin-right: 25vw;
+}
+
+.quest_response{
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.quest_back_button{
+    padding: 0.8vw 1vw;
+    font-size: 1vw;
+    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #4caf50;
+    border: none;
+    border-radius: 1vw;
+    float: left;
+    margin-top: 5vh;
+}
+
+.quest_analysis{
+    max-width:55vw;
+    margin-top: 3vw;
+    margin-left:15vw;
+    margin-bottom:5vw;
+    border:solid;
+}
+
+.quest_mc_analysis td:nth-child(1){
+    width: 10vw;
+    text-align: center;
+    vertical-align: top;
+}
+
+.quest_mc_analysis td:nth-child(2){
+    width: 40vw;
+    
+}
+
+.quest_mc_analysis td:nth-child(3){
+    width: 10vw;
+    text-align: center;
+    vertical-align: top;
+}
+
+.quest_mc_analysis td{
+    padding-top: 1vw;
+    padding-bottom: 1vw;
+}
+
+.quest_no_response{
+    margin-top: 5vw;
+    margin-left:35vw;
+    font-size:2vw;
+}
+
+.quest_lq_analysis td:nth-child(1){
+    width: 10vw;
+    text-align: center;
+    vertical-align: top;
+}
+
+.quest_lq_analysis td:nth-child(2){
+    width: 40vw;
+    white-space:pre-wrap;
+}
+
+.quest_sc_analysis tr:nth-child(1) td:nth-child(1){
+    width: 10vw;
+    border-right:solid;
+}
+
+.quest_sc_analysis tr:nth-child(2) td:nth-child(1){
+    width: 10vw;
+    border-right:solid;
+}
+
+.quest_sc_analysis td:nth-child(11){
+    border-right:solid;
+}
+
+.quest_sc_analysis tr:nth-child(1) td{
+    width: 5vw;
+    padding:0.1vw;
+    border-bottom: solid;
+    text-align: center;
+}
+
+.quest_sc_analysis tr:nth-child(2) td{
+    width: 5vw;
+    padding:0.1vw;
+    text-align: center;
+}
+
+.quest_analysis .sc_question td:nth-child(1){
+    width:10vw;
+    vertical-align: top;
+    padding:0.5vw;
+}
+
+.quest_analysis .sc_question td:nth-child(2){
+    width:40vw;
+}
+
+.quest_analysis .sc_question{
+    margin-bottom:1.5vw;
+}

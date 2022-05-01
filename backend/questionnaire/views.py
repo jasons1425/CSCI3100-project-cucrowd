@@ -163,8 +163,8 @@ class AnswerView(viewsets.ModelViewSet):
         instance = self.get_object()
         host = instance.questionnaire.host
         respondent = instance.respondent
-        if user.id != host.id and user.id != respondent.id:
+        if 1:
             raise ValidationError({"result": False,
-                                   "message": "Only questionnaire host and respondent can cancel the answer."})
+                                   "message": "The answer cannot be canceled."})
         res = super().destroy(request, *args, **kwargs)
         return res
