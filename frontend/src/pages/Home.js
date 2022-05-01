@@ -216,26 +216,26 @@ class Quest_list extends React.Component{
                 <div className='postauthor' onClick={() => {window.location.href = "http://localhost:3000/question/" + this.state.items[0].id}}>{this.state.items[0].title.substring(0,200)}</div>
                 {this.state.items[0].questiontype == "mc" && <div className='postphoto'><img src={mcimg} width="95%" height="95%" ></img></div>}
                 {this.state.items[0].questiontype == "gf" && <div className='postphoto'><img src={googleFormimg} width="95%" height="95%" ></img></div>}
-                {this.state.items[0].questiontpye == "sc" && <div className='postphoto'><img src={scoringimg} width="95%" height="95%" ></img></div>}
+                {this.state.items[0].questiontype == "sc" && <div className='postphoto'><img src={scoringimg} width="95%" height="95%" ></img></div>}
                 {this.state.items[0].questiontype == "lq" && <div className='postphoto'><img src={longquestionimg} width="95%" height="95%" ></img></div>}
                 <div className='home_line'><hr id="line"/></div>
                 <div className='description'>{this.state.items[0].description.substring(0,200) + "..."}</div>
             </div>}
             {this.state.items.length > 1 && <div className='column'>
                 <div className='postauthor'> onClick={() => {window.location.href = "http://localhost:3000/question/" + this.state.items[1].id}} {this.state.items[1].title.substring(0,200)}</div>
-                {this.state.items[0].questiontype == "mc" && <div className='postphoto'><img src={mcimg} width="95%" height="95%" ></img></div>}
-                {this.state.items[0].questiontype == "gf" && <div className='postphoto'><img src={googleFormimg} width="95%" height="95%" ></img></div>}
-                {this.state.items[0].questiontpye == "sc" && <div className='postphoto'><img src={scoringimg} width="95%" height="95%" ></img></div>}
-                {this.state.items[0].questiontype == "lq" && <div className='postphoto'><img src={longquestionimg} width="95%" height="95%" ></img></div>}                
+                {this.state.items[1].questiontype == "mc" && <div className='postphoto'><img src={mcimg} width="95%" height="95%" ></img></div>}
+                {this.state.items[1].questiontype == "gf" && <div className='postphoto'><img src={googleFormimg} width="95%" height="95%" ></img></div>}
+                {this.state.items[1].questiontype == "sc" && <div className='postphoto'><img src={scoringimg} width="95%" height="95%" ></img></div>}
+                {this.state.items[1].questiontype == "lq" && <div className='postphoto'><img src={longquestionimg} width="95%" height="95%" ></img></div>}                
                 <div className='home_line'><hr id="line"/></div>
                 <div className='description'>{this.state.items[1].description.substring(0,200) + "..."}</div>
             </div>}
             {this.state.items.length > 2 && <div className='column'>
                 <div className='postauthor' onClick={() => {window.location.href = "http://localhost:3000/question/" + this.state.items[2].id}} >{this.state.items[2].title.substring(0,200)}</div>
-                {this.state.items[0].questiontype == "mc" && <div className='postphoto'><img src={mcimg} width="95%" height="95%" ></img></div>}
-                {this.state.items[0].questiontype == "gf" && <div className='postphoto'><img src={googleFormimg} width="95%" height="95%" ></img></div>}
-                {this.state.items[0].questiontpye == "sc" && <div className='postphoto'><img src={scoringimg} width="95%" height="95%" ></img></div>}
-                {this.state.items[0].questiontype == "lq" && <div className='postphoto'><img src={longquestionimg} width="95%" height="95%" ></img></div>}                
+                {this.state.items[2].questiontype == "mc" && <div className='postphoto'><img src={mcimg} width="95%" height="95%" ></img></div>}
+                {this.state.items[2].questiontype == "gf" && <div className='postphoto'><img src={googleFormimg} width="95%" height="95%" ></img></div>}
+                {this.state.items[2].questiontype == "sc" && <div className='postphoto'><img src={scoringimg} width="95%" height="95%" ></img></div>}
+                {this.state.items[2].questiontype == "lq" && <div className='postphoto'><img src={longquestionimg} width="95%" height="95%" ></img></div>}         
                 <div className='home_line'><hr id="line"/></div>
                 <div className='description'>{this.state.items[2].description.substring(0,200) + "..."}</div>
             </div>}
