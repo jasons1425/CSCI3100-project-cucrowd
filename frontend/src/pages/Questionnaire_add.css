@@ -50,7 +50,7 @@
 
 .questionnaire_add_type select {
     width: 10vw;
-    height: 1.5vw;
+    height: 1.75vw;
     font-size: 1vw;
     margin-right: 15vw;
     border:solid;
@@ -96,6 +96,7 @@
     border-radius: 1vw;
     float: right;
     margin-right: 5vw;
+    margin-bottom:2vh;
 }
 
 .questionnaire_edit_add_button:active {
@@ -136,4 +137,8 @@
     font-weight: bold;
     color: purple;
     margin-bottom: 30px;
+}
+
+.questionnaire_add_button{
+    height:10vh;
 }

@@ -35,7 +35,7 @@ function Profile() {
       gender="Female"
   }
   if(items.gender=="NA"){
-    gender="NA"
+    gender="Others"
   }
 
   useEffect(() => {
@@ -56,7 +56,7 @@ function Profile() {
 
   useEffect(() => {
     axios
-        .get("http://localhost:8000/api/questionnaire", {withCredentials:true})
+        .get("http://localhost:8000/api/profile/me/hosting_questionnaire", {withCredentials:true})
         .then((res)=>{
           setQuestion(res.data);
         })
@@ -75,7 +75,7 @@ function Profile() {
         <div id="imgpreview" style={{"display":"none"}}><img id="imgpreview1" src="" width="100%" height="100%" /></div>
         <label>
         <input type="file" name="image" id="changeavatar" accept ="image/*" onChange={(e)=>{Imgpreview(e);}}/>
-        <div id="uploadimg" >Select Avatar</div>
+        <div id="uploadimg" >Upload Avatar</div>
         </label>
         <div id="saveimg" onClick={()=>{
           let formData = new FormData();
@@ -220,7 +220,7 @@ function Profile() {
     </div>
     </section>
 
-    {/* <section id="questionnaire_container">
+    { <section id="questionnaire_container">
     <div className='question_card'>
      
         <div id="title">Posted questionnaire</div>
@@ -242,12 +242,19 @@ function Profile() {
         <div style={{display:"flex"}}>
         
             <div id="question_title">{item.title}</div>
-            <div id="cancel" onClick={{}}>Cancel</div>
+            <div id="cancel" onClick={() => {
+              if(window.confirm("Are you sure to delete the questionnaire of " + item.title + "?")){
+                axios
+                  .delete("http://localhost:8000/api/questionnaire/" + item.id, {withCredentials:true})
+                  .then((res) => window.location.reload())
+                  .catch((err) => {alert(err.response.data.message)})
+              }
+            }}>Cancel</div>
         </div>
         <div className='question_card_line'><hr id="line"/></div>
         </>))}
     </div>
-    </section> */}
+    </section> }
     <Hide/>
     </>
   )

@@ -78,7 +78,7 @@
 }
 
 .LongQ p {
-    height: 8vh;
+    height: auto;
     white-space: initial;
     margin: 0 0 1vh 0;
 }
@@ -96,7 +96,7 @@
 }
 
 .MC p {
-    height: 8vh;
+    height: auto;
     white-space: initial;
     margin: 0 0 1vh 0;
 }
@@ -132,7 +132,7 @@
 }
 
 .scoring p {
-    height: 8vh;
+    height: auto;
     white-space: initial;
     margin: 0 0 1vh 0;
 }
