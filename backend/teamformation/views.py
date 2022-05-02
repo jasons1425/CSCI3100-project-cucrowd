@@ -209,6 +209,11 @@ class TeamView(viewsets.ModelViewSet):
             # prevent multiple ongoing application to join the same team by the same user
             raise ValidationError({"result": False,
                                    "message": "You have already applied to join this team."})
+        team_vacancies = instance.teamsize
+        taken_places = len(Teammates.objects.filter(teamformation=instance, state="accepted"))
+        if taken_places >= team_vacancies:
+            raise ValidationError({"result": False,
+                                   "message": "The team is full."})
         application = Teammates.objects.create(teamformation=instance, info=user)
         if not application:
             # unknown error - fail to create a new team for some reasons
