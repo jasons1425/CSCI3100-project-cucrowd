@@ -164,7 +164,7 @@ class TeamView(viewsets.ModelViewSet):
         instance = self.get_object()
         if instance.host.id is not user.id:
             # only allow team host to manage the team application
-            raise ValidationError({"result": False, "message": "Only team host can change application status"})
+            raise ValidationError({"result": False, "message": "Only team host can change application status."})
         application_id = request.data.get('id', None)
         application = instance.teammates_set.filter(id=application_id)
         if not application:
@@ -175,6 +175,14 @@ class TeamView(viewsets.ModelViewSet):
         if not new_state:
             # missing value in the request payload
             raise ValidationError({"result": False, "message": "Missing new state for the application."})
+        team_vacancies = instance.teamsize
+        taken_places = len(Teammates.objects.filter(teamformation=instance, state="accepted"))
+        if taken_places >= team_vacancies and new_state == "accepted":
+            raise ValidationError({"result": False,
+                                   "message": "The team is full."})
+        if application.info.id == user.id:
+            raise ValidationError({"result": False,
+                                   "message": "Team host cannot change his/her own application state."})
         try:
             # queryset.update() method will not do the choice checking,
             #   need to directly call the full_clean method
