@@ -1,0 +1,107 @@
+.post_created #title{
+    font-size: 2vw;
+    margin-top: 9vw;
+    padding-left: 6vw;
+    padding-bottom: 0.8594757198109153vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+}
+
+.post_created #line{
+    border-style: solid;
+    border-color: black;
+    width: 100%;
+}
+
+.post_created{
+    margin-left: 23.635582294800173vw;
+    margin-right: 23.635582294800173vw;
+}
+
+.post_created #icon{
+    margin-left: 41.271164589600346vw;
+    font-size: 1vw;
+    border-color: black;
+    border-style: solid;
+    padding-right: 0.042973785990545764vw;
+    width: 10.043446497636441vw;
+    text-align: center;
+    padding-top: 0.4vw;
+    padding-bottom: 0.4vw;
+    border-radius: 0.4vw;
+    margin-bottom: 1.7189514396218306vw;
+}
+.post_created #icon:hover{
+    cursor: pointer;
+    background-color:white;
+}
+.exp_button #edit{
+    font-size: 1vw;
+    border-radius: 0.42vw;
+    padding-right: 0.42vw;
+    width: 4vw;
+    padding-bottom: 0.58vw;
+    text-align: center;
+    justify-content: center;
+    padding-top: 0.58vw;
+    border-color: black;
+    border-style: solid ;
+    position: relative;
+    bottom: 6.2vh;
+}
+
+.exp_button #delete{
+    margin-left: 1.2vw;
+    font-size: 1vw;
+    padding-right: 0.42vw;
+    padding-left: 0.42vw;
+    border-radius: 0.42vw;
+    width: 4.6vw;
+    text-align: center;
+    justify-content: center;
+    padding-top: 0.58vw;
+    border-color: black;
+    border-style: solid;
+    position: relative;
+    bottom: 6.2vh;
+}
+.exp_button #response{
+    margin-right: 1.2vw;
+    font-size: 1vw;
+    padding-right: 0.42vw;
+    padding-left: 0.42vw;
+    border-radius: 0.42vw;
+    width: 5.8vw;
+    text-align: center;
+    justify-content: center;
+    padding-top: 0.58vw;
+    border-color: black;
+    border-style: solid;
+    position: relative;
+    bottom: 6.2vh;
+}
+.exp_button{
+    display:flex;
+    margin-left: 52vw;
+    padding-bottom: 1.2vw;
+    
+}
+
+.exp_button #edit:hover{
+    cursor: pointer;
+    background-color:white;
+
+
+}
+.exp_button #delete:hover{
+    cursor: pointer;
+    background-color:white;
+
+
+}
+.exp_button #response:hover{
+    cursor: pointer;
+    background-color:white;
+
+
+}

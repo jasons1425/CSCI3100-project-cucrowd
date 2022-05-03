@@ -1,0 +1,150 @@
+.Exp{
+    margin-left: 12vw;
+}
+.banner{
+    margin-left: 11vw;
+    padding-left: 17vw;
+    padding-top: 2vw;
+    padding-bottom: 2vw;
+    background-color:#f5eac9;
+    font-size: 2vw;
+    display: flex;
+    flex-direction: row;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    position: fixed;
+    width: 100%;
+    z-index: 1
+}
+
+.icon{
+    padding-top: 0.8vh;
+}
+
+.title1{
+    padding-left: 1vw;
+}
+
+.exp_space{
+    height: 16.963528413910094vh;
+}
+.picture{
+    margin-left: 11vw;
+    display: grid;
+    padding-top: 2vh;
+    border-style: solid;
+    border-width: 0vw;
+    width: 14vw;
+}
+
+.exp_list{
+    padding-top: 1vh;
+    padding-bottom: 1vh;
+    margin-left: 15vw; 
+
+    list-style-type: none;
+    width: 100%;
+    height: 25vh;
+    display: flex;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.exp_item{
+    width: 30vw;
+    padding-bottom: 2.1486892995272884vw;
+    height:16.963528413910094vh;
+}
+.exp_item #exp_date{
+    padding-left: 1vw;
+    font-size: 0.7vw;
+}
+.exp_item #exp_title{
+    padding-left: 1vw;
+    font-size: 1vw;
+}
+.exp_item #exp_subtitle{
+    padding-left: 1vw;
+    font-size: 0.8vw;
+    font-weight: bold;
+}
+
+.exp_item #exp_condition{
+    padding-top: 0.5vh;
+    padding-left: 1vw;
+    font-size: 0.6vw;
+    overflow-wrap: break-word;
+}
+
+.exp_item #exp_duration{
+    padding-top: 0.5vh;
+    padding-left: 1vw;
+    font-size: 0.6vw;
+    font-weight: bold;
+}
+
+.exp_item #exp_reward{
+    padding-top: 0.5vh;
+    padding-left: 1vw;
+    font-size: 0.6vw;
+    font-weight: bold;
+}
+
+.exp_item #exp_more{
+    padding-top: 0.5vh;
+    padding-left: 1vw;
+    color: red;
+}
+
+.exp_item #exp_vacancy{
+    padding-top: 0.5vh;
+    padding-left: 1vw;
+    font-size: 0.6vw;
+    font-weight: bold;
+}
+
+
+.exp_line{
+    margin-left: 30vw;
+    margin-right: 28vw;
+    
+    border: 0.02vw solid black;
+}
+
+.search{
+    margin-left: 29vw;
+    margin-top: 9.1vw;
+    padding-bottom: 0.8594757198109153vw;
+    display: flex;
+}
+
+.search #bar{
+    width: 34.379028792436614vw;
+    height: 4vh;
+    border-radius: 0.42973785990545765vw;
+    font-size: 0.8594757198109153vw;
+}
+.search #icon{
+    padding-top: 0.42973785990545765vw;
+    padding-right: 0.6446067898581865vw;
+    font-size: 1.7189514396218306vw;
+}
+
+.search #edit_icon{
+    padding-top: 0.6446067898581865vw;
+    padding-left: 0.42973785990545765vw;
+    padding-right: 0.42973785990545765vw;
+    margin-left:2.578427159432746vw;
+    font-size: 1.289213579716373vw;
+}
+
+.search #edit_icon:hover{
+    cursor: pointer;
+    background-color:white;
+    border-radius: 0.42973785990545765vw;
+    border-style:outset;
+  }
+
+
+.container1{
+    height: 13.671875vw;
+    height: auto;
+}

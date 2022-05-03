@@ -1,0 +1,108 @@
+.exp_response_format{
+    display: flex;
+    font-size: 1.304082509669102vw;
+    margin-left: 26.5vw;
+    margin-top: 0.42973785990545765vw;
+}
+.exp_response_format #username{
+    
+}
+.exp_response_format #email{
+    margin-left: 16.348990116029223vw;
+}
+.exp_response_format #time{
+    margin-left: 12.39213579716373vw;
+}
+
+.exp_enrolled_list{
+    font-size: 0.8094757198109153vw;
+    margin-left: 11.218607649333907vw;
+    margin-top: 0.8vw;
+    margin-bottom: 0.8vw;
+    display: flex;
+    height: 0.8vw;
+
+
+}
+.exp_enrolled_list #username{
+    text-align: center;
+    margin-left: 10.1731843575419vw;
+    width: 15.6vw;
+    color: red;
+    text-decoration: underline;
+}
+.exp_enrolled_list #username{
+    cursor: pointer;
+}
+.exp_enrolled_list #email{
+    margin-left: 1.9vw;
+    text-align: center;
+
+    width: 23.6vw;
+}
+.exp_enrolled_list #time{
+    text-align: center;
+    margin-left: 1.9vw;
+
+    width: 7.8vw;
+}
+
+.exp_enrolled_listline{
+    margin-top: 0.42973785990545765vw;
+    padding-left: 21.486892995272882vw;
+    padding-right: 18.478727975934678vw;
+}
+
+.exp_enrolled_listline #line{
+    border-color: black;
+    border-style: dotted;
+}
+
+.exp_enrolled_list #cancel{
+    margin-left: 3.867640739149119vw;
+    height: 2.7686174724342664vh;
+    position: relative;
+    bottom: 0.7033587786259542vh;
+    width: 4.297378599054577vw;
+    padding-top: 0.21486892995272883vw;
+    font-size: 0.8194757198109153vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 1vw;
+
+}
+.exp_enrolled_list #cancel:hover {background-color: #3e8e41}
+
+.exp_enrolled_list #cancel:active {
+  background-color: #3e8e41;
+  transform: translateY(0.14vw);
+}
+
+.back_exp1{
+    position: relative;
+    bottom: 3.4379028792436612vw;
+    margin-left: 44.271164589600346vw;
+    display: inline-block;
+    padding: 0.8vw 2vw;
+    font-size: 1vw;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    cursor: pointer;
+    text-align: center;
+    text-decoration: none;
+    color: #fff;
+    background-color: #4CAF50;
+    border: none;
+    border-radius: 1vw;
+}
+
+.back_exp1:hover {background-color: #3e8e41}
+
+.back_exp1:active {
+  background-color: #3e8e41;
+  transform: translateY(0.14vw);
+}
