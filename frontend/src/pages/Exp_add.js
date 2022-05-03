@@ -8,6 +8,7 @@ import './Exp_add.css'
 import axios from "axios";
 import sample from '../Global/sample.jpg'
 
+//basic layout setting of the post management page
 function Exp_add() {
   return (
     <><div className="banner">
@@ -26,30 +27,34 @@ function Exp_add() {
   )
 }
 
+//find experiments hosted by the organization user
 function List(){
     
   const [name, setName] = useState([{}]);
   const [items, setItems] = useState([{}]);
 
+  //get the username of the cuurent user
   useEffect(() => {
     axios.get("http://localhost:8000/api/login", {withCredentials : true}).then((response) => {
       setName(response.data);
       });
     }, []);
     
-   console.log(name.username);
     
+   //get all the experiments from the database
    useEffect(() => {
     axios.get("http://localhost:8000/api/experiment/").then((response) => {
       setItems(response.data);
       });
     }, []);
     try{
+    //filter the experiments by matching with the username of current user
     const matchData = items.filter((item) => {
       console.log(item.host.username.includes(name.username));
             return item.host.username.includes(name.username);
 
     })
+    //return experiment in listing view and add three button which are Create, Edit and Delete in each post
     return (
       <>
       {matchData.map(item=>(
@@ -88,8 +93,8 @@ function List(){
       
   );
   }catch(e){
-    console.log("hi");
-    return("")
+    console.log("Error Occur");
+    return("Sorry, Something went wrong")
   }
 
     

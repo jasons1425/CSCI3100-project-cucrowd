@@ -9,59 +9,66 @@ import axios from "axios";
 
 function Exp(){
     
+    //used to store the inputted keyword in search bar
     const [SearchItems, setSearchItems] = useState("");
     
    try{
-    return(
-        
-        <>
-            <div className="banner"> 
-            <div className='icon'><Ai.AiTwotoneExperiment /> </div>
-            <div className='title1'>Experiments</div>
-            </div>
-            <div className="search">
-            <div id="icon"><Ai.AiOutlineSearch /></div>
-            <input id="bar" type="text" placeholder="Search..." 
-            onChange={(e)=>{
-                let SearchItemsLowerCase = e.target.value.toLowerCase();
-                setSearchItems(SearchItemsLowerCase);}}/>
-                <div id="edit_icon" onClick={()=>{window.location.pathname='/experiments/add';}}><Io.IoMdCreate/></div>
-            </div>
-            <div><List input={SearchItems}/></div>
-        </>
+        return(
+            <>
+                <div className="banner"> 
+                <div className='icon'><Ai.AiTwotoneExperiment /> </div>
+                <div className='title1'>Experiments</div>
+                </div>
+                <div className="search">
+                <div id="icon"><Ai.AiOutlineSearch /></div>
+                {/* get the inputted keyword in search bar and convert it to lower case then store it to "SearchItems" */}
+                <input id="bar" type="text" placeholder="Search..." 
+                onChange={(e)=>{
+                    let SearchItemsLowerCase = e.target.value.toLowerCase();
+                    setSearchItems(SearchItemsLowerCase);}}/>
+                    <div id="edit_icon" onClick={()=>{window.location.pathname='/experiments/add';}}><Io.IoMdCreate/></div>
+                </div>
+                <div><List input={SearchItems}/></div>
+            </>
     );
-}catch(e){
-        return("")
+    }catch(e){
+        return("Sorry, Something went wrong")
     }
     
-            
 }
     
 
 function List(props){
 
+    //used to store the account type of current user
     const [identity, setIdentity] = useState([{}]);
 
-  useEffect(() => {
-    axios.get("http://localhost:8000/api/profile/me", {withCredentials : true}).then((response) => {
-        setIdentity(response.data);
-      });
-    }, []);
+    //get the account type of current user
+    useEffect(() => {
+        axios.get("http://localhost:8000/api/profile/me", {withCredentials : true}).then((response) => {
+            setIdentity(response.data);
+        });
+        }, []);
     try{
-    if(identity.user.identity=="student user"){
-        document.getElementById("edit_icon").style.display="none";
+        //hide the post management button if the current user is student user
+        if(identity.user.identity=="student user"){
+            document.getElementById("edit_icon").style.display="none";
+        }
+    }catch(e){
+        console.log("error occur")
     }
-}catch(e){
-    console.log("hi")
-}
-  const [items, setItems] = useState([{}]);
 
-  useEffect(() => {
-    axios.get("http://localhost:8000/api/experiment/").then((response) => {
-      setItems(response.data);
-      });
-    }, []);
+    //used to store all experiments
+    const [items, setItems] = useState([{}]);
 
+    //get all experiments from database
+    useEffect(() => {
+        axios.get("http://localhost:8000/api/experiment/").then((response) => {
+        setItems(response.data);
+        });
+        }, []);
+    
+    //filter out experiment that not match with the keyword inputted by user in search bar
     const matchData = items.filter((item) => {
         if (props.input === '') {
             return item;
@@ -70,8 +77,7 @@ function List(props){
             return item.title.toLowerCase().includes(props.input);
         }
     })
-    
-    //console.log(matchData[0].host.username);
+
     try{
         return (
             <>
@@ -97,42 +103,8 @@ function List(props){
             </>
             
         );
-            }catch(e){
-                console.log("hi");
-                return("");
-            }
-    
-    
-    
-    }
-
-   
-
-
-class Demo extends React.Component{
-    render(){
-        return(
-            <>
-            <ul className='exp_list'>
-                <li className='picture'><img src={sample} width="90%" height="85%" ></img></li>
-                <li className='exp_item'>
-                <div id='exp_date'>19/3/2022</div>
-                <div id='exp_title'>Participants Recruitment in Psychology Experiment (40min, 50HK) 誠邀參與心理學實驗</div>
-                <div id='exp_condition'>
-                Professor CHAN Wai of the Department of Psychology and Professor CHEUNG Him from the Education University of 
-                Hong Kong are now conducting a series of experiments to investigate the knowledge learning progress in human. 
-                In this study, you will answer questions about general world knowledge according to your existing knowledge and
-                 information provided. If you don’t know the answers to them, you are strongly encouraged to guess. During the 
-                 experiment, internet search or any help from the third-party are not allowed. Participants are required to work 
-                 on a set of online questionnaire for around 40 minutes.
-                </div>
-                <div id='exp_duration'>Duration: 40min</div>
-                <div id='exp_reward'>Reward: 50HKD supermarket coupons </div>
-                </li>
-            </ul>
-            <hr className='exp_line'/>
-            </>
-        )
+    }catch(e){
+                return("Sorry, Something went wrong");
     }
 }
 

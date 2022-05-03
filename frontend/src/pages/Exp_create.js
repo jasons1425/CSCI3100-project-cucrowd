@@ -53,6 +53,7 @@ function Exp_create() {
 ]
 
 function create(){
+  //A form validation check is conducted to check the existence and word length of each field
   let missing=0;
   if (document.getElementById("exp_title").value==""||document.getElementById("exp_title").value.length>200){
     document.getElementById("exp_title").style.borderColor="red";
@@ -133,30 +134,16 @@ function create(){
     document.getElementById("requirements").style.borderColor="black";
   }
 
-
-
-
-  //console.log(job);
-  console.log(document.getElementById("exp_title").value);
-  console.log(document.getElementById("subtitle").value);
-  console.log(document.getElementById("target").value);
-  console.log(document.getElementById("jobs").value);
-  console.log(document.getElementById("types").value);
-  console.log(document.getElementById("duration").value);
-  console.log(document.getElementById("salary").value);
-  console.log(document.getElementById("venue").value);
-  console.log(document.getElementById("deadline").value);
-  console.log(document.getElementById("vacancy").value);
-  console.log(document.getElementById("description").value);
-  console.log(document.getElementById("timeslot").value);
-
+  //give an alert to user if error detected in front-end
   if(missing==1){
    alert("Missing required field(s) or field(s) exceed word limit")
   }
   if(missing==0){
-  submit_exp();
+    //submit to the database if no error is detected in front-end
+    submit_exp();
   }
 }
+
 function submit_exp(){
 
   let payload;
@@ -192,10 +179,11 @@ function submit_exp(){
       requirements:document.getElementById("requirements").value,
   }
 }
-  
+  //conduct post request the backend
   axios.post('http://localhost:8000/api/experiment/', payload, {withCredentials : true})
   .then((response)=>{
     console.log(response.data.id)
+    //conduct put request to upload the image to backend
     let formData = new FormData();
     let image = document.querySelector('#image');
     formData.append("exp_img", image.files[0]);
@@ -209,6 +197,7 @@ function submit_exp(){
   })
   .catch((error)=>{
     console.log(error)
+    //put all the error together in one alert
     if(error.response.data.vacancy!=null&&error.response.data.timeslots!=null&&error.response.data.deadline!=null){
     alert("Vancancy: "+ error.response.data.vacancy+"\n"+"TimeSlots: "+error.response.data.timeslots+"\n"+"Deadline: "+error.response.data.deadline
       )
@@ -240,6 +229,7 @@ function submit_exp(){
   })
 }
 
+  //reset all the field to empty
   function reset(){
     document.getElementById("exp_title").value="";
     document.getElementById("subtitle").value="";
@@ -340,7 +330,7 @@ function submit_exp(){
     </>
   )
 }catch(e){
-  return("");
+  return("Sorry something went wrong");
 }
 }
 
