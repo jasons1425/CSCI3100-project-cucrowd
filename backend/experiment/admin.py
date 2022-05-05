@@ -3,11 +3,12 @@ from django.core.exceptions import ValidationError as FieldValidationError
 from .models import Experiment, Enrollment
 
 
-# Register your models here.
+# Allow showing the child object (enrollment) of experiment instances when editing on the admin site
 class EnrollmentInline(admin.TabularInline):
     model = Enrollment
 
 
+# Experiment instance view on the admin site
 class ExperimentAdmin(admin.ModelAdmin):
     list_display = ("id", "host", "title", "post_date")
     search_fields = ("id", "host__username", "title")
@@ -20,6 +21,7 @@ class ExperimentAdmin(admin.ModelAdmin):
         obj.save()
 
 
+# Enrollment instance view on the admin site
 class EnrollmentAdmin(admin.ModelAdmin):
     list_display = ("id", "experiment", "participant")
     search_fields = ("experiment__title", "participant__username")
