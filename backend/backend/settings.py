@@ -152,6 +152,7 @@ REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "backend.exception.custom_exception_handler"
 }
 
+# whitelisted frontend domains
 CORS_ORIGIN_WHITELIST = [
     'http://localhost:3000'
 ]
@@ -160,8 +161,12 @@ CORS_TRUSTED_ORIGINS = [
     'http://localhost:3000'
 ]
 
+# determines whether the server allows cookies in the cross-site HTTP requests
 CORS_ALLOW_CREDENTIALS = True
 
+# email settings used
+#   in real production, the email credentials should be set in env variables
+#   to simplify, they are just defined directly here
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
 EMAIL_HOST = "smtp.gmail.com"
 EMAIL_PORT = 587
@@ -169,8 +174,9 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = "csci3100cucrowd@gmail.com"
 EMAIL_HOST_PASSWORD = "CUcrowd2022"
 
+# custom auth user model
 AUTH_USER_MODEL = "user_auth.CrowdUser"
-AUTH_PASSWORD_VALIDATORS = []
 
+# the root url that will store all uploaded media contents
 MEDIA_URL = '/media/'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
