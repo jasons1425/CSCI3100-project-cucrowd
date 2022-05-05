@@ -13,5 +13,4 @@ class StandardRouter(SimpleRouter):
 
 router = StandardRouter()
 router.register(r'teamformation', views.TeamView, basename='team')
-# router.register(r'teammates', views.TeammatesView, basename="teammates")
 urlpatterns = router.urls

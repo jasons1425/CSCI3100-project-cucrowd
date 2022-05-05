@@ -18,6 +18,8 @@ from django.urls import path, include
 from django.conf import settings
 from django.conf.urls.static import static
 
+
+# url patterns of the API system and admin site
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('api/', include('user_auth.urls')),

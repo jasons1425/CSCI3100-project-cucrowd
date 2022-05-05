@@ -30,11 +30,13 @@ import os
 import re
 
 
+# API view class responsible for login
 class LogInView(APIView):
     # will follow DEFAULT_AUTHENTICATION_CLASSES in settings.py if unspecified
     authentication_classes = [ExpiringTokenAuthentication, SessionAuthentication]
     permission_classes = [AllowAny]
 
+    # endpoint responsible for getting the brief user info
     def get(self, request):
         user = request.user
         response_dict = {"endpoint": "login-get",
@@ -55,15 +57,18 @@ class LogInView(APIView):
                     response_dict['admission year'] = profile.admission_year
         return Response(response_dict)
 
+    # endpoint responsible for login
     def post(self, request, format=None):
         data = request.data
         username = data.get('username', None)
         password = data.get('password', None)
+        # check payload integrity
         if not (username and password):
             raise ValidationError({'result': False,
                                    'message': "Missing username or password."})
         username = username.lower()
         user = authenticate(username=username, password=password)
+        # check user state
         if user is not None and user.is_active:
             login(request, user)
             token, created = Token.objects.get_or_create(user=user)
@@ -81,7 +86,9 @@ class LogInView(APIView):
                                    'message': "Incorrect username or password."})
 
 
+# API view class responsible for logout
 class LogOutView(APIView):
+    # endpoint responsible for getting brief user info
     def get(self, request):
         user = request.user
         response_dict = {"endpoint": "logout-get",
@@ -102,8 +109,10 @@ class LogOutView(APIView):
                     response_dict['admission year'] = profile.admission_year
         return Response(response_dict)
 
+    # endpoint responsible for logout
     def post(self, request, format=None):
         if request.user.is_authenticated:
+            # delete auth_token in user's cookie
             if getattr(request.user, 'auth_token', None):
                 request.user.auth_token.delete()
             logout(request)
@@ -113,9 +122,11 @@ class LogOutView(APIView):
         return Response({"result": False, "message": "Unauthenticated user."})
 
 
+# API view class responsible for signup
 class SignUpView(APIView):
     permission_classes = [AllowAny]
 
+    # endpoint responsible for getting brief user info
     def get(self, request):
         user = request.user
         response_dict = {"endpoint": "signup-get",
@@ -136,6 +147,7 @@ class SignUpView(APIView):
                     response_dict['admission year'] = profile.admission_year
         return Response(response_dict)
 
+    # endpoint responsible for signup
     def post(self, request):
         data = request.data
         username = data.get('username', None)
@@ -146,16 +158,18 @@ class SignUpView(APIView):
         date_of_birth = data.get("date_of_birth", None)
         major = data.get("major", None)
         admission_year = data.get("admission_year", None)
-
+        # check request payload integrity
         if not (username and password and email and sid
                 and gender and date_of_birth and major and admission_year):
             raise ValidationError({'result': False,
                                    'message': "Missing values."})
         r = re.match(r"^[a-z0-9_]{5,20}$", username)
+        # validate username
         if r is None:
             raise ValidationError({'result': False,
                                    'message': "The username must be of length 5 to 20, "
                                               "and consist of lowercase alphabets, numbers, and _ only."})
+        # validate date field format
         try:
             date_of_birth = datetime.strptime(date_of_birth, "%Y-%m-%d").date()
             admission_year = datetime.strptime(admission_year, "%Y-%m-%d").date()
@@ -163,20 +177,17 @@ class SignUpView(APIView):
             raise ValidationError({'result': False,
                                    'message': "date_of_birth or admission_year has invalid date format. "
                                               "Expected %Y-%m-%d"})
-
         try:
             validate_email(email)
             validate_sid(sid)
             validate_birth(date_of_birth)
             validate_admission(admission_year)
             user_model = get_user_model()
-            # new_user = user_model.objects.create_user(username=username, email=email,
-            #                                           password=password, gender=gender,
-            #                                           date_of_birth=date_of_birth)
             new_user = user_model.objects.create_user(username=username, email=email, password=password)
             assert new_user is not None
             new_profile = StudentProfile.objects.create(user=new_user, gender=gender, date_of_birth=date_of_birth,
                                                         sid=sid, major=major, admission_year=admission_year)
+            # delete the created new user, if fail to create the profile
             if new_profile is None:
                 new_user.delete()
                 raise AssertionError
@@ -199,7 +210,9 @@ class SignUpView(APIView):
             raise ValidationError({'result': False, 'message': "Fail to create new users - unknown errors."})
 
 
+# profile view class responsible for the Student / Org Profile feature
 class ProfileView(ModelViewSet):
+    # default profile is Student profile
     serializer_class = StudentProfileSerializer
     queryset = StudentProfile.objects.all()
     permission_classes_by_action = {
@@ -212,17 +225,31 @@ class ProfileView(ModelViewSet):
     }
     lookup_field = "user__username"
 
+    # permission control of each endpoint
+    def get_permissions(self):
+        try:
+            return [permission() for permission in self.permission_classes_by_action[self.action]]
+        except KeyError:
+            return [permission() for permission in self.permission_classes]
+
+    # endpoint responsible for profile listing
     def list(self, request, *args, **kwargs):
+        # check user role
         if request.user.is_org:
             return super().list(request, *args, **kwargs)
         raise ValidationError({"result": False,
                                "message": "Profile listing view only available for organization users."})
 
-    # treat all full-update as partial update
+    # endpoint responsible for editing profile
     def update(self, request, *args, **kwargs):
+        # treat all full-update as partial update
         kwargs['partial'] = True
         user = request.user
         instance = self.get_object()
+        # check user identity
+        if instance.user.id is not user.id:
+            raise ValidationError({"result": False, "message": "Only profile owner can update the content."})
+        # remove "user" field in request payload to stop user from changing profile owner
         if type(request.data) is not dict:  # i.e. is immutable QueryDict
             request.data._mutable = True
         for key in list(request.data.keys()):
@@ -230,13 +257,16 @@ class ProfileView(ModelViewSet):
                 del request.data[key]
         if type(request.data) is not dict:  # i.e. is immutable QueryDict
             request.data._mutable = False
-        if instance.user.id is not user.id:
-            raise ValidationError({"result": False, "message": "Only profile owner can edit the content."})
         return super().update(request, *args, **kwargs)
 
+    # endpoint responsible for editing profile
     def partial_update(self, request, *args, **kwargs):
         user = request.user
         instance = self.get_object()
+        # check user identity
+        if instance.user.id is not user.id:
+            raise ValidationError({"result": False, "message": "Only profile owner can update the content."})
+        # remove "user" field in request payload to stop user from changing profile owner
         if type(request.data) is not dict:  # i.e. is immutable QueryDict
             request.data._mutable = True
         for key in list(request.data.keys()):
@@ -244,26 +274,26 @@ class ProfileView(ModelViewSet):
                 del request.data[key]
         if type(request.data) is not dict:  # i.e. is immutable QueryDict
             request.data._mutable = False
-        if instance.user.id is not user.id:
-            raise ValidationError({"result": False, "message": "Only profile owner can update the content."})
         return super().partial_update(request, *args, **kwargs)
 
+    # endpoint responsible for retrieving my profile
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated],
             name='get my profile')
     def me(self, request, *args, **kwargs):
         user = request.user
-        if user.is_org:
+        if user.is_org:  # organization user
             profile = OrgUserProfile.objects.filter(user=user)
             if not profile:
                 raise ValidationError({"result": False, "message": "Profile not found."})
             serializer = OrgProfileSerializer(profile[0], many=False)
-        else:
+        else:  # student user
             profile = self.queryset.filter(user=user)
             if not profile:
                 raise ValidationError({"result": False, "message": "Profile not found."})
             serializer = self.serializer_class(profile[0], many=False)
         return Response(serializer.data)
 
+    # endpoint responsible for retrieving organization user profile
     # ref: https://stackoverflow.com/a/54221108/16418649
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated],
             name='get org user profile', url_path=r"org/(?P<username>[^\.=]+)")
@@ -274,6 +304,7 @@ class ProfileView(ModelViewSet):
         serializer = OrgProfileSerializer(profile[0], many=False)
         return Response(serializer.data)
 
+    # endpoint responsible for retrieving the joining experiment of the current user
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated],
             name='get joining experiments', url_path=r"me/joining")
     def joining(self, request, *args, **kwargs):
@@ -282,6 +313,7 @@ class ProfileView(ModelViewSet):
         serializer = EnrollmentPreviewSerializer(joined, many=True)
         return Response(serializer.data)
 
+    # endpoint responsible for retrieving the hosting experiment of the current user
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated],
             name='get hosting experiments', url_path=r"me/hosting")
     def hosting(self, request, *args, **kwargs):
@@ -290,6 +322,7 @@ class ProfileView(ModelViewSet):
         serializer = ExperimentSerializer(hosted, many=True)
         return Response(serializer.data)
 
+    # endpoint responsible for retrieving the involving team of the current user
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated],
             name='shows team application', url_path=r'me/team_application')
     def team_application(self, request, *args, **kwargs):
@@ -298,6 +331,7 @@ class ProfileView(ModelViewSet):
         serializer = TeamApplicationSerializer(submitted_applications, many=True)
         return Response(serializer.data)
 
+    # endpoint responsible for retrieving the leading team of the current user
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated],
             name='shows leading team', url_path=r'me/leading_team')
     def leading_team(self, request, *args, **kwargs):
@@ -306,6 +340,7 @@ class ProfileView(ModelViewSet):
         serializer = TeamPreviewSerializer(leading_teams, many=True)
         return Response(serializer.data)
 
+    # endpoint responsible for retrieving the hosting questionnaire of the current user
     @action(detail=False, methods=['GET'], permission_classes=[IsAuthenticated],
             name='get hosting questionnaire', url_path=r"me/hosting_questionnaire")
     def hosting_questionnaire(self, request, *args, **kwargs):
@@ -314,6 +349,7 @@ class ProfileView(ModelViewSet):
         serializer = QuestionnaireSerializer(hosted, many=True)
         return Response(serializer.data)
 
+    # endpoint responsible for uploading avatar
     # ref: https://stackoverflow.com/a/24420192/16418649
     @action(detail=False, methods=['POST'], permission_classes=[IsAuthenticated],
             name='upload profile avatar', url_path=r"upload")
@@ -333,19 +369,13 @@ class ProfileView(ModelViewSet):
         profile.update(avatar=fp)
         return Response({"result": True})
 
-    def get_permissions(self):
-        try:
-            return [permission() for permission in self.permission_classes_by_action[self.action]]
-        except KeyError:
-            return [permission() for permission in self.permission_classes]
 
-
+# endpoint responsible for creating reset password token
+#   the function is based on the reset_password_token_created endpoint by django_rest_passwordreset package
 @receiver(reset_password_token_created)
 def password_reset_token_created(sender, instance, reset_password_token, *args, **kwargs):
     user_name = reset_password_token.user.username
     user_email = reset_password_token.user.email
-    # abs_uri = instance.request.build_absolute_uri(reverse("password_reset:reset-password-confirm"))
-    # reset_url = f"{abs_uri}?token={reset_password_token.key}"
     reset_url = f"http://localhost:3000/resetpassword/?token={reset_password_token.key}"
     email_message = f"Dear {user_name},\n\n" \
                     f"Please click the below link to reset your password.\n\n" \

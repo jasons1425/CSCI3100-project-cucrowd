@@ -2,6 +2,7 @@ from rest_framework import serializers
 from .models import CrowdUser, StudentProfile, OrgUserProfile
 
 
+# serializer class for all user
 class CrowdUserSerializer(serializers.ModelSerializer):
     identity = serializers.SerializerMethodField()
 
@@ -15,6 +16,7 @@ class CrowdUserSerializer(serializers.ModelSerializer):
         return "student user"
 
 
+# serializer class for student profile details
 class StudentProfileSerializer(serializers.ModelSerializer):
     user = CrowdUserSerializer(many=False)
 
@@ -24,6 +26,7 @@ class StudentProfileSerializer(serializers.ModelSerializer):
                   "sid", "major", "admission_year", 'avatar']
 
 
+# serializer class for student profile preview
 class StudentPreviewSerializer(serializers.ModelSerializer):
     user = CrowdUserSerializer(many=False)
 
@@ -32,6 +35,7 @@ class StudentPreviewSerializer(serializers.ModelSerializer):
         fields = ["user", "major", "sid", "admission_year", "avatar"]
 
 
+# serializer class for org user profile details
 class OrgProfileSerializer(serializers.ModelSerializer):
     user = CrowdUserSerializer(many=False)
 
@@ -40,6 +44,7 @@ class OrgProfileSerializer(serializers.ModelSerializer):
         fields = "__all__"
 
 
+# serializer class for org user profile preview
 class OrgPreviewSerializer(serializers.ModelSerializer):
     user = CrowdUserSerializer(many=False)
 

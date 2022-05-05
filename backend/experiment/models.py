@@ -10,17 +10,20 @@ import datetime
 import os
 
 
+# for retrieving the filepath to store uploaded experiment image
 def get_exp_fp(instance, filename):
     ext = filename.split('.')[-1]
     return os.path.join("exp", f"{instance.id}.") + ext
 
 
+# validate if the experiment deadline is in the past upon saving
 def validate_deadline(value):
     if value < date.today():
         raise FieldValidationError("The date cannot be in the past!")
     return value
 
 
+# validate if vacancy is set positive
 def validate_min(value):
     if value <= 0:
         raise FieldValidationError(
@@ -29,6 +32,7 @@ def validate_min(value):
         )
 
 
+# validate if the experiment available timeslot is in the correct format & in the future
 def validate_time_string(value):
     timeslots = value.split(';')
     format_string = "%Y-%m-%d-%H:%M"
@@ -44,6 +48,7 @@ def validate_time_string(value):
     return value
 
 
+# configuration of the Experiment model in DB
 class Experiment(models.Model):
     host = models.ForeignKey(settings.AUTH_USER_MODEL,
                              on_delete=models.CASCADE,
@@ -147,6 +152,7 @@ class Experiment(models.Model):
         return self.title
 
 
+# configuration of the Enrollment model in DB
 class Enrollment(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     experiment = models.ForeignKey(Experiment,

@@ -5,10 +5,13 @@ from .models import Experiment, Enrollment
 from user_auth.serializers import CrowdUserSerializer
 
 
+# serializer class for experiment details
 class ExperimentSerializer(serializers.ModelSerializer):
     host = CrowdUserSerializer(many=False, required=False, allow_null=True)
 
     def create(self, validated_data):
+        # assign the requesting user as experiment host upon creating
+        #   this is to prevent admins / users from creating experiments in others' names
         if self.context.get("host", None):
             host = self.context['host']
             validated_data['host'] = host
@@ -22,6 +25,7 @@ class ExperimentSerializer(serializers.ModelSerializer):
                   "deadline", "vacancy", "description", "timeslots", "requirements"]
 
 
+# serializer class for experiment preview
 class ExperimentPreviewSerializer(serializers.ModelSerializer):
     host = CrowdUserSerializer(many=False)
 
@@ -30,10 +34,13 @@ class ExperimentPreviewSerializer(serializers.ModelSerializer):
         fields = ["id", "title", "host", "deadline"]
 
 
+# serializer class for enrollment details
 class EnrollmentSerializer(serializers.ModelSerializer):
     participant = CrowdUserSerializer(many=False, required=False, allow_null=True)
 
     def create(self, validated_data):
+        # assign the requesting user as experiment participant
+        #   this is to prevent admins / users from enrolling experiments in others' names
         if self.context.get("participant", None):
             participant = self.context['participant']
             validated_data['participant'] = participant
@@ -51,6 +58,7 @@ class EnrollmentSerializer(serializers.ModelSerializer):
         fields = ["id", "experiment", "participant", "selected_time"]
 
 
+# serializer class for enrollment preview
 class EnrollmentPreviewSerializer(serializers.ModelSerializer):
     participant = CrowdUserSerializer(many=False)
     experiment = ExperimentPreviewSerializer(many=False)
