@@ -8,16 +8,13 @@ import os
 import uuid
 
 
+# get the filepath to store uploaded user avatar
 def get_avatar_fp(instance, filename):
     ext = filename.split('.')[-1]
     return os.path.join("avatar", f"{instance.user.username}.") + ext
 
 
-class CrowdUser(AbstractUser):
-    is_org = models.BooleanField(default=False, null=False, blank=False)
-    email = models.EmailField(unique=True)
-
-
+# validate if the sid has exactly 10 digits
 def validate_sid(value):
     if not isinstance(value, str):
         raise ValidationError("Expect SID to be in string type.")
@@ -26,18 +23,27 @@ def validate_sid(value):
     return True
 
 
+# validate if the date of birth is in the past
 def validate_birth(value):
     if value >= datetime.date.today():
         raise ValidationError("The birth date must be in the past.")
     return value
 
 
+# validate if the admission date is in the past
 def validate_admission(value):
     if value >= datetime.date.today():
         raise ValidationError("The admission date must be in the past")
     return value
 
 
+# configuration of the User model in DB
+class CrowdUser(AbstractUser):
+    is_org = models.BooleanField(default=False, null=False, blank=False)
+    email = models.EmailField(unique=True)
+
+
+# configuration of the student profile model in DB
 class StudentProfile(models.Model):
     # general account details
     user = models.OneToOneField(settings.AUTH_USER_MODEL,
@@ -69,6 +75,7 @@ class StudentProfile(models.Model):
         return self.user.username
 
 
+# configuration of the org user profile model in DB
 class OrgUserProfile(models.Model):
     # general account details
     user = models.OneToOneField(settings.AUTH_USER_MODEL,

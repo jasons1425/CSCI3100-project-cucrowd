@@ -1,11 +1,11 @@
-from django.db import models
 from rest_framework.authentication import TokenAuthentication, get_authorization_header
 from rest_framework.exceptions import AuthenticationFailed
 from datetime import datetime, timedelta
 import pytz
 
 
-# Create your models here.
+# this class is responsible for authenticating user with the auth-token
+#   thus, user can maintain their login state with the token
 class ExpiringTokenAuthentication(TokenAuthentication):
     # get authorization key by cookies
     def authenticate(self, request):
@@ -33,5 +33,4 @@ class ExpiringTokenAuthentication(TokenAuthentication):
         if token.created < utc_now - timedelta(hours=72):  # token expire after 3 days
             token.delete()
             raise AuthenticationFailed("Token has expired")
-
         return token.user, token
