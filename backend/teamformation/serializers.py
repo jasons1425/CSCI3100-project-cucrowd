@@ -112,7 +112,7 @@ class TeamPreviewSerializer(serializers.ModelSerializer):
 
     # only return accepted applicants
     def get_members(self, team):
-        applicants = team.teammates_set.filter(state="accepted")
+        applicants = team.teammates_set.filter(state="accepted")[::-1]
         return TeammatePreviewSerializer(applicants, many=True).data
 
 
