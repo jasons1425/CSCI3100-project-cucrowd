@@ -4,7 +4,7 @@ from rest_framework.exceptions import ValidationError
 from .models import Questionnaire, Answer
 from user_auth.serializers import CrowdUserSerializer
 
-
+#QuestionnaireSerializer
 class QuestionnaireSerializer(serializers.ModelSerializer):
     host = CrowdUserSerializer(many=False, required=False, allow_null=True)
 
@@ -20,7 +20,7 @@ class QuestionnaireSerializer(serializers.ModelSerializer):
         fields = ["id", "title", "host", "description", "deadline", "post_date",
                   "last_modified", "questionsize", "questiontype", "question", "publishable","exp_finish"]
 
-
+#QuestionnairePreviewSerializer
 class QuestionnairePreviewSerializer(serializers.ModelSerializer):
     host = CrowdUserSerializer(many=False)
 
@@ -28,7 +28,7 @@ class QuestionnairePreviewSerializer(serializers.ModelSerializer):
         model = Questionnaire
         fields = ["id", "title", "host", "deadline"]
 
-
+#AnswerSerializer
 class AnswerSerializer(serializers.ModelSerializer):
     respondent = CrowdUserSerializer(many=False, required=False, allow_null=True)
 
@@ -49,7 +49,7 @@ class AnswerSerializer(serializers.ModelSerializer):
         model = Answer
         fields = ["id", "questionnaire", "respondent", "Ans"]
 
-
+#AnswerPreviewSerializer
 class AnswerPreviewSerializer(serializers.ModelSerializer):
     respondent = CrowdUserSerializer(many=False)
     questionnaire = QuestionnairePreviewSerializer(many=False)

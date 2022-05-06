@@ -6,7 +6,7 @@ from .models import Questionnaire, Answer
 # Register your models here.
 class AnswerInline(admin.TabularInline):
     model = Answer
-
+#QuestionnaireAdmin
 class QuestionnaireAdmin(admin.ModelAdmin):
     list_display = ("id", "title", "host", "questionsize", "post_date", "publishable")
     inlines = [AnswerInline]
@@ -16,7 +16,7 @@ class QuestionnaireAdmin(admin.ModelAdmin):
             obj.host = request.user
         obj.save()
 
-
+#AnswerAdmin
 class AnswerAdmin(admin.ModelAdmin):
     list_display = ("id", "questionnaire", "respondent")
 

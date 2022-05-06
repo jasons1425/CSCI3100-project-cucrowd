@@ -7,12 +7,12 @@ from django.core.exceptions import ValidationError as FieldValidationError
 from user_auth.models import StudentProfile
 
 
-
+#Check deadline
 def validate_deadline(value):
     if value < date.today():
         raise FieldValidationError("The date cannot be in the past!")
     return value
-
+#Check the questionnaire question size
 def validate_size(value):
     if value <= 0:
         raise FieldValidationError(
@@ -26,6 +26,7 @@ def validate_size(value):
         )
     
 # Create your models here.
+# configuration of the Questionnaire model in DB
 class Questionnaire(models.Model):
     id = models.UUIDField(primary_key=True,
                             default=uuid.uuid4,editable=False)
@@ -66,7 +67,8 @@ class Questionnaire(models.Model):
     def save(self, *args, **kwargs):
         self.full_clean()
         super().save(*args, **kwargs)
-
+        
+# configuration of the Answer model in DB
 class Answer(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     questionnaire = models.ForeignKey(Questionnaire, default="",
