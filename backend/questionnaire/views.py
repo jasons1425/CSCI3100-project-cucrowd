@@ -12,6 +12,7 @@ from datetime import date
 
 
 # Create your views here.
+# Questionnaire 
 class QuestionnaireView(viewsets.ModelViewSet):
     serializer_class = QuestionnaireSerializer
     queryset = Questionnaire.objects.all()
@@ -29,7 +30,7 @@ class QuestionnaireView(viewsets.ModelViewSet):
             return [permission() for permission in self.permission_classes_by_action[self.action]]
         except KeyError:
             return [permission() for permission in self.permission_classes]
-
+#Create questionnaire post
     def create(self, request, *args, **kwargs):
         host = request.user
         if host.is_org:
@@ -61,14 +62,14 @@ class QuestionnaireView(viewsets.ModelViewSet):
         if instance.host.id is not user.id:
             raise ValidationError({"result": False, "message": "Only questionnaire host can update the content."})
         return super().partial_update(request, *args, **kwargs)
-    
+  # Delete questionnaire post  
     def destroy(self, request, *args, **kwargs):
         user = request.user
         instance = self.get_object()
         if instance.host.id is not user.id:
             raise ValidationError({"result": False, "message": "Only questionnaire host can destroy the content."})
         return super().destroy(request, *args, **kwargs)
-    
+ # Update questionnaire post  ------ for further improvement   
     def update(self, request, *args, **kwargs):
         kwargs['partial'] = True
         user = request.user
@@ -111,7 +112,7 @@ class QuestionnaireView(viewsets.ModelViewSet):
 
         serializer = self.get_serializer(queryset, many=True)
         return Response(serializer.data)
-
+# Answer Questionnaire
 class AnswerView(viewsets.ModelViewSet):
     serializer_class = AnswerSerializer
     queryset = Answer.objects.all()
@@ -129,7 +130,7 @@ class AnswerView(viewsets.ModelViewSet):
             return [permission() for permission in self.permission_classes_by_action[self.action]]
         except KeyError:
             return [permission() for permission in self.permission_classes]
-
+# Create Answer Questionnaire
     def create(self, request, *args, **kwargs):
         respondent = request.user
         data = request.data
@@ -157,7 +158,7 @@ class AnswerView(viewsets.ModelViewSet):
             err_dict = _serializer.errors
             err_msg = [str(err_dict[k][0]) for k in err_dict]
             raise ValidationError({"result": False, "message": '; '.join(err_msg)})
-
+# Not allow deleting Answer
     def destroy(self, request, *args, **kwargs):
         user = request.user
         instance = self.get_object()
