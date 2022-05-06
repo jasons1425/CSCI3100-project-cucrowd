@@ -38,7 +38,7 @@ def validate_url(value):
             if not all([result.scheme, result.netloc]):
                 raise AssertionError
         except Exception as e:
-            raise FieldValidationError("Invalid URL.")
+            raise FieldValidationError("Invalid URL. Expected format to be `https://...`")
     return value
 
 
