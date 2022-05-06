@@ -78,7 +78,6 @@ h4 {
     margin-left:4vw;
     height:12.5vw;
     white-space: pre-line;
-    overflow:auto;
 }
 
 .team_details_info div {
@@ -116,7 +115,6 @@ h4 {
 .team_info_contact {
     display: flex;
     flex-direction: column;
-
 }
 
 .team_self_intro {
@@ -126,7 +124,6 @@ h4 {
     font-size: 1vw;
     height:10vw;
     white-space: pre-line;
-    overflow:auto;
 }
 
 .team_dotted_line {
