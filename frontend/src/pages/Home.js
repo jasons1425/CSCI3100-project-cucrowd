@@ -47,8 +47,6 @@ function Home() {
   )
 }
 
-
-//return the top three latest post from experiment section
 class Exp_list extends React.Component{
     constructor(props) {
         super(props);
@@ -57,74 +55,75 @@ class Exp_list extends React.Component{
             items: [],
         };
     }
-    //get all the experiment from database
-    componentDidMount() {
-    fetch(
-        "http://localhost:8000/api/experiment/")
-        .then((res) => res.json())
-        .then((json) => {
-            this.setState({items: json,});
-        })
-    }
-    
-    //render the top 3 post only
-    render(){
-        try{
-            return(
-                <div >     
-                
-                        <>
-                        {this.state.items.length > 0 && <div className='column'>
-                            <div className='postauthor' onClick={()=>{window.location.pathname='/experiments/'+this.state.items[0].id;}}>{this.state.items[0].title.substring(0,200)}</div>
-                            <div className='postphoto'><img src={this.state.items[0].exp_img==null? sample:this.state.items[0].exp_img} width="95%" height="95%" ></img></div>
-                            <div className='home_line'><hr id="line"/></div>
-                            <div className='description'>{this.state.items[0].description.substring(0,200) + "..."}</div>
-                        </div>}
-                        {this.state.items.length > 1 && <div className='column'>
-                            <div className='postauthor' onClick={()=>{window.location.pathname='/experiments/'+this.state.items[1].id;}}>{this.state.items[1].title.substring(0,200)}</div>
-                            <div className='postphoto'><img src={this.state.items[1].exp_img==null? sample:this.state.items[1].exp_img} width="95%" height="95%" ></img></div>
-                            <div className='home_line'><hr id="line"/></div>
-                            <div className='description'>{this.state.items[1].description.substring(0,200) + "..."}</div>
-                        </div>}
-                        {this.state.items.length > 2 && <div className='column'>
-                            <div className='postauthor' onClick={()=>{window.location.pathname='/experiments/'+this.state.items[2].id;}}>{this.state.items[2].title.substring(0,200)}</div>
-                            <div className='postphoto'><img src={this.state.items[2].exp_img==null? sample:this.state.items[2].exp_img} width="95%" height="95%" ></img></div>
-                            <div className='home_line'><hr id="line"/></div>
-                            <div className='description'>{this.state.items[2].description.substring(0,200) + "..."}</div>
-                        </div>}
-                        </>
-                </div>
-            );
-        }catch(e){
-            return(""+e)
-        }
-    }
+
+  componentDidMount() {
+  fetch(
+      "http://localhost:8000/api/experiment/")
+      .then((res) => res.json())
+      .then((json) => {
+          this.setState({items: json,});
+      })
+  }
+  
+  render(){
+    try{
+        //console.log(items[0].id);
+     
+    return(
+      <div >     
+     
+            <>
+            {this.state.items.length > 0 && <div className='column'>
+                <div className='postauthor' onClick={()=>{window.location.pathname='/experiments/'+this.state.items[0].id;}}>{this.state.items[0].title.substring(0,200)}</div>
+                <div className='postphoto'><img src={this.state.items[0].exp_img==null? sample:this.state.items[0].exp_img} width="95%" height="95%" ></img></div>
+                <div className='home_line'><hr id="line"/></div>
+                <div className='description'>{this.state.items[0].description.substring(0,200) + "..."}</div>
+            </div>}
+            {this.state.items.length > 1 && <div className='column'>
+                <div className='postauthor' onClick={()=>{window.location.pathname='/experiments/'+this.state.items[1].id;}}>{this.state.items[1].title.substring(0,200)}</div>
+                <div className='postphoto'><img src={this.state.items[1].exp_img==null? sample:this.state.items[1].exp_img} width="95%" height="95%" ></img></div>
+                <div className='home_line'><hr id="line"/></div>
+                <div className='description'>{this.state.items[1].description.substring(0,200) + "..."}</div>
+            </div>}
+            {this.state.items.length > 2 && <div className='column'>
+                <div className='postauthor' onClick={()=>{window.location.pathname='/experiments/'+this.state.items[2].id;}}>{this.state.items[2].title.substring(0,200)}</div>
+                <div className='postphoto'><img src={this.state.items[2].exp_img==null? sample:this.state.items[2].exp_img} width="95%" height="95%" ></img></div>
+                <div className='home_line'><hr id="line"/></div>
+                <div className='description'>{this.state.items[2].description.substring(0,200) + "..."}</div>
+            </div>}
+            </>
+         
+      
+  </div>
+    );
+    }catch(e){
+        return(""+e)
+ }
+  }
 }
 
 
-//return the username of the current user
 function Name(){
     
     const [items, setItems] = useState([{}]);
-
-    
+  
     useEffect(() => {
-        axios.get("http://localhost:8000/api/login", {withCredentials : true}).then((response) => {
+      axios.get("http://localhost:8000/api/login", {withCredentials : true}).then((response) => {
         setItems(response.data);
         });
-    }, []);
+      }, []);
       
-    return(
-            <>
-            {items.username}
-            </>
-    )
-}
+     console.log(items.username);
+      return(
+          <>
+          {items.username}
+        </>
+      )
+      }
 
 export default Home
 
 
-//return the top three latest post from team section
 class Team_list extends React.Component{
     constructor(props) {
         super(props);
@@ -134,60 +133,60 @@ class Team_list extends React.Component{
         };
     }
 
-    //get all the team from database
-    componentDidMount() {
-    fetch("http://localhost:8000/api/teamformation")
-    .then((res) => res.json())
-    .then((json) => {this.setState({items: json,});
-    })
+  componentDidMount() {
+  fetch(
+      "http://localhost:8000/api/teamformation")
+      .then((res) => res.json())
+      .then((json) => {
+          this.setState({items: json,});
+      })
   }
   
-    //render the top 3 post only
-    render(){
-        try{
-            return(
-                <div >     
-                        <>
-                        {this.state.items.length > 0 && <div className='column'>
-                            <div className='postauthor' onClick={() => {window.location.href = "http://localhost:3000/team/" + this.state.items[0].id}}>{this.state.items[0].title.substring(0,200) + "..."}</div>
-                            {this.state.items[0].teamsize == 2 && <div className='postphoto'><img src={member2} width="95%" height="95%" ></img></div>}
-                            {this.state.items[0].teamsize == 3 && <div className='postphoto'><img src={member3} width="95%" height="95%" ></img></div>}
-                            {this.state.items[0].teamsize == 4 && <div className='postphoto'><img src={member4} width="95%" height="95%" ></img></div>}
-                            {this.state.items[0].teamsize == 5 && <div className='postphoto'><img src={member5} width="95%" height="95%" ></img></div>}      
-                            <div className='home_line'><hr id="line"/></div>
-                            <div className='description'>{this.state.items[0].description.substring(0,200) + "..."}</div>
-                        </div>}
-                        {this.state.items.length > 1 && <div className='column'>
-                            <div className='postauthor' onClick={() => {window.location.href = "http://localhost:3000/team/" + this.state.items[1].id}}>{this.state.items[1].title.substring(0,200) + "..."}</div>
-                            {this.state.items[1].teamsize == 2 && <div className='postphoto'><img src={member2} width="95%" height="95%" ></img></div>}
-                            {this.state.items[1].teamsize == 3 && <div className='postphoto'><img src={member3} width="95%" height="95%" ></img></div>}
-                            {this.state.items[1].teamsize == 4 && <div className='postphoto'><img src={member4} width="95%" height="95%" ></img></div>}
-                            {this.state.items[1].teamsize == 5 && <div className='postphoto'><img src={member5} width="95%" height="95%" ></img></div>}
-                            <div className='home_line'><hr id="line"/></div>
-                            <div className='description'>{this.state.items[1].description.substring(0,200) + "..."}</div>
-                        </div>}
-                        {this.state.items.length > 2 && <div className='column'>
-                            <div className='postauthor' onClick={() => {window.location.href = "http://localhost:3000/team/" + this.state.items[2].id}}>{this.state.items[2].title.substring(0,200) + "..."}</div>
-                            {this.state.items[2].teamsize == 2 && <div className='postphoto'><img src={member2} width="95%" height="95%" ></img></div>}
-                            {this.state.items[2].teamsize == 3 && <div className='postphoto'><img src={member3} width="95%" height="95%" ></img></div>}
-                            {this.state.items[2].teamsize == 4 && <div className='postphoto'><img src={member4} width="95%" height="95%" ></img></div>}
-                            {this.state.items[2].teamsize == 5 && <div className='postphoto'><img src={member5} width="95%" height="95%" ></img></div>}
-                            <div className='home_line'><hr id="line"/></div>
-                            <div className='description'>{this.state.items[2].description.substring(0,200) + "..."}</div>
-                        </div>}
-                        </>
-                    
-                
-                </div>
-            );
-        }catch(e){
-            return(""+e)
-        }
-    }
+  render(){
+    try{
+        //console.log(items[0].id);
+     
+    return(
+      <div >     
+            <>
+            {this.state.items.length > 0 && <div className='column'>
+                <div className='postauthor' onClick={() => {window.location.href = "http://localhost:3000/team/" + this.state.items[0].id}}>{this.state.items[0].title.substring(0,200) + "..."}</div>
+                {this.state.items[0].teamsize == 2 && <div className='postphoto'><img src={member2} width="95%" height="95%" ></img></div>}
+                {this.state.items[0].teamsize == 3 && <div className='postphoto'><img src={member3} width="95%" height="95%" ></img></div>}
+                {this.state.items[0].teamsize == 4 && <div className='postphoto'><img src={member4} width="95%" height="95%" ></img></div>}
+                {this.state.items[0].teamsize == 5 && <div className='postphoto'><img src={member5} width="95%" height="95%" ></img></div>}      
+                <div className='home_line'><hr id="line"/></div>
+                <div className='description'>{this.state.items[0].description.substring(0,200) + "..."}</div>
+            </div>}
+            {this.state.items.length > 1 && <div className='column'>
+                <div className='postauthor' onClick={() => {window.location.href = "http://localhost:3000/team/" + this.state.items[1].id}}>{this.state.items[1].title.substring(0,200) + "..."}</div>
+                {this.state.items[1].teamsize == 2 && <div className='postphoto'><img src={member2} width="95%" height="95%" ></img></div>}
+                {this.state.items[1].teamsize == 3 && <div className='postphoto'><img src={member3} width="95%" height="95%" ></img></div>}
+                {this.state.items[1].teamsize == 4 && <div className='postphoto'><img src={member4} width="95%" height="95%" ></img></div>}
+                {this.state.items[1].teamsize == 5 && <div className='postphoto'><img src={member5} width="95%" height="95%" ></img></div>}
+                <div className='home_line'><hr id="line"/></div>
+                <div className='description'>{this.state.items[1].description.substring(0,200) + "..."}</div>
+            </div>}
+            {this.state.items.length > 2 && <div className='column'>
+                <div className='postauthor' onClick={() => {window.location.href = "http://localhost:3000/team/" + this.state.items[2].id}}>{this.state.items[2].title.substring(0,200) + "..."}</div>
+                {this.state.items[2].teamsize == 2 && <div className='postphoto'><img src={member2} width="95%" height="95%" ></img></div>}
+                {this.state.items[2].teamsize == 3 && <div className='postphoto'><img src={member3} width="95%" height="95%" ></img></div>}
+                {this.state.items[2].teamsize == 4 && <div className='postphoto'><img src={member4} width="95%" height="95%" ></img></div>}
+                {this.state.items[2].teamsize == 5 && <div className='postphoto'><img src={member5} width="95%" height="95%" ></img></div>}
+                <div className='home_line'><hr id="line"/></div>
+                <div className='description'>{this.state.items[2].description.substring(0,200) + "..."}</div>
+            </div>}
+            </>
+         
+      
+  </div>
+    );
+    }catch(e){
+        return(""+e)
+ }
+  }
 }
 
-
-//return the top three latest post from Questionnaire section
 class Quest_list extends React.Component{
     constructor(props) {
         super(props);
@@ -196,7 +195,7 @@ class Quest_list extends React.Component{
             items: [],
         };
     }
-    //get all the questionnaire from database
+
   componentDidMount() {
   fetch(
       "http://localhost:8000/api/questionnaire/ongoing")
@@ -206,9 +205,10 @@ class Quest_list extends React.Component{
       })
   }
   
-  //render the top 3 post only
   render(){
-    try{  
+    try{
+        //console.log(items[0].id);
+     
     return(
       <div >     
             <>
