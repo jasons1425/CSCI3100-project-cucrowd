@@ -7,12 +7,16 @@ import { useState} from 'react';
 function Forgotpw() {
   const [isSending, setSending] = useState(false);
   
+
+  //enable Enter to send email
   const handleKeypress = event => {
     if (event.charCode === 13) {
       sendemail();
     }
   }
 
+
+  //make request to server
   function sendemail(){
     let payload = { email : document.getElementById("email").value}
     if(document.querySelector("#email").classList.contains("is-invalid")){
@@ -35,6 +39,8 @@ function Forgotpw() {
       })
   }
 
+
+  //html 
   return (
     <div id="forgotpw_page">
       <form id="forgotpw">

@@ -7,6 +7,8 @@ function Resetpw() {
     const [isLoadingvalid, setLoadingvalid] = useState(true);
     const [isLoadinglogout, setLoadinglogout] = useState(true);
 
+
+    //verify the correctness of the link for reset password
     useEffect(() => {
         let urlString = window.location.href;
         let url = new URL(urlString);
@@ -35,6 +37,8 @@ function Resetpw() {
             
     },[])
 
+
+    //html code of reset password page
     if(isLoadinglogout || isLoadingvalid){
         return <div></div>
     }else{
@@ -73,6 +77,8 @@ function Resetpw() {
 }
 export default Resetpw
 
+
+//make request to change password
 function resetPassword(){
     let newpw = document.getElementById("new password").value
     let confirmpw = document.getElementById("confirm password").value
@@ -100,6 +106,8 @@ function resetPassword(){
     }
 }
 
+
+//make sure the new password is same as confirm password
 function confirm_checkSame(){
     let newpw = document.getElementById("new password").value
     let confirmpw = document.getElementById("confirm password").value
@@ -116,6 +124,8 @@ function confirm_checkSame(){
 
 }
 
+
+//check the confirm passowrd is same as new password
 function new_checkSame(){
     let newpw = document.getElementById("new password").value
     let confirmpw = document.getElementById("confirm password").value
@@ -127,6 +137,8 @@ function new_checkSame(){
     }
 }
 
+
+//enable Enter key to reset password
 const handleKeypress = event => {
     if (event.charCode === 13) {
       resetPassword();

@@ -6,6 +6,7 @@ import {useState, useEffect, } from 'react'
 import {useParams} from 'react-router-dom'
 import axios from 'axios';
 
+
 function Questionnaire_details() {
     const [number, setNumber] = useState(1);
     const [data, setData] = useState();
@@ -16,6 +17,7 @@ function Questionnaire_details() {
     const [loadingProfile, setLoadingProfile] = useState(true);
     const [profile, setProfile] = useState();
 
+    //get all the questionnaire detail
     useEffect(()=> {
         axios
             .get("http://localhost:8000/api/questionnaire/"+id)
@@ -43,6 +45,8 @@ function Questionnaire_details() {
         return <>Loading</>;
     }
 
+
+    //html code of a detailed questionnaire post
     if(!loading && !loadingProfile){
         return(
             <div className="questionnaire_details">
@@ -132,6 +136,7 @@ function Questionnaire_details() {
     }
 
 
+    //Interface of long questions
     function LongQ({number, question}){
         return(
             <div className="LongQ">
@@ -143,6 +148,8 @@ function Questionnaire_details() {
         )
     }
 
+
+    //Interface of MC questions
     function MC({number, question}){
         useEffect(() => {
             if(answer[number-1] == "A"){
@@ -180,6 +187,8 @@ function Questionnaire_details() {
         )
     }
 
+
+    //Interface of scoring questions
     function Scoring({number, question}){
         if(answer[number-1] == undefined){
             answer[number-1] = 1;
@@ -197,6 +206,8 @@ function Questionnaire_details() {
         )
     }
 
+
+    //Interface of google form
     function GoogleForm({question}){
         return(        
             <div className="googleForm" onClick={() => window.open(question, "_blank")}>
@@ -206,6 +217,8 @@ function Questionnaire_details() {
         )
     }
 
+
+    //update the process bar
     function update(number){
         let x = document.getElementById(number).value;
         let y = document.getElementById("bubble_img");
@@ -213,6 +226,8 @@ function Questionnaire_details() {
         y.style.marginLeft = (-0.5 + (x-1) * (97/9)) + "%";
     }
 
+
+    //update the MC answers 
     function updateMCAnswer(newAnswer, number){
         let temp_state = [...answer];
         let temp_element = {...temp_state[number-1]};
@@ -221,6 +236,8 @@ function Questionnaire_details() {
         setAnswer(temp_state);
     }
 
+
+    //update the long question answer
     function updateQuestionAnswer(type, number){
         if(type !== "mc"){
             let temp_state = [...answer];
@@ -234,6 +251,8 @@ function Questionnaire_details() {
         }
     }
 
+
+    //make request to server to save and submit the answer 
     function submitQuest(number){
         var check = true;
         var check_array = [];

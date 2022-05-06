@@ -19,6 +19,8 @@ function Quest_response() {
     var type;
     var number
 
+
+    //get the response details of a particular questionnaire
     useEffect(()=>{
         axios
             .get("http://localhost:8000/api/questionnaire/"+id)
@@ -127,6 +129,8 @@ function Quest_response() {
         return (<>is Loading</>)
     }
 
+
+    //html code of Questionnaire Response Page
     if(!isLoading && !isLoadingQuest){
         var number = quest.questionsize;
         var type = quest.questiontype;

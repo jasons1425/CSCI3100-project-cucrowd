@@ -17,7 +17,7 @@ function Team() {
   const [User, setUser] = useState();
   const [dataArray, setDataArray] = useState();
 
-  
+  //search bar in Team List Page
   function teamSearch(){
       let x = document.getElementById("team_search_bar").value
       x = x.toLowerCase()
@@ -26,7 +26,7 @@ function Team() {
       }))
   }
 
-
+  //get all team list 
   useEffect(()=>{
     axios
         .get("http://localhost:8000/api/teamformation")
@@ -50,6 +50,8 @@ function Team() {
     return (<>Loading</>)
   }
 
+
+  //html code of Team List Page
   if(!isLoading && !isLoadingUser){
     return (
       <div className="team_page">
@@ -83,6 +85,8 @@ function Team() {
 
 export default Team;
 
+
+//Interface of a team post
 function TeamPost({title, id, vacancy, target, closing, members, index, description}){
   const [selected, setSelected] = useState(-1)
 
@@ -114,6 +118,8 @@ function TeamPost({title, id, vacancy, target, closing, members, index, descript
   )
 }
 
+
+//Interface of team member list
 function TeamMember({members}){
   var date = new Date();
   var year = date.getFullYear();

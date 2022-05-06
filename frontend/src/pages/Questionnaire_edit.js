@@ -16,6 +16,8 @@ function Questionnaire_edit() {
   const [data, setData] = useState();
   const [loading, isLoading] = useState(true);
 
+
+  //get the questionnaire that the user posts
   useEffect(()=> {
         axios
             .get("http://localhost:8000/api/questionnaire/")
@@ -43,6 +45,8 @@ function Questionnaire_edit() {
       return <>Loading</>;
   }
 
+
+  //html code of Edit Page
   if(!loading && !loadingProfile){
     return (
       <div className="questionnaire_page">
@@ -76,6 +80,8 @@ function Questionnaire_edit() {
   
 export default Questionnaire_edit;
 
+
+//Interface of questionnaire post
 function QuestionnairePost({id, type, title, description, eft}){
     return(
       <div>
@@ -104,6 +110,8 @@ function QuestionnairePost({id, type, title, description, eft}){
     )
 }
 
+
+//make request to delete the post
 function deletePost(id, title){
     if(window.confirm("Are you sure to delete this post: " + title + "?")){
       axios
@@ -119,6 +127,8 @@ function deletePost(id, title){
     }
 }
 
+
+//redirect to response page of the post
 function responseQuest(id){
     window.location.pathname="/question/response/" + id;
 }
