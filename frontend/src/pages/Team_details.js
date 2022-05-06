@@ -12,6 +12,7 @@ function Team_details() {
   const {id} = useParams();
   const [joining, setJoining] = useState(false);
 
+  //make request to server for joining the team
   function jointeam(id){
     setJoining(true)
     axios
@@ -26,6 +27,8 @@ function Team_details() {
         })
   }
 
+
+  //load the post detail
   useEffect(() => {
     axios
         .get("http://localhost:8000/api/teamformation/"+id)
@@ -48,7 +51,8 @@ function Team_details() {
     if (date.getMonth()+1 >= 9){
       year = year + 1;
     }
-
+    
+    //html code of Team Detail Page
     return (
       <div className="team_details">
         <header className="team_header">
@@ -121,6 +125,8 @@ function Team_details() {
   
 export default Team_details;
 
+
+//Interface of a member card in the member list
 function MemberCard({name, year, major, sid, avatar, id}){
   return (
     <div className="membercard" onClick={()=>profile(name, id)}>
@@ -136,6 +142,8 @@ function MemberCard({name, year, major, sid, avatar, id}){
   )
 }
 
+
+//Interface of a empty member card
 function EmptyMemberCard({name, year, major, sid, avatar}){
   return (
     <div className="membercard">
@@ -150,6 +158,8 @@ function EmptyMemberCard({name, year, major, sid, avatar}){
   )
 }
 
+
+//rendering the empty member card
 function emptyhandling(count){
     let array=[];
     for(let x = 0; x < count; x++){
@@ -158,6 +168,8 @@ function emptyhandling(count){
     return array;
 } 
 
+
+//redirect to profile
 function profile(name, id){
     window.location.href = "http://localhost:3000/profile/" + name + "/team/" + id
 }

@@ -15,6 +15,8 @@ function Questionnaire() {
   const [isLoading, setLoading] = useState(true);
   const [dataArray, setDataArray] = useState();
 
+
+  //search bar for searching post in Questionnaire List Page
   function questionnaireSearch(){
     let x = document.getElementById("questionnaire_search_bar").value
     x = x.toLowerCase()
@@ -23,6 +25,8 @@ function Questionnaire() {
     }))
   }
 
+
+  //load all questionnaire posts
   useEffect(() => {
     axios
         .get("http://localhost:8000/api/questionnaire/ongoing")
@@ -40,6 +44,8 @@ function Questionnaire() {
     return (<>Loading</>)
   }
 
+
+  //html code of Questionnaire List Page
   if(!isLoading){
     return (
       <div className="questionnaire_page">
@@ -73,6 +79,8 @@ function Questionnaire() {
 export default Questionnaire
 
 
+
+//Interface of questionnaire post
 function QuestionnairePost({id, type, title, description, time}){
   return(
     <div>

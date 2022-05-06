@@ -6,6 +6,7 @@ import {useState, useEffect} from 'react'
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
+
 function Team_edit_post() {
     const {id} = useParams();
     const [loadingUser, isLoadingUser] = useState(true);
@@ -28,6 +29,8 @@ function Team_edit_post() {
 
     }
 
+
+    //load the details of the post for editing
     useEffect(()=>{
         axios
             .get("http://localhost:8000/api/teamformation/" + id)
@@ -50,6 +53,8 @@ function Team_edit_post() {
         return(<>Loading</>)
     }
 
+
+    //html code of Team Edit Post
     if(!loadingUser && !loadingPost){
         if(user.username !== data.host.username){
             window.location.pathname="/team/edit"
@@ -125,6 +130,8 @@ function Team_edit_post() {
 
 export default Team_edit_post;
 
+
+//change the team size
 function changesize(){
     let size = document.getElementById("team_teamsize").value;
     if(size > 5){
@@ -134,6 +141,8 @@ function changesize(){
     }
 }
 
+
+//make request to server to save changes
 function saveTeam(id, post_date){
     let payload = {
       title : document.getElementById("team_title").value,

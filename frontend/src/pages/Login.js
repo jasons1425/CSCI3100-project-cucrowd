@@ -14,10 +14,13 @@ function styling(){
 }
 
 
+//redirect to signup page
 function signup(){
     window.location.pathname='/signup';
 }
 
+
+//make request to server for login
 function login (){
     let payload = {username : document.getElementById("username").value, password : document.getElementById("password").value};
     axios
@@ -37,9 +40,11 @@ function login (){
         });
 };
 
+
+
 function Login() {
     
-
+        //html 
         return (
             <div className="Login" onLoad={()=>styling()}>
                 <img className="image" src={logo} alt="cu-crowd-logo"></img>
@@ -69,6 +74,8 @@ function Login() {
  
 export default Login;
 
+
+//enable Enter key to login
 const handleKeypress = event => {
     if (event.charCode === 13) {
       login();

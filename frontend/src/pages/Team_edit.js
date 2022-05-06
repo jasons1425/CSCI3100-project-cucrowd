@@ -16,6 +16,8 @@ function Team_edit() {
     const [loading, isLoading] = useState(true);
     const [data, setData] = useState();
 
+
+    //load the team post that are published by the user
     useEffect(()=>{
       axios
           .get("http://localhost:8000/api/profile/me/leading_team", {withCredentials:true})
@@ -30,6 +32,8 @@ function Team_edit() {
       return(<>Loading</>)
     }
 
+
+    //html code of Team Edit Page
     if(!loading){
       return (
         <div className="team_page">
@@ -63,6 +67,8 @@ function Team_edit() {
   
 export default Team_edit;
 
+
+//Interface of team edit post
 function Team_edit_post({title, vacancy, target, closing, id, description}){
     return(
         <div>
@@ -95,6 +101,8 @@ function Team_edit_post({title, vacancy, target, closing, id, description}){
     )
 }
 
+
+//make request to delete the team post
 function deleteTeam(id, title){
     if(window.confirm("Are you sure to delete this post:" + title + "?")){
       axios
@@ -110,10 +118,14 @@ function deleteTeam(id, title){
     }
 }
 
+
+//redirect to edit post page
 function editTeam(id){
     window.location.pathname ="/team/edit/" + id; 
 }
 
+
+//redirect to response post page
 function responseTeam(id){
       window.location.pathname="/team/response/" + id;
 }

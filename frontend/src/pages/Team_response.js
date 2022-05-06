@@ -8,6 +8,7 @@ import { useParams } from 'react-router-dom';
 import axios from 'axios';
 
 
+
 function Team_response() {
     const [isLoading, setLoading] = useState(true)
     const [data, setData] = useState()
@@ -19,6 +20,7 @@ function Team_response() {
         year = year + 1;
     }
 
+    //make request to server to accept the student request
     function AcceptTeam(userid, user){
         const payload = {
             id : userid,
@@ -37,6 +39,8 @@ function Team_response() {
         }
     }
 
+
+    //make request to server to reject the student request
     function RejectTeam(userid, user){
         const payload = {
             id : userid,
@@ -55,6 +59,8 @@ function Team_response() {
         }
     }
 
+
+    //load a particular team response
     useEffect(()=>{
         axios
             .get("http://localhost:8000/api/teamformation/" + id, {withCredentials:true})
@@ -68,6 +74,8 @@ function Team_response() {
         return (<>is Loading</>)
     }
 
+
+    //html code of Team Resposne Page
     if(!isLoading){
         return (
         <div className="team_page">

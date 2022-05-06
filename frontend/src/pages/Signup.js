@@ -5,12 +5,16 @@ import {useState} from "react"
 function Signup(){
     const [signingup, setSignup] = useState(false)
 
+
+    //enable Enter key to do sign up action
     const handleKeypress = event => {
       if (event.charCode === 13) {
         signup();
       }
     }
 
+
+    //html code of Sign Up Page
     return (
         <div id="signup_page">
             <form id="signup">
@@ -54,7 +58,9 @@ function Signup(){
             </form>
         </div>
     )
+    
 
+    //make request to server for creating new account
     function signup(){
         setSignup(true);
         checkempty_username();
@@ -96,6 +102,8 @@ function Signup(){
 }
 export default Signup
 
+
+//check the validity of the sid
 function checksid(){
     let sid = document.getElementById("sid").value;
     if(sid.length > 10 || sid.length < 10){
@@ -110,6 +118,9 @@ function checksid(){
         return true;
     }
 }
+
+
+//Below functions are checking the missing fields 
 
 function checkempty_username(){
     let check = document.getElementById("username").value;

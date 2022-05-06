@@ -7,6 +7,8 @@ function Questionnaire_add() {
     const [type, setType] = useState(1);
     const [number, setNumber] = useState(1);
 
+
+    //determine the question number
     function changeQuestionNumber(){
         let x = document.getElementById("questionnaire_number").value;
         if(x > 10){
@@ -16,6 +18,8 @@ function Questionnaire_add() {
         }
     }
 
+
+    //determine the type of questionnaire
     function changeType(){
         let x = document.getElementById("questionnaire_type").value;
         if(x === "MC"){
@@ -29,6 +33,8 @@ function Questionnaire_add() {
         }
     }
 
+
+    //html questionnaire form
     return (
       <div className="questionnaire_page">
         <header className="questionnaire_header">
@@ -98,6 +104,8 @@ function Questionnaire_add() {
 
 export default Questionnaire_add;
 
+
+//interface of MC question
 function MCQ({number}){
     var all_question = [];
     for(var id = 1; id <= number; id++){
@@ -129,6 +137,8 @@ function MCQ({number}){
     return all_question
 }
 
+
+//interface of long questions
 function Question({number}){
     var all_question = [];
     for(var id = 1; id <= number; id++){
@@ -142,6 +152,8 @@ function Question({number}){
     return all_question
 }
 
+
+//interface of google form
 function Form(){
     return(
         <div className="add_question">  
@@ -151,6 +163,8 @@ function Form(){
     )
 }
 
+
+//make request to server to create new post
 function addPost(type, number){
     var question = "";
     let error = [];
