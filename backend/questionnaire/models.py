@@ -26,7 +26,7 @@ def validate_size(value):
         )
     
 # Create your models here.
-# model of Questionnaire
+# configuration of the Questionnaire model in DB
 class Questionnaire(models.Model):
     id = models.UUIDField(primary_key=True,
                             default=uuid.uuid4,editable=False)
@@ -68,7 +68,7 @@ class Questionnaire(models.Model):
         self.full_clean()
         super().save(*args, **kwargs)
         
-#Model of Answer
+# configuration of the Answer model in DB
 class Answer(models.Model):
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     questionnaire = models.ForeignKey(Questionnaire, default="",
