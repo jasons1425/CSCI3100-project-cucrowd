@@ -1,12 +1,10 @@
 import uuid
 from django.db import models
 from datetime import date
-from django.contrib.auth.models import AnonymousUser
 from django.conf import settings
 from django.core.exceptions import ValidationError as FieldValidationError
-from django.core.exceptions import ValidationError
-from user_auth.models import StudentProfile
 import os
+from urllib.parse import urlparse
 
 
 def get_team_fp(instance, filename):
@@ -33,6 +31,17 @@ def validate_size(value):
         )
 
 
+def validate_url(value):
+    if len(value) > 0:
+        try:
+            result = urlparse(value)
+            if not all([result.scheme, result.netloc]):
+                raise AssertionError
+        except Exception as e:
+            raise FieldValidationError("Invalid URL.")
+    return value
+
+
 # configuration of the Team model in DB
 class Teamformation(models.Model):
     id = models.UUIDField(primary_key=True,
@@ -53,7 +62,7 @@ class Teamformation(models.Model):
                                     null=False, blank=False)
     link = models.TextField(max_length=200 , default = "Please type the links here.",
                             help_text="Please enter the links that you need.(if available)",
-                            null=True, blank=True)
+                            validators=[validate_url], null=True, blank=True)
     contact = models.TextField(max_length=200, default = "Please type the contact here.",
                                help_text="Please type your contact. (Email , Phone number, etc...)",
                                null=False, blank=False)
