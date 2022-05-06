@@ -177,6 +177,11 @@ class SignUpView(APIView):
             raise ValidationError({'result': False,
                                    'message': "date_of_birth or admission_year has invalid date format. "
                                               "Expected %Y-%m-%d"})
+        # validate sid
+        existing_user = StudentProfile.objects.filter(sid=sid)
+        if existing_user:
+            raise ValidationError({'result': False,
+                                   'message': "User with the given SID already exists."})
         try:
             validate_email(email)
             validate_sid(sid)
@@ -250,10 +255,11 @@ class ProfileView(ModelViewSet):
         if instance.user.id is not user.id:
             raise ValidationError({"result": False, "message": "Only profile owner can update the content."})
         # remove "user" field in request payload to stop user from changing profile owner
+        #   forbid users to change their sid
         if type(request.data) is not dict:  # i.e. is immutable QueryDict
             request.data._mutable = True
         for key in list(request.data.keys()):
-            if key.startswith("user.") or key == "user":
+            if key.startswith("user.") or key == "user" or key == "sid":
                 del request.data[key]
         if type(request.data) is not dict:  # i.e. is immutable QueryDict
             request.data._mutable = False
@@ -267,10 +273,11 @@ class ProfileView(ModelViewSet):
         if instance.user.id is not user.id:
             raise ValidationError({"result": False, "message": "Only profile owner can update the content."})
         # remove "user" field in request payload to stop user from changing profile owner
+        # forbid users to change their sid
         if type(request.data) is not dict:  # i.e. is immutable QueryDict
             request.data._mutable = True
         for key in list(request.data.keys()):
-            if key.startswith("user.") or key == "user":
+            if key.startswith("user.") or key == "user" or key == "sid":
                 del request.data[key]
         if type(request.data) is not dict:  # i.e. is immutable QueryDict
             request.data._mutable = False
