@@ -7,6 +7,7 @@ import * as Fi from "react-icons/fi";
 import icon from './whitelogo1.png'
 import axios from 'axios';
 
+//data in sidebar
 const Sidebardata=[
     {
         title:"Home",
@@ -35,12 +36,15 @@ const Sidebardata=[
     },
 ]
 
+
 function Sidebar() {
     return (
         <>
+           
             <div className='Sidebar'>
                 <div className='photo' onClick={()=>{window.location.pathname='/';}}><img src={icon} width="80%" height="10%"></img></div>
                     <hr/>
+                     {/*map the sidebar data to the sidebar */}
                     <ul className="SidebarContainer"> 
                         {Sidebardata.map((item, index) => {
                             return (
@@ -51,6 +55,7 @@ function Sidebar() {
                             );
                         })}
                         <hr className='bottomline'/>
+                         {/* add a logout button at the bottom */}
                         <li className="profile" onClick={()=>logout()}>
                             <div id="proicon"><Fi.FiLogOut /></div>
                             <div id="protitle">Logout</div>

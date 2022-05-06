@@ -7,6 +7,7 @@ import axios from "axios";
 
 function Exp_detail(){
 
+  //get the experiment id from the URL by params
   const params=useParams();
     return (
     <>
@@ -16,11 +17,12 @@ function Exp_detail(){
     
 }
 
+//look up corresponding experiment by the retrivied experiment id and display all the information detailly
 function List(id){
-//console.log(id.id);
 
   const [items, setItems] = useState({});
-    
+  
+  //get the specific experiment by id
   useEffect(() => {
     axios.get("http://localhost:8000/api/experiment/"+id.id+"/", {withCredentials : true}).then((response) => {
       setItems(response.data);
@@ -28,7 +30,9 @@ function List(id){
     }, []);
     
   
+
   function enroll(){
+    //conduct post request about the enrollment to backend
     let selected = document.getElementById("exp_time");
     let payload = {experiment : id.id, selected_time : selected.value};
     axios.post('http://localhost:8000/api/enroll', payload, {withCredentials : true})
@@ -42,10 +46,11 @@ function List(id){
     })
   
   }
-
+  //back to experiment listing page
   function back(){
     window.location.pathname='/experiments';
   }
+
   try{
     const timesplit=items.timeslots.split(';');
     console.log(timesplit[0])
@@ -64,7 +69,7 @@ function List(id){
       job="others"
     }
 
-    console.log(job)
+    //render the information of the experiment in formatted pattern.
   return(
     <>
     <div >
@@ -117,8 +122,8 @@ function List(id){
 </>
   );
 }catch(e){
-  console.log("hi")
-  return("")
+
+  return("Sorry, something went wrong")
 }
 
   }
