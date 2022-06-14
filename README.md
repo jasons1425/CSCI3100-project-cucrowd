@@ -28,9 +28,9 @@ https://docs.google.com/document/d/1I2MnXVgWsSJvWj0sM4RzHOcH3UH_gpJIyJ3-lNy49vw/
 
 # Testing Gmail Account
 
-email:  csci3100cucrowd@gmail.com 
+email:  <gmail email>
 
-password:  CUcrowd2022
+password:  <gmail password>
 
 # Set Up
 
